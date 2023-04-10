@@ -8,10 +8,12 @@ import { ProductosService } from '../../services/productos.service';
 })
 export class ListadoComponent implements OnInit {
 
+  prueba: string = '';
+
   constructor( private productosService: ProductosService ) {}
 
   ngOnInit(): void {
       this.productosService.getProductos()
-        .subscribe();
+        .subscribe(resp => console.log(resp));
   }
 }
