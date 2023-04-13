@@ -1,42 +1,36 @@
-import { QueryResult } from 'pg';
-import pool from '../database/pool';
+import pool from '../database/pool'
+import { Product } from '../interfaces/Product';
 
-export interface Producto {
-  id: number;
-  nombre: string;
-  descripcion: string;
-  precio: number;
-  categoria: string;
-  marca: string;
-  tipo: string;
-}
-
-export async function getProductos(limit: number): Promise<Producto[]> {
-  const { rows } = await pool.query<Producto>('SELECT * FROM productos LIMIT $1', [limit]);
+export const getProducts = async (limit?: number): Promise<Product[]> => {
+  let query = 'SELECT * FROM productos';
+  if (limit) {
+    query += ` LIMIT ${limit}`;
+  }
+  const { rows } = await pool.query(query);
   return rows;
-}
+};
 
-export async function getProductoById(id: number): Promise<Producto | null> {
-  const { rows } = await pool.query<Producto>('SELECT * FROM productos WHERE id_producto = $1', [id]);
-  return rows.length ? rows[0] : null;
-}
+export const getProductById = async (id: number): Promise<Product> => {
+  const { rows } = await pool.query('SELECT * FROM productos WHERE id_producto = $1', [id]);
+  return rows[0];
+};
 
-export async function createProducto(producto: Producto): Promise<QueryResult> {
-  const { nombre, descripcion, precio, categoria, marca, tipo } = producto;
-  return pool.query(
-    'INSERT INTO productos (nombre, descripcion, precio, categoria, marca, tipo) VALUES ($1, $2, $3, $4, $5, $6)',
-    [nombre, descripcion, precio, categoria, marca, tipo]
+export const createProduct = async (product: Product): Promise<void> => {
+  const { categoria, marca, tipo_producto, nombre, imagen, descripcion, ingredientes } = product;
+  await pool.query(
+    'INSERT INTO productos (categoria, marca, tipo_producto, nombre, imagen, descripcion, ingredientes) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+    [categoria, marca, tipo_producto, nombre, imagen, descripcion, ingredientes]
   );
-}
+};
 
-export async function updateProducto(id: number, producto: Producto): Promise<QueryResult> {
-  const { nombre, descripcion, precio, categoria, marca, tipo } = producto;
-  return pool.query(
-    'UPDATE productos SET nombre = $2, descripcion = $3, precio = $4, categoria = $5, marca = $6, tipo = $7 WHERE id = $1',
-    [id, nombre, descripcion, precio, categoria, marca, tipo]
+export const updateProduct = async (id: number, product: Product): Promise<void> => {
+  const { categoria, marca, tipo_producto, nombre, imagen, descripcion, ingredientes } = product;
+  await pool.query(
+    'UPDATE productos SET categoria=$1, marca=$2, tipo_producto=$3, nombre=$4, imagen=$5, descripcion=$6, ingredientes=$7 WHERE id_producto=$8',
+    [categoria, marca, tipo_producto, nombre, imagen, descripcion, ingredientes, id]
   );
-}
+};
 
-export async function deleteProducto(id: number): Promise<QueryResult> {
-  return pool.query('DELETE FROM productos WHERE id = $1', [id]);
-}
+export const deleteProduct = async (id: number): Promise<void> => {
+  await pool.query('DELETE FROM productos WHERE id_producto = $1', [id]);
+};

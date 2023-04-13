@@ -1,37 +1,31 @@
-import { QueryResult } from 'pg';
-import pool from '../database/pool';
+import pool from '../database/pool'
+import { Marca } from '../interfaces/Marca';
 
-export interface Marca {
-    id: number;
-    nombre: string;
+export const getMarcas = async (limit?: number): Promise<Marca[]> => {
+  let query = 'SELECT * FROM marcas';
+  if (limit) {
+    query += ` LIMIT ${limit}`;
   }
-
-export async function getMarcas(limit: number): Promise<Marca[]> {
-  const { rows } = await pool.query<Marca>('SELECT * FROM marcas LIMIT $1', [limit]);
+  const { rows } = await pool.query(query);
   return rows;
-}
+};
 
-export async function getMarcaById(id: number): Promise<Marca | null> {
-  const { rows } = await pool.query<Marca>('SELECT * FROM marcas WHERE id_marca = $1', [id]);
-  return rows.length ? rows[0] : null;
-}
+export const getMarcaById = async (id: number): Promise<Marca> => {
+  const { rows } = await pool.query('SELECT * FROM marcas WHERE id_marca = $1', [id]);
+  return rows[0];
+};
 
-export async function createMarca(marca: Marca): Promise<QueryResult> {
-  const { nombre } = marca;
-  return pool.query(
-    'INSERT INTO marcas (marca) VALUES ($1)',
-    [nombre]
-  );
-}
+export const createMarca = async (marca: string): Promise<Marca> => {
+  const { rows } = await pool.query('INSERT INTO marcas (marca) VALUES ($1) RETURNING *', [marca]);
+  return rows[0];
+};
 
-export async function updateMarca(id: number, marca: Marca): Promise<QueryResult> {
-  const { nombre } = marca;
-  return pool.query(
-    'UPDATE marcas SET marca = $2 WHERE id_marca = $1',
-    [id, nombre]
-  );
-}
+export const updateMarca = async (id: number, marca: string): Promise<Marca> => {
+  const { rows } = await pool.query('UPDATE marcas SET marca = $1 WHERE id_marca = $2 RETURNING *', [marca, id]);
+  return rows[0];
+};
 
-export async function deleteProducto(id: number): Promise<QueryResult> {
-  return pool.query('DELETE FROM marcas WHERE id_marca = $1', [id]);
-}
+export const deleteMarcaById = async (id: number): Promise<boolean> => {
+  const result = await pool.query('DELETE FROM marcas WHERE id_marca = $1', [id]);
+  return result.rowCount > 0;
+};
