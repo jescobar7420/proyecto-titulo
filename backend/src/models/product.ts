@@ -23,12 +23,13 @@ export const createProduct = async (product: Product): Promise<void> => {
   );
 };
 
-export const updateProduct = async (id: number, product: Product): Promise<void> => {
+export const updateProduct = async (id: number, product: Product): Promise<Product | null> => {
   const { categoria, marca, tipo_producto, nombre, imagen, descripcion, ingredientes } = product;
-  await pool.query(
-    'UPDATE productos SET categoria=$1, marca=$2, tipo_producto=$3, nombre=$4, imagen=$5, descripcion=$6, ingredientes=$7 WHERE id_producto=$8',
+  const result = await pool.query(
+    'UPDATE productos SET categoria=$1, marca=$2, tipo_producto=$3, nombre=$4, imagen=$5, descripcion=$6, ingredientes=$7 WHERE id_producto=$8 RETURNING *',
     [categoria, marca, tipo_producto, nombre, imagen, descripcion, ingredientes, id]
   );
+  return result.rowCount ? result.rows[0] : null;
 };
 
 export const deleteProduct = async (id: number): Promise<void> => {

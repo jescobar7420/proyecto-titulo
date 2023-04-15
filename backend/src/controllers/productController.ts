@@ -1,33 +1,82 @@
 import { Request, Response } from 'express';
-import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../models/product';
+import * as ProductoModel from '../models/product';
 
-export const getProductos = async (req: Request, res: Response): Promise<void> => {
-  const { limit } = req.query;
-  const products = await getProducts(limit ? parseInt(limit as string, 10) : undefined);
-  res.json(products);
+export const getProducts = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const limit = parseInt(req.query.limit as string, 10) || undefined;
+    const productos = await ProductoModel.getProducts(limit);
+    res.status(200).json(productos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
-export const getProductoById = async (req: Request, res: Response): Promise<void> => {
-  const { id } = req.params;
-  const product = await getProductById(parseInt(id, 10));
-  res.json(product);
+export const getProductById = async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(req.params.id, 10);
+  if (!id) {
+    res.status(400).json({ error: 'Invalid ID' });
+    return;
+  }
+  try {
+    const producto = await ProductoModel.getProductById(id);
+    if (producto) {
+      res.status(200).json(producto);
+    } else {
+      res.status(404).json({ error: `Producto with ID ${id} not found` });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
-export const createProducto = async (req: Request, res: Response): Promise<void> => {
-  const product = req.body;
-  await createProduct(product);
-  res.sendStatus(201);
+export const createProduct = async (req: Request, res: Response): Promise<void> => {
+  const producto = req.body.producto;
+  if (!producto) {
+    res.status(400).json({ error: 'Producto name is required' });
+    return;
+  }
+  try {
+    const newProducto = await ProductoModel.createProduct(producto);
+    res.status(201).json(newProducto);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
-export const updateProducto = async (req: Request, res: Response): Promise<void> => {
-  const { id } = req.params;
-  const product = req.body;
-  await updateProduct(parseInt(id, 10), product);
-  res.sendStatus(200);
+export const updateProduct = async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(req.params.id, 10);
+  const producto = req.body.producto;
+  if (!id || !producto) {
+    res.status(400).json({ error: 'Invalid ID or Producto name' });
+    return;
+  }
+  try {
+    const updatedProducto = await ProductoModel.updateProduct(id, producto);
+    if (updatedProducto) {
+      res.status(200).json(updatedProducto);
+    } else {
+      res.status(404).json({ error: `Producto with ID ${id} not found` });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
-export const deleteProducto = async (req: Request, res: Response): Promise<void> => {
-  const { id } = req.params;
-  await deleteProduct(parseInt(id, 10));
-  res.sendStatus(204);
+export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(req.params.id, 10);
+  if (!id) {
+    res.status(400).json({ error: 'Invalid ID' });
+    return;
+  }
+  try {
+    await ProductoModel.deleteProduct(id);
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
