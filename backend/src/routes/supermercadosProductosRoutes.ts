@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getSupermercadosProductos, getSupermercadoProductoByIds, createSupermercadoProducto, updateSupermercadoProducto } from '../controllers/supermercado_productoController';
+import { getSupermercadosProductos, getSupermercadoProductoByIds, createSupermercadoProducto, updateSupermercadoProducto } from '../controllers/supermercadoProductoController';
 
 const router = Router();
 

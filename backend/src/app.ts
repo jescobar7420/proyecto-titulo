@@ -6,7 +6,7 @@ import marcaRoutes from './routes/marcaRoutes';
 import tipoRoutes from './routes/tipoRoutes';
 import categoriaRoutes from './routes/categoriaRoutes';
 import supermercadoRoutes from './routes/supermercadoRoutes';
-import supermercados_productosRoutes from './routes/supermercados_productosRoutes';
+import supermercados_productosRoutes from './routes/supermercadosProductosRoutes';
 
 require('dotenv').config();
 

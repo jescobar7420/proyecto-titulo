@@ -80,3 +80,14 @@ export const deleteProduct = async (req: Request, res: Response): Promise<void> 
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getAvailableProductCards = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const limit = req.query.limit ? Number(req.query.limit) : 10;
+    const productCards = await ProductoModel.getAvailableProductCards(limit);
+    res.json(productCards);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
