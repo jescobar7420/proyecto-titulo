@@ -40,16 +40,18 @@ export const deleteProduct = async (id: number): Promise<void> => {
 export const getAvailableProductCards = async (limit: number): Promise<ProductCard[]> => {
   const query = `
       SELECT p.nombre, 
-             m.marca AS marca, 
-             t.tipo AS tipo_producto, 
-             sp.url_product, 
-             MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS mejor_precio
+        m.marca AS marca,
+        c.categoria AS categoria,
+        t.tipo AS tipo_producto, 
+        sp.url_product, 
+        MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS mejor_precio
       FROM productos p 
       JOIN marcas m ON p.marca = m.id_marca
       JOIN tipos t ON p.tipo_producto = t.id_tipo
       JOIN supermercados_productos sp ON p.id_producto = sp.id_producto
+      JOIN categorias AS c ON p.categoria = c.id_categoria
       WHERE sp.disponibilidad = 'Yes'
-      GROUP BY p.nombre, m.marca, t.tipo, sp.url_product
+      GROUP BY p.nombre, m.marca, c.categoria, t.tipo, sp.url_product
       LIMIT ${limit}
   `;
   const { rows } = await pool.query(query);
