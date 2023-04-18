@@ -6,18 +6,22 @@ import { MaterialModule } from '../material/material.module';
 import { ComparadorRoutingModule } from './comparador-routing.module';
 
 import { HomeComponent } from './pages/home/home.component';
-import { ProductoComponent } from './pages/producto/producto.component';
-import { BuscarComponent } from './pages/buscar/buscar.component';
-import { ListadoComponent } from './pages/listado/listado.component';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
+import { PriceComparisonComponent } from './pages/price-comparison/price-comparison.component';
+import { ProductCardComponent } from './pages/product-card/product-card.component';
+import { ProductListComponent } from './pages/product-list/product-list.component';
+import { NavbarComponent } from './pages/navbar/navbar.component';
 
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    ProductoComponent,
-    BuscarComponent,
-    ListadoComponent
+    ProductDetailsComponent,
+    PriceComparisonComponent,
+    ProductCardComponent,
+    ProductListComponent,
+    NavbarComponent
   ],
   imports: [
     CommonModule,

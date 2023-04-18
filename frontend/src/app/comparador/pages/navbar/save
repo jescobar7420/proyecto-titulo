@@ -1,0 +1,71 @@
+<mat-sidenav-container fullscreen>
+    <!-- Side nav -->
+    <mat-sidenav #sidenav mode="over">
+        <mat-toolbar>
+            <span>Menú</span>
+            
+            <span class="spacer"></span>
+            
+            <button mat-icon-button
+                    (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </mat-toolbar>
+    </mat-sidenav>
+    
+    <!-- Side nav content -->
+    <mat-sidenav-content>
+        <mat-toolbar color="primary" class="align-items-center">
+        
+            <!-- Button options -->
+            <button mat-icon-button
+                    (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            
+            <span class="spacer"></span>
+            
+            <!-- Search input -->
+            <div class="input-container">
+                <!-- <mat-form-field appearance="fill" class="navbar-search">
+                  <mat-label>Buscar</mat-label>
+                  <input matInput type="text" placeholder="Buscar">
+                  <button mat-button matSuffix>
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </mat-form-field> -->
+                
+                <div class="test">
+                    <mat-form-field appearance="fill" class="rounded">
+                        <mat-label>Busca aquí el producto</mat-label>
+                        <input matInput placeholder="Placeholder">
+                        <button mat-button matSuffix>
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+              </div>
+            
+            <span class="spacer"></span>
+            
+            <!-- Button login/register -->
+            <div>
+                <button mat-icon-button>
+                    <mat-icon>person</mat-icon>
+                </button>
+            </div>
+            
+          </mat-toolbar>
+    </mat-sidenav-content>
+    
+</mat-sidenav-container>
+
+
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+  };

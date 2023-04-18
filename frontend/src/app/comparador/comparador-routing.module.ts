@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
-import { ListadoComponent } from './pages/listado/listado.component';
+import { ProductListComponent } from './pages/product-list/product-list.component';
 
 const rutas: Routes = [
   {
     path: '',
     component: HomeComponent,
     children: [
-      { path: 'listado', component: ListadoComponent}
+      { path: 'product-list', component: ProductListComponent}
     ]
   }
 ];
