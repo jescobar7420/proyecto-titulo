@@ -10,9 +10,6 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
 import { PriceComparisonComponent } from './pages/price-comparison/price-comparison.component';
 import { ProductCardComponent } from './pages/product-card/product-card.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
-import { NavbarComponent } from './pages/navbar/navbar.component';
-
-
 
 @NgModule({
   declarations: [
@@ -20,8 +17,7 @@ import { NavbarComponent } from './pages/navbar/navbar.component';
     ProductDetailsComponent,
     PriceComparisonComponent,
     ProductCardComponent,
-    ProductListComponent,
-    NavbarComponent
+    ProductListComponent
   ],
   imports: [
     CommonModule,

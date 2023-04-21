@@ -4,7 +4,8 @@ import { getProducts,
          createProduct, 
          updateProduct, 
          deleteProduct,
-         getAvailableProductCards
+         getAvailableProductCards,
+         getProductCardById
 } from '../controllers/productController';
 
 const router = Router();
@@ -12,6 +13,7 @@ const router = Router();
 router.get('/productos', getProducts);
 router.get('/productos/:id', getProductById);
 router.get('/available-products', getAvailableProductCards);
+router.get('/product-card/:id', getProductCardById);
 
 router.post('/productos', createProduct);
 

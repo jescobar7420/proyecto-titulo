@@ -1,8 +1,9 @@
 export interface ProductCard {
+    id: number;
     nombre: string;
     marca: string;
     categoria: string;
-    tipo_producto: string;
-    url_product: string;
+    tipo: string;
+    imagen: string;
     precio: string;
 }

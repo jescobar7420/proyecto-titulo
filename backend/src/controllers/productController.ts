@@ -91,3 +91,22 @@ export const getAvailableProductCards = async (req: Request, res: Response): Pro
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 }
+
+export const getProductCardById = async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(req.params.id, 10);
+  if (!id) {
+    res.status(400).json({ error: 'Invalid ID' });
+    return;
+  }
+  try {
+    const producto = await ProductoModel.getProductCardById(id);
+    if (producto) {
+      res.status(200).json(producto);
+    } else {
+      res.status(404).json({ error: `Producto with ID ${id} not found` });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

@@ -1,1 +1,33 @@
-<p>product-card works!</p>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{producto.nombre}}</mat-card-title>
+        <mat-card-subtitle>{{producto.marca}}</mat-card-subtitle>
+    </mat-card-header>
+
+    <img mat-card-image [src]="producto.imagen">
+
+    <mat-card-content>
+        <div *ngIf="producto.categoria !== 'NA'">
+            <span>
+                <strong>Categoría: </strong> {{producto.categoria}}
+            </span>
+        </div>
+        <div *ngIf="producto.tipo != 'NA'">
+            <span>
+                <strong>Tipo de productoo: </strong> {{producto.tipo}}
+            </span>
+        </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+        <button mat-button 
+                color="warn"
+                >
+            Agregar
+        </button>
+    </mat-card-actions>
+
+</mat-card>
+
+
+

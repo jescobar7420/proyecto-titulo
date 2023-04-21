@@ -39,21 +39,43 @@ export const deleteProduct = async (id: number): Promise<void> => {
 
 export const getAvailableProductCards = async (limit: number): Promise<ProductCard[]> => {
   const query = `
-      SELECT p.nombre, 
+      SELECT p.id_producto,
+        p.nombre, 
         m.marca AS marca,
         c.categoria AS categoria,
-        t.tipo AS tipo_producto, 
-        sp.url_product, 
-        MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS mejor_precio
+        t.tipo AS tipo, 
+        MAX(p.imagen) AS imagen, 
+        MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio
       FROM productos p 
       JOIN marcas m ON p.marca = m.id_marca
       JOIN tipos t ON p.tipo_producto = t.id_tipo
       JOIN supermercados_productos sp ON p.id_producto = sp.id_producto
       JOIN categorias AS c ON p.categoria = c.id_categoria
       WHERE sp.disponibilidad = 'Yes'
-      GROUP BY p.nombre, m.marca, c.categoria, t.tipo, sp.url_product
+      GROUP BY p.id_producto, p.nombre, m.marca, c.categoria, t.tipo
       LIMIT ${limit}
   `;
   const { rows } = await pool.query(query);
   return rows;
+};
+
+export const getProductCardById = async (id: number): Promise<ProductCard> => {
+  const query = `
+      SELECT p.id_producto,
+        p.nombre, 
+        m.marca AS marca,
+        c.categoria AS categoria,
+        t.tipo AS tipo, 
+        MAX(p.imagen) AS imagen, 
+        MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio
+      FROM productos p 
+      JOIN marcas m ON p.marca = m.id_marca
+      JOIN tipos t ON p.tipo_producto = t.id_tipo
+      JOIN supermercados_productos sp ON p.id_producto = sp.id_producto
+      JOIN categorias AS c ON p.categoria = c.id_categoria
+      WHERE sp.disponibilidad = 'Yes' AND p.id_producto = ${id}
+      GROUP BY p.id_producto, p.nombre, m.marca, c.categoria, t.tipo
+    `;
+  const { rows } = await pool.query(query);
+  return rows[0];
 };

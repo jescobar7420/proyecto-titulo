@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment.prod'; 
+import { ProductCard } from '../interfaces/product-card';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,11 @@ export class ProductosService {
 
   constructor( private http: HttpClient ) { }
   
-  getProductos() {
-    return this.http.get(`${this.baseUrl}/ListProductos`);
+  getProductCardById(id: number):Observable<ProductCard> {
+    return this.http.get<ProductCard>(`${this.baseUrl}/api/product-card/${id}`);
+  }
+  
+  getAvailableProductCards(limit: number):Observable<ProductCard[]> {
+    return this.http.get<ProductCard[]>(`${this.baseUrl}/api/available-products`);
   }
 }

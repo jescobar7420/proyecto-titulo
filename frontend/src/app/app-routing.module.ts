@@ -9,7 +9,7 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule )
   },
   {
-    path: 'comparador',
+    path: 'home',
     loadChildren: () => import('./comparador/comparador.module').then( m => m.ComparadorModule)
   },
   {
