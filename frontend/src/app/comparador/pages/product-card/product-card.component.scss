@@ -1,0 +1,36 @@
+.icon-color {
+    color: #545454;
+}
+
+button {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.card-name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.card-brand {
+    font-size: 14px;
+    font-family: Roboto, sans-serif;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.card-price {
+    font-family: Roboto, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.text-oneline ::ng-deep * {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}

@@ -23,7 +23,8 @@ app.use('/api', supermercadoRoutes);
 app.use('/api', supermercados_productosRoutes);
 
 const PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const HOSTNAME_SV: string = process.env.HOSTNAME_SV || 'localhost'; 
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+  console.log(`Server listening on ${HOSTNAME_SV}:${PORT}`);
 });

@@ -45,14 +45,17 @@ export const getAvailableProductCards = async (limit: number): Promise<ProductCa
         c.categoria AS categoria,
         t.tipo AS tipo, 
         MAX(p.imagen) AS imagen, 
-        MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio
+        MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio,
+        (MIN(CASE WHEN sp.precio_oferta IS NOT NULL THEN 1 ELSE 0 END) = 1) AS flag_oferta,
+        s.logo AS logo_supermercado
       FROM productos p 
       JOIN marcas m ON p.marca = m.id_marca
       JOIN tipos t ON p.tipo_producto = t.id_tipo
       JOIN supermercados_productos sp ON p.id_producto = sp.id_producto
+      JOIN supermercados AS s ON s.id_supermercado = sp.id_supermercado
       JOIN categorias AS c ON p.categoria = c.id_categoria
       WHERE sp.disponibilidad = 'Yes'
-      GROUP BY p.id_producto, p.nombre, m.marca, c.categoria, t.tipo
+      GROUP BY p.id_producto, p.nombre, m.marca, c.categoria, t.tipo, s.logo
       LIMIT ${limit}
   `;
   const { rows } = await pool.query(query);
@@ -67,14 +70,17 @@ export const getProductCardById = async (id: number): Promise<ProductCard> => {
         c.categoria AS categoria,
         t.tipo AS tipo, 
         MAX(p.imagen) AS imagen, 
-        MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio
+        MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio,
+        (MIN(CASE WHEN sp.precio_oferta IS NOT NULL THEN 1 ELSE 0 END) = 1) AS flag_oferta,
+        s.logo AS logo_supermercado
       FROM productos p 
       JOIN marcas m ON p.marca = m.id_marca
       JOIN tipos t ON p.tipo_producto = t.id_tipo
       JOIN supermercados_productos sp ON p.id_producto = sp.id_producto
+      JOIN supermercados AS s ON s.id_supermercado = sp.id_supermercado
       JOIN categorias AS c ON p.categoria = c.id_categoria
       WHERE sp.disponibilidad = 'Yes' AND p.id_producto = ${id}
-      GROUP BY p.id_producto, p.nombre, m.marca, c.categoria, t.tipo
+      GROUP BY p.id_producto, p.nombre, m.marca, c.categoria, t.tipo, s.logo
     `;
   const { rows } = await pool.query(query);
   return rows[0];

@@ -1,33 +1,42 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>{{producto.nombre}}</mat-card-title>
-        <mat-card-subtitle>{{producto.marca}}</mat-card-subtitle>
-    </mat-card-header>
+<mat-card class="mat-elevation-z4">
+    
+    <!-- Card header -->
+    <mat-card-header class="text-oneline">
+        <img mat-card-avatar [src]="producto.logo_supermercado" alt="">
+        <mat-card-title class="card-name">{{ producto.nombre | titlecase }}</mat-card-title>
+        <mat-card-subtitle class="card-brand">{{ producto.marca | uppercase }}</mat-card-subtitle>
+    </mat-card-header>    
 
     <img mat-card-image [src]="producto.imagen">
 
     <mat-card-content>
-        <div *ngIf="producto.categoria !== 'NA'">
+        <p>
+            <strong> Categoría: </strong> {{ producto.categoria | titlecase }}
+            <br>
+            <strong> Tipo de producto: </strong> {{ producto.tipo | titlecase }}
+        </p>
+        <div class="card-price">
             <span>
-                <strong>Categoría: </strong> {{producto.categoria}}
-            </span>
-        </div>
-        <div *ngIf="producto.tipo != 'NA'">
-            <span>
-                <strong>Tipo de productoo: </strong> {{producto.tipo}}
+                $ {{ producto.precio | thousandsSeparator }}
             </span>
         </div>
     </mat-card-content>
 
-    <mat-card-actions align="end">
-        <button mat-button 
-                color="warn"
+    <mat-card-actions class="d-flex justify-content-center">
+        <button mat-icon-button
+                color="#545454"
+                >
+            <mat-icon class="icon-size icon-color"
+                      aria-label="Ver detalles"
+                      >
+                visibility
+            </mat-icon>
+        </button>
+        <button mat-raised-button 
+                color="primary"
                 >
             Agregar
         </button>
     </mat-card-actions>
 
 </mat-card>
-
-
-

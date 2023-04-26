@@ -1,17 +1,18 @@
 <mat-divider></mat-divider>
 <br>
 
-<div fxLayout="row wrap"
-     fxLayout.xs="column"
-     fxLayoutAlign="center"
-     fxLayoutGap="20px">
+<div class="content">
+    <div fxLayout="row wrap"
+         fxLayoutAlign="center"
+         fxLayoutGap="16px grid">
 
-    <div fxFlex="20"
-         fxFlex.lg="15"
-         fxFlex.sm="30"
-         *ngFor="let producto of productos">
-       
-        <app-product-card [producto]="producto"></app-product-card>
+        <div fxFlex="19%" 
+             fxFlex.xs="45%"
+             fxFlex.sm="32%"
+             *ngFor="let producto of productos">
+               
+            <app-product-card [producto]="producto"></app-product-card>
+        </div>
     </div>
 </div>
 

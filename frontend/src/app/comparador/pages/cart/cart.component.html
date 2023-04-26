@@ -1,0 +1,26 @@
+<button mat-fab 
+        class="floating-element" 
+        aria-label="cart"
+        color="warn"
+        (click)="cart_list.toggle()"
+        >
+    <mat-icon>shopping_cart</mat-icon>
+    <div id="badge_cart" matBadge="8"></div>
+</button>   
+
+<mat-sidenav-container>
+    <mat-sidenav #cart_list mode="over" [fixedInViewport]="true" position="end">
+        <mat-toolbar>
+            
+            <button mat-icon-button
+                    (click)="cart_list.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            
+            <span class="spacer"></span>
+            
+            <span>Tus productos</span>
+        
+        </mat-toolbar>
+    </mat-sidenav>
+</mat-sidenav-container>

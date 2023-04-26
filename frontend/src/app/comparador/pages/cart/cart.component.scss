@@ -1,0 +1,10 @@
+.floating-element {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+#badge_cart {
+    position: absolute;
+    transform: translate(3px, -25px);
+}

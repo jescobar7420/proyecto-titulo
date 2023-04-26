@@ -8,13 +8,15 @@
 // match the expected interface, even if the JSON is valid.
 
 export interface ProductCard {
-    id?:           number;
-    nombre?:       string;
-    marca?:        string;
-    categoria?:    string;
-    tipo?: string;
-    imagen?:       string;
-    precio?:       string;
+    id_producto?:       number;
+    nombre?:           string;
+    marca?:            string;
+    categoria?:        string;
+    tipo?:             string;
+    imagen?:           string;
+    precio?:           string;
+    flag_oferta?:       boolean;
+    logo_supermercado?: string;
 }
 
 // Converts JSON strings to/from your types
@@ -183,12 +185,14 @@ function r(name: string) {
 
 const typeMap: any = {
     "ProductCard": o([
-        { json: "id", js: "id", typ: u(undefined, 0) },
+        { json: "id_producto", js: "idProducto", typ: u(undefined, 0) },
         { json: "nombre", js: "nombre", typ: u(undefined, "") },
         { json: "marca", js: "marca", typ: u(undefined, "") },
         { json: "categoria", js: "categoria", typ: u(undefined, "") },
         { json: "tipo", js: "tipo", typ: u(undefined, "") },
         { json: "imagen", js: "imagen", typ: u(undefined, "") },
         { json: "precio", js: "precio", typ: u(undefined, "") },
+        { json: "flag_oferta", js: "flagOferta", typ: u(undefined, true) },
+        { json: "logo_supermercado", js: "logoSupermercado", typ: u(undefined, "") },
     ], false),
 };
