@@ -54,9 +54,10 @@ export const getAvailableProductCards = async (limit: number): Promise<ProductCa
       JOIN supermercados_productos sp ON p.id_producto = sp.id_producto
       JOIN supermercados AS s ON s.id_supermercado = sp.id_supermercado
       JOIN categorias AS c ON p.categoria = c.id_categoria
-      WHERE sp.disponibilidad = 'Yes'
+      WHERE sp.disponibilidad = 'Yes' AND p.id_producto != 13 AND p.id_producto != 21
       GROUP BY p.id_producto, p.nombre, m.marca, c.categoria, t.tipo, s.logo
       LIMIT ${limit}
+      OFFSET 10
   `;
   const { rows } = await pool.query(query);
   return rows;

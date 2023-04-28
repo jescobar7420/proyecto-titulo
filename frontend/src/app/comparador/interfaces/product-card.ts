@@ -8,15 +8,15 @@
 // match the expected interface, even if the JSON is valid.
 
 export interface ProductCard {
-    id_producto?:       number;
-    nombre?:           string;
-    marca?:            string;
-    categoria?:        string;
-    tipo?:             string;
-    imagen?:           string;
-    precio?:           string;
-    flag_oferta?:       boolean;
-    logo_supermercado?: string;
+    id_producto:       number;
+    nombre:           string;
+    marca:            string;
+    categoria:        string;
+    tipo:             string;
+    imagen:           string;
+    precio:           string;
+    flag_oferta:       boolean;
+    logo_supermercado: string;
 }
 
 // Converts JSON strings to/from your types

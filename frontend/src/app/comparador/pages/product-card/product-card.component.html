@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z4">
+<mat-card class="mat-elevation-z4" [id]="producto.id_producto">
     
     <!-- Card header -->
     <mat-card-header class="text-oneline">
@@ -34,6 +34,7 @@
         </button>
         <button mat-raised-button 
                 color="primary"
+                (click)="addToCart(producto.id_producto)"
                 >
             Agregar
         </button>
