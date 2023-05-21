@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import * as SupermercadoProductoModel from '../models/supermercadosProductos';
 import { SupermercadoProducto } from '../interfaces/SupermercadosProductos';
+import { ProductSupermarket } from '../interfaces/ProductSupermarket';
 
 export const getSupermercadosProductos = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -80,6 +81,25 @@ export const updateSupermercadoProducto = async (req: Request, res: Response): P
       res.status(200).json(updatedSupermercadoProducto);
     } else {
       res.status(404).json({ error: `SupermercadoProducto with IDs (${id_supermercado},${id_producto}) not found` });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getProductoAtSupermercado = async (req: Request, res: Response): Promise<void> => {
+  const id_producto = parseInt(req.params.id_producto, 10);
+  if (!id_producto) {
+    res.status(400).json({ error: 'Invalid IDs' });
+    return;
+  }
+  try {
+    const supermercadoProducto = await SupermercadoProductoModel.getProductoAtSupermercado(id_producto);
+    if (supermercadoProducto) {
+      res.status(200).json(supermercadoProducto);
+    } else {
+      res.status(404).json({ error: `SupermercadoProducto with IDs (${id_producto}) not found` });
     }
   } catch (error) {
     console.error(error);

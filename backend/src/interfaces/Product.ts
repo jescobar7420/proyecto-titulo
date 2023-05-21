@@ -1,11 +1,11 @@
 export interface Product {
-    id_producto: number;
-    categoria: number;
-    marca: number;
-    tipo_producto: number;
-    nombre: string;
-    imagen: string;
-    descripcion: string;
-    ingredientes: string;
+    id_producto?:   number;
+    categoria?:     string;
+    marca?:         string;
+    tipo_producto?: string;
+    nombre?:        string;
+    imagen?:        string;
+    descripcion?:   string;
+    ingredientes?:  string;
 }
   

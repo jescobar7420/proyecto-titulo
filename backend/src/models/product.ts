@@ -12,7 +12,20 @@ export const getProducts = async (limit?: number): Promise<Product[]> => {
 };
 
 export const getProductById = async (id: number): Promise<Product> => {
-  const { rows } = await pool.query('SELECT * FROM productos WHERE id_producto = $1', [id]);
+  const query = `SELECT p.id_producto, 
+                        c.categoria, 
+                        m.marca, 
+                        t.tipo AS tipo_producto, 
+                        p.nombre, 
+                        p.imagen, 
+                        p.descripcion, 
+                        p.ingredientes
+                 FROM productos AS p
+                 JOIN categorias AS c ON p.categoria = c.id_categoria
+                 JOIN marcas AS m ON p.marca = m.id_marca
+                 JOIN tipos AS t ON p.tipo_producto = t.id_tipo
+                 WHERE p.id_producto = $1;`;
+  const { rows } = await pool.query(query, [id]);
   return rows[0];
 };
 

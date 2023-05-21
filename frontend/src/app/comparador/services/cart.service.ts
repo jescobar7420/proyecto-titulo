@@ -28,7 +28,6 @@ export class CartService {
     this.cart.forEach((cartProduct: CartProduct) => {
       cartProduct.precio_total = parseFloat(cartProduct.precio) * cartProduct.cantidad;
     });
-
     
     localStorage.setItem('cart', JSON.stringify(this.cart));
     this.cartUpdated.next();

@@ -1,10 +1,61 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+
+import { CartService } from '../../services/cart.service';
+import { CartProduct } from '../../interfaces/cart-product';
+import { ProductosService } from '../../services/productos.service';
+import { Product } from '../../interfaces/producto';
+import { ProductSupermarket } from '../../interfaces/product-supermarket';
+
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
-export class ProductDetailsComponent {
-
+export class ProductDetailsComponent implements OnInit {
+  
+  producto!: Product;
+  ListaSupermercadosProducto: ProductSupermarket[] = [];
+  precio_producto!: string;
+  
+  constructor(private productosService: ProductosService,
+              private cartService: CartService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {}
+  
+  ngOnInit(): void {
+    /* Get product details */
+    this.activatedRoute.params
+    .pipe(
+      switchMap( ({ id }) => this.productosService.getProductById(id) )
+    )
+    .subscribe( producto => this.producto = producto );
+    
+    /* Get list of supermarkets */
+    this.activatedRoute.params
+    .pipe(
+      switchMap( ({ id }) => this.productosService.getProductAtSupermarket(id) )
+    )
+    .subscribe( productos => this.ListaSupermercadosProducto = productos );
+  }
+  
+  addToCart(id_producto: number) { 
+    if ( !this.ListaSupermercadosProducto[0].precio_oferta ) {
+      this.precio_producto = this.ListaSupermercadosProducto[0].precio_normal!;
+    } else {
+      this.precio_producto = this.ListaSupermercadosProducto[0].precio_oferta;
+    }
+    
+    const new_product: CartProduct = {
+      "id_producto": id_producto,
+      "nombre": this.producto.nombre!,
+      "marca": this.producto.marca!,
+      "imagen": this.producto.imagen!,
+      "precio": this.precio_producto,
+      "cantidad": 1
+    }
+    this.cartService.addToCart(new_product);
+  }
 }

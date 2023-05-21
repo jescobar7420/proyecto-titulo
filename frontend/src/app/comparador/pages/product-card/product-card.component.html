@@ -3,11 +3,17 @@
     <!-- Card header -->
     <mat-card-header class="text-oneline">
         <img mat-card-avatar [src]="producto.logo_supermercado" alt="">
-        <mat-card-title class="card-name">{{ producto.nombre | titlecase }}</mat-card-title>
+        <mat-card-title class="card-name"
+            (mouseenter)="isHovered = true"
+            (mouseleave)="isHovered = false"
+            [class.underlined]="isHovered"
+            [routerLink]="['/products', producto.id_producto]">
+                {{ producto.nombre | titlecase }}
+        </mat-card-title>
         <mat-card-subtitle class="card-brand">{{ producto.marca | uppercase }}</mat-card-subtitle>
     </mat-card-header>    
 
-    <img mat-card-image [src]="producto.imagen">
+    <img mat-card-image [src]="producto.imagen" [routerLink]="['/products', producto.id_producto]">
 
     <mat-card-content>
         <p>
@@ -25,6 +31,7 @@
     <mat-card-actions class="d-flex justify-content-center">
         <button mat-icon-button
                 color="#545454"
+                [routerLink]="['/products', producto.id_producto]"
                 >
             <mat-icon class="icon-size icon-color"
                       aria-label="Ver detalles"

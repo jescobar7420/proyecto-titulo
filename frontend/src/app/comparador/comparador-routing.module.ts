@@ -3,13 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 
 const rutas: Routes = [
   {
     path: '',
     component: HomeComponent,
     children: [
-      { path: 'featured-products', component: ProductListComponent}
+      { path: 'featured-products', component: ProductListComponent },
+      { path: ':id', component: ProductDetailsComponent },
+      { path: '**', redirectTo: 'featured-products' }
     ]
   }
 ];

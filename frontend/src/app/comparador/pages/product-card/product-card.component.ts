@@ -11,6 +11,7 @@ import { CartProduct } from '../../interfaces/cart-product';
 export class ProductCardComponent {
   
   @Input() producto!: ProductCard;
+  isHovered = false;
    
   constructor(private cartService: CartService) {}
  

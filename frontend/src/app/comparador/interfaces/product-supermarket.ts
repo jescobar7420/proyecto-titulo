@@ -1,32 +1,23 @@
-// To parse this data:
-//
-//   import { Convert, Product } from "./file";
-//
-//   const product = Convert.toProduct(json);
-//
-// These functions will throw an error if the JSON doesn't
-// match the expected interface, even if the JSON is valid.
-
-export interface Product {
-    id_producto?:   number;
-    categoria?:     string;
-    marca?:         string;
-    tipo_producto?: string;
-    nombre?:        string;
-    imagen?:        string;
-    descripcion?:   string;
-    ingredientes?:  string;
+export interface ProductSupermarket {
+    id_supermercado?:     number;
+    nombre_supermercado?: string;
+    logo_supermercado?:   string;
+    precio_normal?:       string;
+    precio_oferta?:       null;
+    disponibilidad?:      string;
+    url_producto?:        string;
+    fecha?:               Date;
 }
 
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
-    public static toProduct(json: string): Product {
-        return cast(JSON.parse(json), r("Product"));
+    public static toProductSupermarket(json: string): ProductSupermarket {
+        return cast(JSON.parse(json), r("ProductSupermarket"));
     }
 
-    public static productToJson(value: Product): string {
-        return JSON.stringify(uncast(value, r("Product")), null, 2);
+    public static productSupermarketToJson(value: ProductSupermarket): string {
+        return JSON.stringify(uncast(value, r("ProductSupermarket")), null, 2);
     }
 }
 
@@ -183,14 +174,14 @@ function r(name: string) {
 }
 
 const typeMap: any = {
-    "Product": o([
-        { json: "id_producto", js: "idProducto", typ: u(undefined, 0) },
-        { json: "categoria", js: "categoria", typ: u(undefined, "") },
-        { json: "marca", js: "marca", typ: u(undefined, "") },
-        { json: "tipo", js: "tipo", typ: u(undefined, "") },
-        { json: "nombre", js: "nombre", typ: u(undefined, "") },
-        { json: "imagen", js: "imagen", typ: u(undefined, "") },
-        { json: "descripcion", js: "descripcion", typ: u(undefined, "") },
-        { json: "ingredientes", js: "ingredientes", typ: u(undefined, "") },
+    "ProductSupermarket": o([
+        { json: "id_supermercado", js: "id_supermercado", typ: u(undefined, 0) },
+        { json: "nombre_supermercado", js: "nombre_supermercado", typ: u(undefined, "") },
+        { json: "logo_supemercado", js: "logo_supermercado", typ: u(undefined, "") },
+        { json: "precio_normal", js: "precio_normal", typ: u(undefined, "") },
+        { json: "precio_oferta", js: "precio_oferta", typ: u(undefined, null) },
+        { json: "disponibilidad", js: "disponibilidad", typ: u(undefined, "") },
+        { json: "url_product", js: "url_producto", typ: u(undefined, "") },
+        { json: "fecha", js: "fecha", typ: u(undefined, Date) },
     ], false),
 };
