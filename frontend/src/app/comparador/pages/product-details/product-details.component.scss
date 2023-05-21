@@ -32,15 +32,17 @@ mat-card {
     margin-top: 10px;
 }
 
-a:link, a:visited, a:active {
-    text-decoration:none;
+a:link,
+a:visited,
+a:active {
+    text-decoration: none;
     color: white;
 }
 
 .card {
     transition: border-color 0.3s ease;
 }
-  
+
 .logo-super {
     max-height: 200px;
 }

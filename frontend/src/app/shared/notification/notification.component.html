@@ -1,0 +1,9 @@
+<div class="notification">
+    <div class="mx-2">
+        <mat-card-subtitle class="notification-sucess">¡Producto agregado!</mat-card-subtitle>
+        <mat-card-title class="notification-name">{{ producto.nombre | titlecase }}</mat-card-title>
+    </div>
+    <button mat-icon-button color="warn" (click)="onTrashClick()">
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>

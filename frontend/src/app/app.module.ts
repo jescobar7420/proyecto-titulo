@@ -10,12 +10,14 @@ import { MaterialModule } from './material/material.module';
 
 import { ErrorPageComponent } from './shared/error-page/error-page.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { NotificationComponent } from './shared/notification/notification.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ErrorPageComponent,
-    NavbarComponent
+    NavbarComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
