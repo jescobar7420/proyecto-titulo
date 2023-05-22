@@ -1,8 +1,7 @@
-
-<mat-divider></mat-divider>
-<br>
-   
-<div class="content">
+ <div class="content" *ngIf="!loading; else loadingTemplate">
+    <mat-divider></mat-divider>
+    <br>
+ 
     <div fxLayout="row wrap"
          fxLayoutAlign="center"
          fxLayoutGap="16px grid">
@@ -16,3 +15,11 @@
         </div>
     </div>
 </div>
+
+<ng-template #loadingTemplate>
+    <div class="center">
+        <h2>Cargando productos...</h2>
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+</ng-template>
+

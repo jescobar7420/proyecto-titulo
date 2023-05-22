@@ -1,22 +1,15 @@
-// To parse this data:
-//
-//   import { Convert, ProductCard } from "./file";
-//
-//   const productCard = Convert.toProductCard(json);
-//
-// These functions will throw an error if the JSON doesn't
-// match the expected interface, even if the JSON is valid.
-
 export interface ProductCard {
     id_producto:       number;
-    nombre:           string;
-    marca:            string;
-    categoria:        string;
-    tipo:             string;
-    imagen:           string;
-    precio:           string;
+    id_supermercado:   number;
+    nombre:            string;
+    marca:             string;
+    categoria:         string;
+    tipo:              string;
+    imagen:            string;
+    precio:            string;
     flag_oferta:       boolean;
     logo_supermercado: string;
+    fecha:             Date;
 }
 
 // Converts JSON strings to/from your types
@@ -26,7 +19,7 @@ export class Convert {
         return cast(JSON.parse(json), r("ProductCard"));
     }
 
-    public static productCardToJson(value: ProductCard): string {
+    public static ProductCardToJson(value: ProductCard): string {
         return JSON.stringify(uncast(value, r("ProductCard")), null, 2);
     }
 }
@@ -185,14 +178,16 @@ function r(name: string) {
 
 const typeMap: any = {
     "ProductCard": o([
-        { json: "id_producto", js: "idProducto", typ: u(undefined, 0) },
+        { json: "id_producto", js: "id_producto", typ: u(undefined, 0) },
+        { json: "id_supermercado", js: "id_supermercado", typ: u(undefined, 0) },
         { json: "nombre", js: "nombre", typ: u(undefined, "") },
         { json: "marca", js: "marca", typ: u(undefined, "") },
         { json: "categoria", js: "categoria", typ: u(undefined, "") },
         { json: "tipo", js: "tipo", typ: u(undefined, "") },
         { json: "imagen", js: "imagen", typ: u(undefined, "") },
         { json: "precio", js: "precio", typ: u(undefined, "") },
-        { json: "flag_oferta", js: "flagOferta", typ: u(undefined, true) },
-        { json: "logo_supermercado", js: "logoSupermercado", typ: u(undefined, "") },
+        { json: "flag_oferta", js: "flag_oferta", typ: u(undefined, null) },
+        { json: "logo_supermercado", js: "logo_supermercado", typ: u(undefined, "") },
+        { json: "fecha", js: "fecha", typ: u(undefined, Date) },
     ], false),
 };

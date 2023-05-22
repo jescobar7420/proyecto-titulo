@@ -10,14 +10,22 @@ import { ProductosService } from '../../services/productos.service';
 export class ProductListComponent implements OnInit {
 
   productos: ProductCard[] = [];
+  loading: boolean = false;
   
   limit: number = 30;
   
   constructor( private productService: ProductosService ) {}
   
   ngOnInit(): void {
+    this.loading = true;
     this.productService.getAvailableProductCards(this.limit)
-      .subscribe( productos => this.productos = productos );
+      .subscribe( productos => {
+        this.productos = productos;
+        this.loading = false;
+      },
+      error => {
+        console.error(error);
+        this.loading = false;
+      });
   }
-
 }

@@ -52,26 +52,40 @@ export const deleteProduct = async (id: number): Promise<void> => {
 
 export const getAvailableProductCards = async (limit: number): Promise<ProductCard[]> => {
   const query = `
-      SELECT p.id_producto,
-        p.nombre, 
-        m.marca AS marca,
-        c.categoria AS categoria,
-        t.tipo AS tipo, 
-        MAX(p.imagen) AS imagen, 
-        MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio,
-        (MIN(CASE WHEN sp.precio_oferta IS NOT NULL THEN 1 ELSE 0 END) = 1) AS flag_oferta,
-        s.logo AS logo_supermercado
-      FROM productos p 
-      JOIN marcas m ON p.marca = m.id_marca
-      JOIN tipos t ON p.tipo_producto = t.id_tipo
-      JOIN supermercados_productos sp ON p.id_producto = sp.id_producto
-      JOIN supermercados AS s ON s.id_supermercado = sp.id_supermercado
-      JOIN categorias AS c ON p.categoria = c.id_categoria
-      WHERE sp.disponibilidad = 'Yes' AND p.id_producto != 13 AND p.id_producto != 21
-      GROUP BY p.id_producto, p.nombre, m.marca, c.categoria, t.tipo, s.logo
-      LIMIT ${limit}
-      OFFSET 10
-  `;
+          SELECT p.id_producto,
+                 sm.id_supermercado,
+                 p.nombre, 
+                 m.marca,
+                 c.categoria,
+                 t.tipo, 
+                 p.imagen, 
+                 sm_precio_min.precio_minimo AS precio,
+                 (sm_precio_min.precio_minimo = sm_precio_min.precio_oferta) AS flag_oferta,
+                 sm.logo AS logo_supermercado,
+                 sm_precio_min.fecha
+          FROM productos p 
+          JOIN marcas m ON p.marca = m.id_marca
+          JOIN categorias c ON p.categoria = c.id_categoria
+          JOIN tipos t ON p.tipo_producto = t.id_tipo
+          JOIN (
+            SELECT sp.id_producto,
+                   sp.id_supermercado,
+                   MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio_minimo,
+                   sp.precio_oferta,
+                   MAX(sp.fecha) AS fecha
+            FROM supermercados_productos sp
+            WHERE sp.disponibilidad = 'Yes'
+            GROUP BY sp.id_producto, sp.id_supermercado, sp.precio_oferta
+        ) sm_precio_min ON sm_precio_min.id_producto = p.id_producto
+        JOIN supermercados sm ON sm.id_supermercado = sm_precio_min.id_supermercado
+        WHERE sm_precio_min.precio_minimo IN (
+            SELECT MIN(COALESCE(sp2.precio_oferta, sp2.precio_normal))
+            FROM supermercados_productos sp2
+            WHERE sp2.id_producto = p.id_producto AND sp2.disponibilidad = 'Yes'
+        )
+        ORDER BY p.id_producto
+        LIMIT ${limit} 
+        OFFSET 10`;
   const { rows } = await pool.query(query);
   return rows;
 };
@@ -79,23 +93,39 @@ export const getAvailableProductCards = async (limit: number): Promise<ProductCa
 export const getProductCardById = async (id: number): Promise<ProductCard> => {
   const query = `
       SELECT p.id_producto,
-        p.nombre, 
-        m.marca AS marca,
-        c.categoria AS categoria,
-        t.tipo AS tipo, 
-        MAX(p.imagen) AS imagen, 
-        MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio,
-        (MIN(CASE WHEN sp.precio_oferta IS NOT NULL THEN 1 ELSE 0 END) = 1) AS flag_oferta,
-        s.logo AS logo_supermercado
+             min_price.id_supermercado,
+             p.nombre, 
+             m.marca AS marca,
+             c.categoria AS categoria,
+             t.tipo AS tipo, 
+             MAX(p.imagen) AS imagen, 
+             min_price.precio,
+             min_price.flag_oferta,
+             min_price.logo_supermercado,
+             max_date.fecha_reciente
       FROM productos p 
       JOIN marcas m ON p.marca = m.id_marca
       JOIN tipos t ON p.tipo_producto = t.id_tipo
-      JOIN supermercados_productos sp ON p.id_producto = sp.id_producto
-      JOIN supermercados AS s ON s.id_supermercado = sp.id_supermercado
       JOIN categorias AS c ON p.categoria = c.id_categoria
-      WHERE sp.disponibilidad = 'Yes' AND p.id_producto = ${id}
-      GROUP BY p.id_producto, p.nombre, m.marca, c.categoria, t.tipo, s.logo
-    `;
+      JOIN (
+        SELECT sp.id_producto,
+              s.id_supermercado,
+              MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio,
+              (MIN(CASE WHEN sp.precio_oferta IS NOT NULL THEN 1 ELSE 0 END) = 1) AS flag_oferta,
+              s.logo AS logo_supermercado
+        FROM supermercados_productos sp
+        JOIN supermercados s ON s.id_supermercado = sp.id_supermercado
+        WHERE sp.disponibilidad = 'Yes'
+        GROUP BY sp.id_producto, s.id_supermercado
+      ) AS min_price ON min_price.id_producto = p.id_producto
+      JOIN (
+        SELECT sp.id_producto, MAX(sp.fecha) AS fecha_reciente
+        FROM supermercados_productos sp
+        WHERE sp.disponibilidad = 'Yes'
+        GROUP BY sp.id_producto
+      ) AS max_date ON max_date.id_producto = p.id_producto
+      WHERE p.id_producto = ${id}
+      GROUP BY p.id_producto, min_price.id_supermercado, p.nombre, m.marca, c.categoria, t.tipo, min_price.precio, min_price.flag_oferta, min_price.logo_supermercado, max_date.fecha_reciente`;
   const { rows } = await pool.query(query);
   return rows[0];
 };
