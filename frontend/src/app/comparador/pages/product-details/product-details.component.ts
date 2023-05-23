@@ -8,7 +8,7 @@ import { ProductosService } from '../../services/productos.service';
 import { Product } from '../../interfaces/producto';
 import { ProductSupermarket } from '../../interfaces/product-supermarket';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationComponent } from 'src/app/shared/notification/notification.component'; // Asegúrate de que la ruta sea correcta
+import { NotificationComponent } from 'src/app/comparador/notification/notification.component'; // Asegúrate de que la ruta sea correcta
 
 @Component({
   selector: 'app-product-details',
@@ -20,6 +20,8 @@ export class ProductDetailsComponent implements OnInit {
   producto!: Product;
   ListaSupermercadosProducto: ProductSupermarket[] = [];
   precio_producto!: string;
+  loadingDetails: boolean = false;
+  loadingSuper: boolean = false;
 
   constructor(private productosService: ProductosService,
     private cartService: CartService,
@@ -28,19 +30,36 @@ export class ProductDetailsComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.loadingDetails = true;
+    this.loadingSuper = true;
+  
     /* Get product details */
     this.activatedRoute.params
       .pipe(
         switchMap(({ id }) => this.productosService.getProductById(id))
       )
-      .subscribe(producto => this.producto = producto);
+      .subscribe(producto => {
+        this.producto = producto;
+        this.loadingDetails = false;
+      },
+      error => {
+        console.error(error);
+        this.loadingDetails = false;
+      });
 
     /* Get list of supermarkets */
     this.activatedRoute.params
       .pipe(
         switchMap(({ id }) => this.productosService.getProductAtSupermarket(id))
       )
-      .subscribe(productos => this.ListaSupermercadosProducto = productos);
+      .subscribe(productos => {
+        this.ListaSupermercadosProducto = productos;
+        this.loadingSuper = false;
+      },
+      error => {
+        console.error(error);
+        this.loadingSuper = false;
+      });
   }
 
   addToCart(id_producto: number) {

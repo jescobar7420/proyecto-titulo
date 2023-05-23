@@ -3,7 +3,7 @@ import { ProductCard } from '../../interfaces/product-card';
 import { CartService } from '../../services/cart.service';
 import { CartProduct } from '../../interfaces/cart-product';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationComponent } from 'src/app/shared/notification/notification.component'; // Aseg
+import { NotificationComponent } from 'src/app/comparador/notification/notification.component'; // Aseg
 
 @Component({
   selector: 'app-product-card',
@@ -37,7 +37,7 @@ export class ProductCardComponent {
               nombre: nombreProducto },
       duration: 3000,
       horizontalPosition: 'center',
-      verticalPosition: 'bottom',
+      verticalPosition: 'bottom'
     });
   }
 }

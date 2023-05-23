@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
+import { ProductFilterComponent } from './pages/product-filter/product-filter.component';
 
 const rutas: Routes = [
   {
@@ -11,6 +12,7 @@ const rutas: Routes = [
     component: HomeComponent,
     children: [
       { path: 'featured-products', component: ProductListComponent },
+      { path: 'search-filter', component: ProductFilterComponent },
       { path: ':id', component: ProductDetailsComponent },
       { path: '**', redirectTo: 'featured-products' }
     ]

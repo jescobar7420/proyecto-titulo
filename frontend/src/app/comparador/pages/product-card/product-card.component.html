@@ -4,10 +4,10 @@
     <mat-card-header class="text-oneline">
         <img mat-card-avatar src="../../../../assets/{{ producto.id_supermercado }}.png" alt="">
         <mat-card-title class="card-name"
-            (mouseenter)="isHovered = true"
-            (mouseleave)="isHovered = false"
-            [class.underlined]="isHovered"
-            [routerLink]="['/products', producto.id_producto]">
+                        (mouseenter)="isHovered = true"
+                        (mouseleave)="isHovered = false"
+                        [class.underlined]="isHovered"
+                        [routerLink]="['/products', producto.id_producto]">
                 {{ producto.nombre | titlecase }}
         </mat-card-title>
         <mat-card-subtitle class="card-brand">{{ producto.marca | uppercase }}</mat-card-subtitle>

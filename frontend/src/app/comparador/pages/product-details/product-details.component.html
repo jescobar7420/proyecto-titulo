@@ -1,165 +1,174 @@
-<div fxLayout="column" 
-     fxLayoutAlign="start stretch" 
-     fxLayoutGap="16px"
-     class="container-detalles container-detalles-no-margin">
-
-    <!-- Información del producto -->
-    <div fxLayout="row" 
-         fxLayoutAlign="start center" 
-         class="py-3">
-         
-        <div>
-            <h2 id="name-title" class="adjusted-line-height">{{ producto.nombre | titlecase }}</h2>
-            <h3 id="brand-title" class="adjusted-line-height">{{ producto.marca | uppercase }}</h3>
-        </div>
-        <div fxFlex></div>
-    </div>
-
+<div class="content" *ngIf="!loadingDetails && !loadingSuper; else loadingTemplate">
     <div fxLayout="column" 
-         fxLayout.gt-sm="row" 
-         fxLayoutGap="16px" 
-         fxLayoutWrap 
-         class="d-flex align-items-stretch">
-
-        <div fxFlex="100%" 
-             fxFlex.gt-sm="25%">
-
-            <mat-card class="h-100">
-                <img mat-card-image [src]="producto.imagen">
-            </mat-card>
-        </div>
-
-        <div fxFlex="100%" 
-             fxFlex.gt-sm="75%" 
-             class="d-flex flex-column justify-content-between">
-
-            <mat-card class="h-100">
-                <mat-card-content>
-                    <h2 id="info-title"><strong>INFORMACIÓN DEL PRODUCTO</strong></h2>
-                    <mat-divider></mat-divider>
-
-                    <ul class="list-unstyled">
-                        <li class="list-group-item">
-                            <strong>Nombre:</strong>
-                            {{ producto.nombre | titlecase }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Marca:</strong>
-                            {{ producto.marca | titlecase }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Categoría:</strong>
-                            {{ producto.categoria | titlecase }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Tipo de producto:</strong>
-                            {{ producto.tipo_producto | titlecase }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Descripción:</strong>
-                            {{ producto.descripcion }}
-                        </li>
-                        <li class="list-group-item" *ngIf="producto.ingredientes != 'NA'">
-                            <strong>Ingredientes:</strong>
-                            {{ producto.ingredientes }}
-                        </li>
-                    </ul>
-                </mat-card-content>
-
-                <div class="text-center mt-auto">
-                    <button mat-raised-button 
-                            id="add_button" 
-                            color="primary" 
-                            class="btn-lg"
-                            (click)="addToCart(producto.id_producto!)">
-                        Agregar
-                    </button>
-                </div>
-            </mat-card>
-        </div>
-    </div>
-
-    <!-- List of Supermarkets availables -->
-    <div fxLayout="row" 
-         fxLayout.xs="column" 
-         fxLayout.sm="column" 
-         fxLayoutAlign="center stretch" 
+         fxLayoutAlign="start stretch" 
          fxLayoutGap="16px"
-         fxLayoutWrap class="mt-3">
+         class="container-detalles container-detalles-no-margin">
 
-        <div *ngFor="let supermercado of ListaSupermercadosProducto" class="mb-3 card">
-
-            <mat-card>
-                
-                <mat-card-content class="no-side-padding">
+        <!-- Información del producto -->
+        <div fxLayout="row" 
+             fxLayoutAlign="start center" 
+             class="py-3">
+             
+            <div>
+                <h2 id="name-title" class="adjusted-line-height">{{ producto.nombre | titlecase }}</h2>
+                <h3 id="brand-title" class="adjusted-line-height">{{ producto.marca | uppercase }}</h3>
+            </div>
+            <div fxFlex></div>
+        </div>
+    
+        <div fxLayout="column" 
+             fxLayout.gt-sm="row" 
+             fxLayoutGap="16px" 
+             fxLayoutWrap 
+             class="d-flex align-items-stretch">
+    
+            <div fxFlex="100%" 
+                 fxFlex.gt-sm="25%">
+    
+                <mat-card class="h-100">
+                    <img mat-card-image [src]="producto.imagen">
+                </mat-card>
+            </div>
+    
+            <div fxFlex="100%" 
+                 fxFlex.gt-sm="75%" 
+                 class="d-flex flex-column justify-content-between">
+    
+                <mat-card class="h-100">
+                    <mat-card-content>
+                        <h2 id="info-title"><strong>INFORMACIÓN DEL PRODUCTO</strong></h2>
+                        <mat-divider></mat-divider>
+    
+                        <ul class="list-unstyled">
+                            <li class="list-group-item">
+                                <strong>Nombre:</strong>
+                                {{ producto.nombre | titlecase }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Marca:</strong>
+                                {{ producto.marca | titlecase }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Categoría:</strong>
+                                {{ producto.categoria | titlecase }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Tipo de producto:</strong>
+                                {{ producto.tipo_producto | titlecase }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Descripción:</strong>
+                                {{ producto.descripcion }}
+                            </li>
+                            <li class="list-group-item" *ngIf="producto.ingredientes != 'NA'">
+                                <strong>Ingredientes:</strong>
+                                {{ producto.ingredientes }}
+                            </li>
+                        </ul>
+                    </mat-card-content>
+    
+                    <div class="text-center mt-auto">
+                        <button mat-raised-button 
+                                id="add_button" 
+                                color="primary" 
+                                class="btn-lg"
+                                (click)="addToCart(producto.id_producto!)">
+                            Agregar
+                        </button>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    
+        <!-- List of Supermarkets availables -->
+        <div fxLayout="row" 
+             fxLayout.xs="column" 
+             fxLayout.sm="column" 
+             fxLayoutAlign="center stretch" 
+             fxLayoutGap="16px"
+             fxLayoutWrap class="mt-3">
+    
+            <div *ngFor="let supermercado of ListaSupermercadosProducto" class="mb-3 card">
+    
+                <mat-card>
                     
-                    <div fxLayout="column" 
-                         fxLayoutAlign="stretch">
+                    <mat-card-content class="no-side-padding">
                         
-                        <div fxLayout="row">
-
-                            <!-- Logo Supermarket -->
-                            <div fxFlex="40" 
-                                 fxLayout="column" 
-                                 fxLayoutAlign="center center"
-                                 style="border-right: 1px solid #ccc;">
-
-                                <div fxFlex="100" fxLayoutAlign="center center" class="mx-2">
-
-                                    <a [href]="supermercado.url_producto">
-                                        <img src="../../../../assets/{{supermercado.id_supermercado}}.png"
-                                            class="img-fluid logo-super">
-                                    </a>
+                        <div fxLayout="column" 
+                             fxLayoutAlign="stretch">
+                            
+                            <div fxLayout="row">
+    
+                                <!-- Logo Supermarket -->
+                                <div fxFlex="40" 
+                                     fxLayout="column" 
+                                     fxLayoutAlign="center center"
+                                     style="border-right: 1px solid #ccc;">
+    
+                                    <div fxFlex="100" fxLayoutAlign="center center" class="mx-2">
+    
+                                        <a [href]="supermercado.url_producto">
+                                            <img src="../../../../assets/{{supermercado.id_supermercado}}.png"
+                                                class="img-fluid logo-super">
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <!-- Prices -->
-                            <div fxFlex="60" 
-                                 fxLayout="row" 
-                                 fxLayoutAlign="start center">
-
-                                <div fxLayout="column" 
-                                     fxFlex="100" 
-                                     class="mx-2">
-                                     
-                                    <div fxLayout="row" 
-                                         fxFlex="50" 
-                                         class="my-1">
+    
+                                <!-- Prices -->
+                                <div fxFlex="60" 
+                                     fxLayout="row" 
+                                     fxLayoutAlign="start center">
+    
+                                    <div fxLayout="column" 
+                                         fxFlex="100" 
+                                         class="mx-2">
                                          
-                                        <ng-container *ngIf="supermercado.precio_oferta != null; else noOferta">
-                                            <div fxFlex="50">
-                                                <mat-card-subtitle>Precio Oferta</mat-card-subtitle>
-                                                <mat-card-title>$ {{ supermercado.precio_oferta! | thousandsSeparator }}</mat-card-title>
-                                            </div>
-
-                                            <div fxFlex="50">
-                                                <mat-card-subtitle>Precio Normal</mat-card-subtitle>
-                                                <mat-card-title>$ {{ supermercado.precio_normal | thousandsSeparator }}</mat-card-title>
-                                            </div>
-                                        </ng-container>
-
-                                        <ng-template #noOferta>
-                                            <div fxFlex="100">
-                                                <mat-card-subtitle>Precio Normal</mat-card-subtitle>
-                                                <mat-card-title>$ {{ supermercado.precio_normal | thousandsSeparator }}</mat-card-title>
-                                            </div>
-                                        </ng-template>
-
+                                        <div fxLayout="row" 
+                                             fxFlex="50" 
+                                             class="my-1">
+                                             
+                                            <ng-container *ngIf="supermercado.precio_oferta != null; else noOferta">
+                                                <div fxFlex="50">
+                                                    <mat-card-subtitle>Precio Oferta</mat-card-subtitle>
+                                                    <mat-card-title>$ {{ supermercado.precio_oferta! | thousandsSeparator }}</mat-card-title>
+                                                </div>
+    
+                                                <div fxFlex="50">
+                                                    <mat-card-subtitle>Precio Normal</mat-card-subtitle>
+                                                    <mat-card-title>$ {{ supermercado.precio_normal | thousandsSeparator }}</mat-card-title>
+                                                </div>
+                                            </ng-container>
+    
+                                            <ng-template #noOferta>
+                                                <div fxFlex="100">
+                                                    <mat-card-subtitle>Precio Normal</mat-card-subtitle>
+                                                    <mat-card-title>$ {{ supermercado.precio_normal | thousandsSeparator }}</mat-card-title>
+                                                </div>
+                                            </ng-template>
+    
+                                        </div>
+                                        
+                                        <mat-divider></mat-divider>
+                                        
+                                        <div fxFlex="50" class="my-2">
+                                            <mat-card-subtitle>Stock</mat-card-subtitle>
+                                            <mat-card-title>{{ supermercado.disponibilidad }}</mat-card-title>
+                                        </div>
+                                        
                                     </div>
-                                    
-                                    <mat-divider></mat-divider>
-                                    
-                                    <div fxFlex="50" class="my-2">
-                                        <mat-card-subtitle>Stock</mat-card-subtitle>
-                                        <mat-card-title>{{ supermercado.disponibilidad }}</mat-card-title>
-                                    </div>
-                                    
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </mat-card-content>
-            </mat-card>
+                    </mat-card-content>
+                </mat-card>
+            </div>
         </div>
     </div>
 </div>
+
+<ng-template #loadingTemplate>
+    <div class="center">
+        <h2>Cargando producto...</h2>
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+</ng-template>
