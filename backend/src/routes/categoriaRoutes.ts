@@ -10,7 +10,7 @@ import {
 const router = Router();
 
 router.get('/categorias', getCategorias);
-router.get('/categorias/:id', getCategoriaById);
+router.get('/categoria/:id', getCategoriaById);
 router.post('/categorias', createCategoria);
 router.put('/categorias/:id', updateCategoria);
 router.delete('/categorias/:id', deleteCategoriaById);

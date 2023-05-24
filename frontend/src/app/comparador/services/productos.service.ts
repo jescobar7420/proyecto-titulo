@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment.prod';
 import { ProductCard } from '../interfaces/product-card';
 import { Product } from '../interfaces/producto';
 import { ProductSupermarket } from '../interfaces/product-supermarket';
+import { Category } from '../interfaces/category';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,10 @@ export class ProductosService {
     return this.http.get<ProductCard>(`${this.baseUrl}/api/product-card/${id}`);
   }
   
-  getAvailableProductCards(limit: number):Observable<ProductCard[]> {
+  getAvailableProductCards(limit?: number):Observable<ProductCard[]> {
+    if (limit) {
+      return this.http.get<ProductCard[]>(`${this.baseUrl}/api/available-products?limit=${limit}`);
+    }
     return this.http.get<ProductCard[]>(`${this.baseUrl}/api/available-products`);
   }
   
@@ -30,5 +34,12 @@ export class ProductosService {
   
   getProductAtSupermarket(id_product: number):Observable<ProductSupermarket[]> {
     return this.http.get<ProductSupermarket[]>(`${this.baseUrl}/api/supermercados-productos/${id_product}`);
+  }
+  
+  getCategories(limit?: number):Observable<Category[]> {
+    if (limit) {
+      return this.http.get<Category[]>(`${this.baseUrl}/api/categorias?limit=${limit}`);
+    }
+    return this.http.get<Category[]>(`${this.baseUrl}/api/categorias`);
   }
 }

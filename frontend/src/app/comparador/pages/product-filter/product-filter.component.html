@@ -1,1 +1,113 @@
-<p>product-filter works!</p>
+<div class="content py-3">
+
+  <div fxLayout="row" fxLayoutGap="10px" class="container-filters">
+
+    <div fxLayout="column" fxFlex="25">
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Filtros</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content fxLayout="column">
+
+          <!-- Supermercados -->
+          <div fxFlex>
+            <h3>Supermercados:</h3>
+            <div>
+              <mat-checkbox [formControl]="supermercados" value="2" color="primary">
+                Jumbo
+              </mat-checkbox>
+            </div>
+            <div>
+              <mat-checkbox [formControl]="supermercados" value="1" color="primary">
+                Santa Isabel
+              </mat-checkbox>
+            </div>
+          </div>
+
+
+          <!-- Rango de precios -->
+          <div fxFlex>
+            <mat-slider min="0" max="1000000" step="1" thumbLabel [formControl]="precioRange"></mat-slider>
+          </div>
+
+          <!-- Categorías -->
+          <div fxFlex>
+            <mat-form-field>
+              <mat-label>Categorías</mat-label>
+              <mat-select [formControl]="categorias" multiple>
+                <mat-option *ngFor="let categoria of categoriasList" [value]="categoria">
+                  {{ categoria.categoria | capitalizeFirstLetter }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Marcas -->
+          <div fxFlex>
+            <mat-form-field>
+              <mat-label>Marcas</mat-label>
+              <mat-select [formControl]="marcas" multiple [disabled]="!categorias.value?.length">
+                <mat-option *ngFor="let marca of marcasList" [value]="marca">
+
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Tipos -->
+          <div fxFlex>
+            <mat-form-field>
+              <mat-label>Tipos</mat-label>
+              <mat-select [formControl]="tipos" multiple [disabled]="!categorias.value?.length">
+                <mat-option *ngFor="let tipo of tiposList" [value]="tipo">
+
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Ordenar -->
+          <div fxFlex>
+            <h3>Ordenar por:</h3>
+            <mat-radio-group aria-label="Ordenar por" [formControl]="orden">
+              <mat-list>
+                <mat-list-item>
+                  <mat-radio-button value="menorPrecio">Menor a mayor precio</mat-radio-button>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-radio-button value="mayorPrecio">Mayor a menor precio</mat-radio-button>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-radio-button value="az">A-Z</mat-radio-button>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-radio-button value="za">Z-A</mat-radio-button>
+                </mat-list-item>
+              </mat-list>
+            </mat-radio-group>
+          </div>
+
+
+        </mat-card-content>
+
+        <mat-card-actions class="d-flex justify-content-center">
+          <button mat-raised-button color="primary">
+            Filtrar
+          </button>
+          <button mat-icon-button color="warn" class="mx-2">
+            <mat-icon class="icon-size icon-color" aria-label="Ver detalles">
+              refresh
+            </mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div fxLayout="column" fxFlex="75" style="background-color: green;">
+
+      <span>hola 2</span>
+    </div>
+  </div>
+</div>

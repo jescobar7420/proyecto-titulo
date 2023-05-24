@@ -3,7 +3,8 @@ import * as CategoriaModel from '../models/categoria';
 
 export const getCategorias = async (req: Request, res: Response): Promise<void> => {
   try {
-    const categorias = await CategoriaModel.getCategorias();
+    const limit = parseInt(req.query.limit as string) || undefined;
+    const categorias = await CategoriaModel.getCategorias(limit);
     res.status(200).json(categorias);
   } catch (error) {
     console.error(error);
