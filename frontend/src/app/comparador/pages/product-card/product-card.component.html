@@ -2,7 +2,7 @@
     
     <!-- Card header -->
     <mat-card-header class="text-oneline">
-        <img mat-card-avatar src="../../../../assets/{{ producto.id_supermercado }}.png" alt="">
+        <img mat-card-avatar src="assets/{{ producto.id_supermercado }}.png" alt="">
         <mat-card-title class="card-name"
                         (mouseenter)="isHovered = true"
                         (mouseleave)="isHovered = false"
@@ -29,22 +29,17 @@
     </mat-card-content>
 
     <mat-card-actions class="d-flex justify-content-center">
-        <button mat-icon-button
+        <button mat-icon-button 
                 color="#545454"
-                [routerLink]="['/products', producto.id_producto]"
-                >
-            <mat-icon class="icon-size icon-color"
-                      aria-label="Ver detalles"
-                      >
-                visibility
-            </mat-icon>
+                [routerLink]="['/products', producto.id_producto]">
+            <mat-icon class="icon-size icon-color" 
+                      aria-label="Ver detalles">visibility</mat-icon>
         </button>
         <button mat-raised-button 
                 color="primary"
-                (click)="addToCart(producto.id_producto)"
-                >
+                (click)="addToCart(producto.id_producto)">
+            <mat-icon>add</mat-icon>
             Agregar
         </button>
     </mat-card-actions>
-
 </mat-card>

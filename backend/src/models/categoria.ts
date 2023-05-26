@@ -2,7 +2,9 @@ import pool from '../database/pool';
 import { Categoria } from '../interfaces/Categoria';
 
 export const getCategorias = async (limit?: number): Promise<Categoria[]> => {
-  let query = 'SELECT * FROM categorias';
+  let query = `SELECT id_categoria, categoria 
+               FROM categorias AS c
+               ORDER BY c.categoria`;
   if (limit) {
     query += ` LIMIT ${limit}`;
   }

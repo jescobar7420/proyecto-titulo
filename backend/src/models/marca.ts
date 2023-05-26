@@ -29,3 +29,24 @@ export const deleteMarcaById = async (id: number): Promise<boolean> => {
   const result = await pool.query('DELETE FROM marcas WHERE id_marca = $1', [id]);
   return result.rowCount > 0;
 };
+
+export const getMarcaByCategoryType = async (id_category: string | null, id_tipo: string | null): Promise<Marca[]> => {
+  let query = `
+    SELECT DISTINCT m.id_marca, m.marca
+    FROM productos AS p
+    JOIN marcas AS m ON m.id_marca = p.marca
+    WHERE 1 = 1
+  `;
+
+  if (id_category) {
+    query += ` AND p.categoria IN (${id_category})`;
+  }
+
+  if (id_tipo) {
+    query += ` AND p.tipo_producto IN (${id_tipo})`;
+  }
+
+  query += ' ORDER BY m.marca ASC';
+  const { rows } = await pool.query(query);
+  return rows;
+};

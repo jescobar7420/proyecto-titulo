@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 import { Category } from '../../interfaces/category';
 import { ProductosService } from '../../services/productos.service';
@@ -23,13 +24,22 @@ export class ProductFilterComponent implements OnInit {
   categoriasList: Category[] = [];
   marcasList = [];
   tiposList = [];
+  selected = 'option2';
   
   constructor(private productService: ProductosService) {}
   
   ngOnInit(): void {
     this.productService.getCategories()
       .subscribe(categoria => this.categoriasList = categoria);
+      
+      this.categorias.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe(categoriasSeleccionadas => {
+        if (categoriasSeleccionadas.length > 0) {
+          console.log(categoriasSeleccionadas.join(', '));
+          // Más código aquí...
+        }
+      });
   }
-
 
 }

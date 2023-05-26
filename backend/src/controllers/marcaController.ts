@@ -83,3 +83,16 @@ export const deleteMarcaById = async (req: Request, res: Response): Promise<void
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getMarcaByCategoryType = async (req: Request, res: Response): Promise<void> => {
+  const id_category = typeof req.query.id_category === 'string' ? req.query.id_category : null;
+  const id_tipo = typeof req.query.id_tipo === 'string' ? req.query.id_tipo : null;
+
+  try {
+    const marcas = await MarcaModel.getMarcaByCategoryType(id_category, id_tipo);
+    res.status(200).json(marcas);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
