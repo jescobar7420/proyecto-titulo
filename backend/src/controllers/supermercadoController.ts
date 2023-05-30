@@ -3,7 +3,8 @@ import * as SupermercadoModel from '../models/supermercado';
 
 export const getSupermercados = async (req: Request, res: Response): Promise<void> => {
   try {
-    const supermercados = await SupermercadoModel.getSupermercados();
+    const limit = parseInt(req.query.limit as string) || undefined;
+    const supermercados = await SupermercadoModel.getSupermercados(limit);
     res.status(200).json(supermercados);
   } catch (error) {
     console.error(error);

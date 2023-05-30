@@ -5,15 +5,16 @@ import {
     createMarca, 
     updateMarca, 
     deleteMarcaById,
-    getMarcaByCategoryType
+    getBrandsByCategoryType,
+    getBrandsByTypes
 } from '../controllers/marcaController';
 
 const router = Router();
 
 router.get('/marcas', getMarcas);
 router.get('/marcas/:id', getMarcaById);
-router.get('/marcas-filter', getMarcaByCategoryType);
-
+router.get('/filter-brand', getBrandsByCategoryType);
+router.get('/filter-brands-types', getBrandsByTypes);
 router.post('/marcas', createMarca);
 router.put('/marcas/:id', updateMarca);
 router.delete('/marcas/:id', deleteMarcaById);

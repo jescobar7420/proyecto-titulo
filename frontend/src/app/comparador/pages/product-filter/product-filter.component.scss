@@ -8,5 +8,15 @@ mat-slider {
 
 .mat-card {
     margin-bottom: 200px;
-  }
-  
+}
+
+.range-prices {
+    display: flex; 
+    justify-content: space-between;
+    font-weight: 450;
+    padding-bottom: 15px;
+}
+
+.input-range {
+    padding-right: 15px;
+}

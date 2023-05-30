@@ -5,8 +5,8 @@
     <div fxLayout="column" fxFlex="25">
 
       <mat-card>
-        <mat-card-header>
-          <mat-card-title>Filtros</mat-card-title>
+        <mat-card-header class="py-3">
+          <mat-card-title>Filtrar búsqueda</mat-card-title>
         </mat-card-header>
 
         <mat-card-content fxLayout="column">
@@ -23,68 +23,81 @@
             </mat-form-field>
           </div>
           
-          <!-- Marcas -->
-          <div>
-            <mat-form-field>
-              <mat-label>Marcas</mat-label>
-              <mat-select [formControl]="marcas" multiple [disabled]="!categorias.value?.length">
-                <mat-option *ngFor="let marca of marcasList" [value]="marca">
-
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
           <!-- Tipos -->
           <div>
             <mat-form-field>
               <mat-label>Tipos</mat-label>
               <mat-select [formControl]="tipos" multiple [disabled]="!categorias.value?.length">
-                <mat-option *ngFor="let tipo of tiposList" [value]="tipo">
-
+                <mat-option *ngFor="let tipo of tiposList" [value]="tipo.id_tipo">
+                  {{ tipo.tipo | capitalizeFirstLetter }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          
+          <!-- Marcas -->
+          <div>
+            <mat-form-field>
+              <mat-label>Marcas</mat-label>
+              <mat-select [formControl]="marcas" multiple [disabled]="!categorias.value?.length">
+                <mat-option *ngFor="let marca of marcasList" [value]="marca.id_marca">
+                  {{ marca.marca | capitalizeFirstLetter }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           
           <!-- Rango de precios -->
-          <div>
-            <mat-slider min="0" max="1000000" step="1" thumbLabel [formControl]="precioRange"></mat-slider>
+          <div class="input-range my-4">
+            <h3><strong>Rango de precios:</strong></h3>
+            <mat-slider [min]="minPrice" 
+                        [max]="maxPrice" 
+                        step="1000" 
+                        discrete 
+                        tickInterval="50000"
+                        [displayWith]="formatLabel"
+                        [formControl]="precioRange">
+              <input value="0" matSliderStartThumb [(ngModel)]="rangeMin">
+              <input value="250000" matSliderEndThumb [(ngModel)]="rangeMax">
+            </mat-slider>
+            <div class="range-prices">
+              <span>$ {{ minPrice }}</span>
+              <span>$ {{ maxPrice | thousandsSeparator }}</span>
+            </div>
           </div>
           
           <!-- Supermercados -->
-          <div>
-            <h3>Supermercados:</h3>
+          <div class="py-2">
+            <h3><strong>Supermercados:</strong></h3>
             <mat-list>
-              <mat-list-item>
-                <mat-checkbox value="2" color="primary">
-                  Jumbo
+              <mat-list-item *ngFor="let supermercado of supermercadosList">
+                <mat-checkbox [value]="supermercado.id_supermercado!.toString()" 
+                              [checked]="supermercados.value!.includes(supermercado.id_supermercado!.toString())"
+                              (change)="onSupermercadoChange($event, supermercado.id_supermercado!.toString())"
+                              color="primary">
+                  {{ supermercado.supermercado }}
                 </mat-checkbox>
               </mat-list-item>
-              <mat-list-item>
-                <mat-checkbox value="1" color="primary">
-                  Santa Isabel
-                </mat-checkbox>
-              </mat-list-item>
+              
             </mat-list>
           </div> 
           
           <!-- Ordenar -->
           <div fxFlex>
-            <h3>Ordenar por:</h3>
+            <h3><strong>Ordenar por:</strong></h3>
             <mat-radio-group aria-label="Ordenar por" [formControl]="orden">
               <mat-list>
                 <mat-list-item>
-                  <mat-radio-button value="menorPrecio" color="primary">Menor a mayor precio</mat-radio-button>
+                  <mat-radio-button value="precio_asc" color="primary">Menor a mayor precio</mat-radio-button>
                 </mat-list-item>
                 <mat-list-item>
-                  <mat-radio-button value="mayorPrecio" color="primary">Mayor a menor precio</mat-radio-button>
+                  <mat-radio-button value="precio_desc" color="primary">Mayor a menor precio</mat-radio-button>
                 </mat-list-item>
                 <mat-list-item>
-                  <mat-radio-button value="az" color="primary">A-Z</mat-radio-button>
+                  <mat-radio-button value="nombre_asc" color="primary">Nombres de la A-Z</mat-radio-button>
                 </mat-list-item>
                 <mat-list-item>
-                  <mat-radio-button value="za" color="primary">Z-A</mat-radio-button>
+                  <mat-radio-button value="nombre_desc" color="primary">Nombres de la Z-A</mat-radio-button>
                 </mat-list-item>
               </mat-list>
             </mat-radio-group>
@@ -93,10 +106,12 @@
         </mat-card-content>
 
         <mat-card-actions class="d-flex justify-content-center">
-          <button mat-raised-button color="primary">
+          <button mat-raised-button color="primary"
+                  [disabled]="!categorias.value?.length"
+                  (click)="onFilterClick()">
             Filtrar
           </button>
-          <button mat-icon-button color="warn" class="mx-2">
+          <button mat-icon-button color="warn" class="mx-2" (click)="clearFields()">
             <mat-icon class="icon-size icon-color" aria-label="Ver detalles">
               refresh
             </mat-icon>

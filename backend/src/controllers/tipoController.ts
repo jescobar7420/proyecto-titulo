@@ -3,7 +3,8 @@ import * as TipoModel from '../models/tipo';
 
 export const getTipos = async (req: Request, res: Response): Promise<void> => {
   try {
-    const tipos = await TipoModel.getTipos();
+    const limit = parseInt(req.query.limit as string) || undefined;
+    const tipos = await TipoModel.getTipos(limit);
     res.status(200).json(tipos);
   } catch (error) {
     console.error(error);
@@ -78,6 +79,30 @@ export const deleteTipoById = async (req: Request, res: Response): Promise<void>
     } else {
       res.status(404).json({ error: `Tipo with ID ${id} not found` });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getTypesByCategoryBrand = async (req: Request, res: Response): Promise<void> => {
+  const id_category = typeof req.query.categories === 'string' ? req.query.categories : null;
+  const id_marca = typeof req.query.brands === 'string' ? req.query.brands : null;
+  try {
+    const tipos = await TipoModel.getTypesByCategoryBrand(id_category, id_marca);
+    res.status(200).json(tipos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getTypesByBrands = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const id_marcas = typeof req.query.brands === 'string' ? req.query.brands : null;
+    
+    const tipos = await TipoModel.getTypesByBrands(id_marcas);
+    res.status(200).json(tipos);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });

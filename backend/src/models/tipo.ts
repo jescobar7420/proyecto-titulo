@@ -1,5 +1,6 @@
 import pool from '../database/pool'
 import { Tipo } from '../interfaces/Tipo';
+import { TiposByCategoria } from '../interfaces/TipoByCategorias';
 
 export const getTipos = async (limit?: number): Promise<Tipo[]> => {
   let query = 'SELECT * FROM tipos';
@@ -28,4 +29,48 @@ export const updateTipo = async (id: number, tipo: string): Promise<Tipo> => {
 export const deleteTipoById = async (id: number): Promise<boolean> => {
   const result = await pool.query('DELETE FROM tipos WHERE id_tipo = $1', [id]);
   return result.rowCount > 0;
+};
+
+export const getTiposByCategory = async (): Promise<TiposByCategoria[]> => {
+  let query = `SELECT c.id_categoria AS id_categoria,
+                      t.id_tipo AS id_tipo,
+                      t.tipo AS tipo
+               FROM productos AS p
+               JOIN categorias c ON p.categoria = c.id_categoria
+               JOIN tipos t ON p.tipo_producto = t.id_tipo
+               GROUP BY c.id_categoria, t.id_tipo, t.tipo
+               ORDER BY t.tipo ASC`;
+               
+  const { rows } = await pool.query(query);
+  return rows;
+}
+
+export const getTypesByCategoryBrand = async (id_category: string | null, id_marca: string | null): Promise<Tipo[]> => {
+  let query = `
+    SELECT DISTINCT t.id_tipo, t.tipo
+    FROM productos AS p
+    JOIN tipos AS t ON t.id_tipo = p.tipo_producto
+    WHERE 1 = 1`;
+
+  if (id_category) {
+    query += ` AND p.categoria IN (${id_category})`;
+  }
+
+  if (id_marca) {
+    query += ` AND p.marca IN (${id_marca})`;
+  }
+
+  query += ' ORDER BY t.tipo ASC';
+  const { rows } = await pool.query(query);
+  return rows;
+};
+
+export const getTypesByBrands = async (id_marca: string | null): Promise<Tipo[]> => {
+  let query = `SELECT DISTINCT t.id_tipo, t.tipo
+               FROM productos AS p
+               JOIN tipos AS t ON p.tipo_producto = t.id_tipo
+               WHERE p.marca IN (${id_marca})
+               ORDER BY t.tipo;`;
+  const { rows } = await pool.query(query);
+  return rows;
 };

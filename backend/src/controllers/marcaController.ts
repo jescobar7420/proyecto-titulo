@@ -3,7 +3,8 @@ import * as MarcaModel from '../models/marca';
 
 export const getMarcas = async (req: Request, res: Response): Promise<void> => {
   try {
-    const marcas = await MarcaModel.getMarcas();
+    const limit = parseInt(req.query.limit as string) || undefined;
+    const marcas = await MarcaModel.getMarcas(limit);
     res.status(200).json(marcas);
   } catch (error) {
     console.error(error);
@@ -84,12 +85,24 @@ export const deleteMarcaById = async (req: Request, res: Response): Promise<void
   }
 };
 
-export const getMarcaByCategoryType = async (req: Request, res: Response): Promise<void> => {
-  const id_category = typeof req.query.id_category === 'string' ? req.query.id_category : null;
-  const id_tipo = typeof req.query.id_tipo === 'string' ? req.query.id_tipo : null;
+export const getBrandsByCategoryType = async (req: Request, res: Response): Promise<void> => {
+  const id_category = typeof req.query.categories === 'string' ? req.query.categories : null;
+  const id_tipo = typeof req.query.types === 'string' ? req.query.types : null;
 
   try {
-    const marcas = await MarcaModel.getMarcaByCategoryType(id_category, id_tipo);
+    const marcas = await MarcaModel.getBrandsByCategoryType(id_category, id_tipo);
+    res.status(200).json(marcas);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getBrandsByTypes = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const id_tipos = typeof req.query.types === 'string' ? req.query.types : null;
+    
+    const marcas = await MarcaModel.getBrandsByTypes(id_tipos);
     res.status(200).json(marcas);
   } catch (error) {
     console.error(error);

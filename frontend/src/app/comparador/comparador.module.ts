@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { MaterialModule } from '../material/material.module';
 import { ComparadorRoutingModule } from './comparador-routing.module';
@@ -30,6 +33,8 @@ import { CapitalizeFirstLetterPipe } from './pipes/capitalize-first-letter.pipe'
   imports: [
     CommonModule,
     FlexLayoutModule,
+    FormsModule,
+    NgSelectModule,
     MaterialModule,
     ComparadorRoutingModule
   ]

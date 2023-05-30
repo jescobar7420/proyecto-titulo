@@ -2,7 +2,9 @@ import pool from '../database/pool';
 import { Supermercado } from '../interfaces/Supermercado';
 
 export const getSupermercados = async (limit?: number): Promise<Supermercado[]> => {
-  let query = 'SELECT * FROM supermercados';
+  let query = `SELECT s.id_supermercado, s.supermercado 
+               FROM supermercados AS s
+               ORDER BY s.supermercado ASC`;
   if (limit) {
     query += ` LIMIT ${limit}`;
   }

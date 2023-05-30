@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ThousandsSeparatorPipe implements PipeTransform {
 
-  transform(value: string | undefined): string {
+  transform(value: any | undefined): string {
     if (!value) {
       return '';
     }

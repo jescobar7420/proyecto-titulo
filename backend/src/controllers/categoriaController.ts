@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 import * as CategoriaModel from '../models/categoria';
+import * as TipoModel from '../models/tipo';
+import * as MarcaModel from '../models/marca';
+import { CategoriaData } from '../interfaces/CategoriaData';
 
 export const getCategorias = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -84,3 +87,33 @@ export const deleteCategoriaById = async (req: Request, res: Response): Promise<
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getCategoriasMarcasTipos = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const marcasResults = await MarcaModel.getMarcaByCategory();
+    const tiposResults = await TipoModel.getTiposByCategory();
+    const categoriasMarcasTipos: Record<number, CategoriaData> = {};
+    
+    for(const row of marcasResults) {
+      if (!categoriasMarcasTipos[row.id_categoria]) {
+        categoriasMarcasTipos[row.id_categoria] = { marcas: [], tipos: [] };
+      }
+    
+      categoriasMarcasTipos[row.id_categoria].marcas.push({"id_marca": row.id_marca, "marca": row.marca});
+    }
+    
+    for(const row of tiposResults) {
+      if (!categoriasMarcasTipos[row.id_categoria]) {
+        categoriasMarcasTipos[row.id_categoria] = { marcas: [], tipos: [] };
+      }
+    
+      categoriasMarcasTipos[row.id_categoria].tipos.push({"id_tipo": row.id_tipo, "tipo": row.tipo});
+    }
+
+    res.status(200).json(categoriasMarcasTipos);
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('There was an error trying to get the categories, brands and types.');
+  }
+}

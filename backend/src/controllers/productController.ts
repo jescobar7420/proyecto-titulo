@@ -110,3 +110,14 @@ export const getProductCardById = async (req: Request, res: Response): Promise<v
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const productsFilter = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const filters: Filters = req.body;
+    const productCards = await ProductoModel.productsFilter(filters);
+    res.json(productCards);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+};
