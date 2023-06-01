@@ -95,4 +95,7 @@ export class ProductosService {
     return this.http.post<any>(`${this.baseUrl}/api/products-filter`, filterData);
   }
   
+  getTotalResultFilter(filterData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/api/products-filter-result`, filterData);
+  }
 }

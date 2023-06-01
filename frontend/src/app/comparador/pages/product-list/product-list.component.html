@@ -1,25 +1,14 @@
- <div class="content" *ngIf="!loading; else loadingTemplate">
-    <mat-divider></mat-divider>
-    <br>
- 
-    <div fxLayout="row wrap"
-         fxLayoutAlign="center"
-         fxLayoutGap="16px grid">
+<div fxLayout="row wrap" 
+     fxLayoutAlign="center" 
+     fxLayoutGap="16px grid">
 
-        <div fxFlex="19%" 
-             fxFlex.xs="45%"
-             fxFlex.sm="32%"
-             *ngFor="let producto of productos">
-               
-            <app-product-card [producto]="producto"></app-product-card>
-        </div>
+    <div fxFlex.xs="100" 
+         fxFlex.sm="50"
+         fxFlex.md="30"
+         fxFlex.lg="25"
+         fxFlex.xl="25"
+         *ngFor="let producto of productos">
+
+        <app-product-card [producto]="producto"></app-product-card>
     </div>
 </div>
-
-<ng-template #loadingTemplate>
-    <div class="center">
-        <h2>Cargando productos...</h2>
-        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    </div>
-</ng-template>
-

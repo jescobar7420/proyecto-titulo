@@ -6,7 +6,8 @@ import { getProducts,
          deleteProduct,
          getAvailableProductCards,
          getProductCardById,
-         productsFilter
+         productsFilter,
+         getTotalResultFilter
 } from '../controllers/productController';
 
 const router = Router();
@@ -16,6 +17,7 @@ router.get('/productos/:id', getProductById);
 router.get('/available-products', getAvailableProductCards);
 router.get('/product-card/:id', getProductCardById);
 
+router.post('/products-filter-result', getTotalResultFilter);
 router.post('/productos', createProduct);
 router.post('/products-filter', productsFilter)
 

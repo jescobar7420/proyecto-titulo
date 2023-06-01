@@ -1,8 +1,15 @@
 <div class="content py-3 px-3">
 
-  <div fxLayout="row" fxLayoutGap="10px" class="container-filters">
+  <div fxLayout="row"
+       fxLayout.lt-md="column" 
+       fxLayoutGap="10px" 
+       class="container-filters">
 
-    <div fxLayout="column" fxFlex="25">
+    <div fxFlex.xs="100"
+         fxFlex.sm="100"
+         fxFlex.md="35"
+         fxFlex.lg="30"
+         fxFlex.xl="25">
 
       <mat-card>
         <mat-card-header class="py-3">
@@ -39,7 +46,7 @@
           <div>
             <mat-form-field>
               <mat-label>Marcas</mat-label>
-              <mat-select [formControl]="marcas" multiple [disabled]="!categorias.value?.length">
+              <mat-select [formControl]="marcas" multiple>
                 <mat-option *ngFor="let marca of marcasList" [value]="marca.id_marca">
                   {{ marca.marca | capitalizeFirstLetter }}
                 </mat-option>
@@ -120,9 +127,38 @@
       </mat-card>
     </div>
 
-    <div fxLayout="column" fxFlex="75" style="background-color: green;">
-
-      <span>hola 2</span>
+    <div fxFlex="row"
+         fxFlex.xs="100" 
+         fxFlex.sm="100"
+         fxFlex.md="100"
+         fxFlex.lg="70"
+         fxFlex.xl="75">
+         
+      <div class="content" *ngIf="productosFilters.length > 0; else loadingTemplate">
+        <app-product-list [productos]="productosFilters"></app-product-list>
+        
+        <div class="d-flex justify-content-center py-2" *ngIf="total_results > 20">
+          <button mat-fab color="primary" class="mx-2" [disabled]="offset == 0" (click)="previousPage(); scrollToTop()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          
+          <button mat-fab color="primary" class="mx-2" [disabled]="offset + 20 >= total_results" (click)="nextPage(); scrollToTop()">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </div>
+      
+      <div *ngIf="!flag_filter" class="center">
+        <h2>¡Aún no se han aplicado filtros!</h2>
+      </div>
+      
+      <ng-template #loadingTemplate>
+        <div class="center" *ngIf="flag_loading">
+          <h2>Cargando productos...</h2>
+          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        </div>
+      </ng-template>
+      
     </div>
   </div>
 </div>

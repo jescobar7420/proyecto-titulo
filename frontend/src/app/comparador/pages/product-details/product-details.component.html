@@ -26,7 +26,7 @@
                  fxFlex.gt-sm="25%">
     
                 <mat-card class="h-100">
-                    <img mat-card-image [src]="producto.imagen">
+                    <img mat-card-image [src]="producto.imagen" (error)="producto.imagen = 'assets/failed_load_image.png'">
                 </mat-card>
             </div>
     

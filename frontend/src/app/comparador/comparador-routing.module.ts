@@ -2,24 +2,22 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
-import { ProductListComponent } from './pages/product-list/product-list.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { ProductFilterComponent } from './pages/product-filter/product-filter.component';
+import { FeaturedProductsComponent } from './pages/featured-products/featured-products.component';
 
 const rutas: Routes = [
   {
     path: '',
     component: HomeComponent,
     children: [
-      { path: 'featured-products', component: ProductListComponent },
+      { path: 'featured-products', component: FeaturedProductsComponent },
       { path: 'search-filter', component: ProductFilterComponent },
       { path: ':id', component: ProductDetailsComponent },
       { path: '**', redirectTo: 'featured-products' }
     ]
   }
 ];
-
-
 
 @NgModule({
   imports: [

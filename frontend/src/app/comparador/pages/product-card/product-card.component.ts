@@ -14,6 +14,8 @@ export class ProductCardComponent {
   
   @Input() producto!: ProductCard;
   isHovered = false;
+  
+  alternativeUrl: string = "assets/failed_load_image.png";
    
   constructor(private cartService: CartService,
               private snackBar: MatSnackBar) {}
@@ -40,6 +42,7 @@ export class ProductCardComponent {
       verticalPosition: 'bottom'
     });
   }
+
 }
 
   

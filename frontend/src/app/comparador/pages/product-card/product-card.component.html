@@ -13,18 +13,16 @@
         <mat-card-subtitle class="card-brand">{{ producto.marca | uppercase }}</mat-card-subtitle>
     </mat-card-header>    
 
-    <img mat-card-image [src]="producto.imagen" [routerLink]="['/products', producto.id_producto]">
+    <img mat-card-image
+         [src]="producto.imagen"
+         (error)="producto.imagen = 'assets/failed_load_image.png'"
+         [routerLink]="['/products', producto.id_producto]">
 
     <mat-card-content>
-        <p>
-            <strong> Categoría: </strong> {{ producto.categoria | titlecase }}
-            <br>
-            <strong> Tipo de producto: </strong> {{ producto.tipo | titlecase }}
-        </p>
         <div class="card-price">
-            <span>
-                $ {{ producto.precio | thousandsSeparator }}
-            </span>
+            <mat-card-subtitle *ngIf="producto.flag_oferta" class="sale_price">PRECIO OFERTA</mat-card-subtitle>
+            <mat-card-subtitle *ngIf="!producto.flag_oferta">PRECIO NORMAL</mat-card-subtitle>
+            <mat-card-title >$ {{ producto.precio | thousandsSeparator }}</mat-card-title>
         </div>
     </mat-card-content>
 

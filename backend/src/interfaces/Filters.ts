@@ -6,4 +6,5 @@ interface Filters {
     tipos: string;
     marcas: string;
     order: string;
+    offset: number;
 }

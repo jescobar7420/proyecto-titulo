@@ -115,6 +115,11 @@
     white-space: nowrap;
 }
 
+.card-name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .text-oneline ::ng-deep * {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -123,4 +128,8 @@
 
 .mat-button-focus-overlay {
     display: none !important;
+}
+
+.cart-image {
+    cursor: pointer;
 }

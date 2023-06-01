@@ -8,6 +8,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { MaterialModule } from '../material/material.module';
 import { ComparadorRoutingModule } from './comparador-routing.module';
 
+import { FeaturedProductsComponent } from './pages/featured-products/featured-products.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotificationComponent } from './notification/notification.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
@@ -20,6 +21,7 @@ import { CapitalizeFirstLetterPipe } from './pipes/capitalize-first-letter.pipe'
 
 @NgModule({
   declarations: [
+    FeaturedProductsComponent,
     HomeComponent,
     NotificationComponent,
     ProductDetailsComponent,

@@ -203,8 +203,66 @@ export const productsFilter = async (filters: Filters): Promise<ProductCard[]> =
   }
       
   query += `AND sm_precio_min.precio_minimo::INTEGER BETWEEN ${filters.precioMin} AND ${filters.precioMax}
-            ORDER BY ${orderColumn} ${orderDirection}`;
-     
+            ORDER BY ${orderColumn} ${orderDirection}
+            LIMIT 20
+            OFFSET ${filters.offset}`;
+  const { rows } = await pool.query(query);
+  return rows;
+};
+
+export const getTotalResultFilter = async (filters: Filters): Promise<ProductCard[]> => { 
+  let query = `
+    SELECT COUNT(*)
+    FROM (SELECT p.id_producto,
+                 sm.id_supermercado,
+                 p.nombre, 
+                 m.marca,
+                 c.categoria,
+                 t.tipo, 
+                 p.imagen, 
+                 sm_precio_min.precio_minimo AS precio,
+                 (sm_precio_min.precio_minimo = sm_precio_min.precio_oferta) AS flag_oferta,
+                 sm.logo AS logo_supermercado,
+                 sm_precio_min.fecha
+          FROM productos p 
+          JOIN marcas m ON p.marca = m.id_marca
+          JOIN categorias c ON p.categoria = c.id_categoria
+          JOIN tipos t ON p.tipo_producto = t.id_tipo
+          JOIN (
+           SELECT sp.id_producto,
+                  sp.id_supermercado,
+                  MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio_minimo,
+                  sp.precio_oferta,
+                  MAX(sp.fecha) AS fecha
+           FROM supermercados_productos sp
+           WHERE sp.disponibilidad = 'Yes'
+           GROUP BY sp.id_producto, sp.id_supermercado, sp.precio_oferta
+          ) sm_precio_min ON sm_precio_min.id_producto = p.id_producto
+          JOIN supermercados sm ON sm.id_supermercado = sm_precio_min.id_supermercado
+          WHERE sm_precio_min.precio_minimo IN (
+           SELECT MIN(COALESCE(sp2.precio_oferta, sp2.precio_normal))
+           FROM supermercados_productos sp2
+           WHERE sp2.id_producto = p.id_producto AND sp2.disponibilidad = 'Yes'
+          )`;
+    
+  if (filters.supermercados) {
+    query += `AND sm.id_supermercado IN (${filters.supermercados})`;
+  }
+  
+  if (filters.categorias) {
+    query += `AND c.id_categoria IN (${filters.categorias})`;
+  }
+  
+  if (filters.tipos) {
+    query += `AND t.id_tipo IN (${filters.tipos})`;
+  }
+  
+  if (filters.marcas) {
+    query += `AND m.id_marca IN (${filters.marcas})`;
+  }
+      
+  query += `AND sm_precio_min.precio_minimo::INTEGER BETWEEN ${filters.precioMin} AND ${filters.precioMax}) AS total_result`;
+  
   const { rows } = await pool.query(query);
   return rows;
 };

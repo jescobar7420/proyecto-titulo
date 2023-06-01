@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ProductCard } from '../../interfaces/product-card';
-import { ProductosService } from '../../services/productos.service';
 
 @Component({
   selector: 'app-product-list',
@@ -9,23 +8,12 @@ import { ProductosService } from '../../services/productos.service';
 })
 export class ProductListComponent implements OnInit {
 
-  productos: ProductCard[] = [];
+  @Input() productos: ProductCard[] = [];
   loading: boolean = false;
-  
-  limit: number = 30;
-  
-  constructor( private productService: ProductosService ) {}
+   
+  constructor() {}
   
   ngOnInit(): void {
-    this.loading = true;
-    this.productService.getAvailableProductCards(this.limit)
-      .subscribe( productos => {
-        this.productos = productos;
-        this.loading = false;
-      },
-      error => {
-        console.error(error);
-        this.loading = false;
-      });
+    
   }
 }

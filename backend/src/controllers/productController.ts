@@ -121,3 +121,14 @@ export const productsFilter = async (req: Request, res: Response): Promise<void>
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
+
+export const getTotalResultFilter = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const filters: Filters = req.body;
+    const productCards = await ProductoModel.getTotalResultFilter(filters);
+    res.json(productCards);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+};
