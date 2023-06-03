@@ -13,16 +13,26 @@
     </mat-toolbar>
 
     <mat-nav-list>
-      <a routerLink="./featured-products" mat-list-item class="my-list-item" (click)="sidenav.toggle()">
-        <mat-icon mat-list-icon>home</mat-icon>
-        <span>Inicio</span>
-      </a>
-
-      <a routerLink="./search-filter" mat-list-item class="my-list-item" (click)="sidenav.toggle()">
-        <mat-icon mat-list-icon>search</mat-icon>
-        <span>Búsqueda con filtros</span>
-      </a>
+      <mat-list-item>
+        <a routerLink="./featured-products" mat-list-item class="my-list-item" (click)="sidenav.toggle()">
+          <mat-icon mat-list-icon>home</mat-icon>
+          <span>Inicio</span>
+        </a>
+      </mat-list-item>
+      <mat-list-item>
+        <a routerLink="./search-filter" mat-list-item class="my-list-item" (click)="sidenav.toggle()">
+          <mat-icon mat-list-icon>search</mat-icon>
+          <span>Búsqueda con filtros</span>
+        </a>
+      </mat-list-item>
+      <mat-list-item>
+        <a routerLink="./price-comparison" mat-list-item class="my-list-item" (click)="sidenav.toggle()">
+          <mat-icon mat-list-icon>attach_money</mat-icon>
+          <span>Comparar precios</span>
+        </a>
+      </mat-list-item>
     </mat-nav-list>
+
   </mat-sidenav>
 
 
@@ -46,10 +56,12 @@
                  class="cart-image"
                  [src]="product.imagen"
                  (error)="product.imagen = 'assets/error_image_cart.jpg'"
-                 [routerLink]="['/products', product.id_producto]">
+                 [routerLink]="['/products', product.id_producto]"
+                 (click)="cartSidenav.toggle()">
             <mat-card-title class="card-name" 
                             matListItemTitle
-                            [routerLink]="['/products', product.id_producto]">
+                            [routerLink]="['/products', product.id_producto]"
+                            (click)="cartSidenav.toggle()">
               {{ product.nombre | titlecase }}
             </mat-card-title>
             <mat-card-subtitle matListItemLine>{{ product.marca | uppercase }}</mat-card-subtitle>
@@ -84,10 +96,13 @@
       </mat-card>
     </mat-nav-list>
     
-    <div class="d-flex justify-content-center">
+    <!-- Button price comparision -->
+    <div class="d-flex justify-content-center py-2">
       <button mat-raised-button 
               color="primary"
-              class="py-2">
+              class="py-4"
+              routerLink="./price-comparison"
+              (click)="cartSidenav.toggle()">
         COMPARAR
       </button>
     </div>

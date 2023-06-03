@@ -1,0 +1,52 @@
+<mat-card class="mat-elevation-z4">
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <div class="mat-card-header py-2">
+            <mat-card-title>{{ supermarket_comparison.supermercado }}</mat-card-title>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div fxLayout="row" class="py-3">
+        <div fxFlex="45" fxLayoutAlign="center center">
+            <img src="assets/{{ supermarket_comparison.id_supermercado }}.png" class="img-fluid logo-super px-1">
+        </div>
+        <div fxFlex="55" style="border-left: 1px solid #ccc;">
+            <mat-list>
+                <div mat-subheader><h2>Precauciones:</h2></div>
+                <mat-list-item>
+                    <mat-icon matListItemIcon class="icon icon-available">check_circle</mat-icon>
+                    <span matListItemTitle>Disponibles</span>
+                    <span matListItemLine>{{ num_available }}</span>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon class="icon icon-sale">new_releases</mat-icon>
+                    <span matListItemTitle>En oferta</span>
+                    <span matListItemLine>{{ num_on_offer }}</span>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon class="icon icon-stock">cancel</mat-icon>
+                    <span matListItemTitle>Sin stock</span>
+                    <span matListItemLine>{{ num_out_of_stock }}</span>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon class="icon icon-distribute">not_interested</mat-icon>
+                    <span matListItemTitle>No distribuye</span>
+                    <span matListItemLine>{{ num_not_distributed }}</span>
+                </mat-list-item>
+            </mat-list>
+
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div fxLayout="row" fxLayoutAlign="center center" class="my-2">
+        <div>
+            <span class="total-title">VALOR TOTAL: </span>
+            <span class="total-value">$ {{ supermarket_comparison.total_value | thousandsSeparator }}</span>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div fxLayout="row" fxLayoutAlign="center center" class="py-2">
+        <button mat-flat-button color="primary" class="py-4">
+            Ver productos
+        </button>
+    </div>
+</mat-card>

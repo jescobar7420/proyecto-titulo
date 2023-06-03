@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductCard } from '../../interfaces/product-card';
 
 @Component({
@@ -6,14 +6,10 @@ import { ProductCard } from '../../interfaces/product-card';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent {
 
   @Input() productos: ProductCard[] = [];
-  loading: boolean = false;
    
   constructor() {}
-  
-  ngOnInit(): void {
-    
-  }
+
 }

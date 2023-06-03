@@ -92,5 +92,8 @@ export class CartService {
     }
   }
   
-  
+  getProductIds(): string {
+    const ids = this.cart.map(product => product.id_producto);
+    return ids.join(",");
+}
 }

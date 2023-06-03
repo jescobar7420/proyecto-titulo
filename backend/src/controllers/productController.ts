@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as ProductoModel from '../models/product';
+import { SupermarketComparisonCard } from '../interfaces/SupermarketComparisonCard';
 
 export const getProducts = async (req: Request, res: Response): Promise<void> => {
   try {

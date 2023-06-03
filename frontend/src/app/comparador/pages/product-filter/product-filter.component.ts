@@ -149,6 +149,8 @@ export class ProductFilterComponent implements OnInit {
   }
   
   clearFields(): void {
+    this.productosFilters = [];
+    this.flag_filter = false;
     this.categorias.reset();
     this.tipos.reset();
     this.marcas.reset();

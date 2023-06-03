@@ -106,3 +106,14 @@ export const getProductoAtSupermercado = async (req: Request, res: Response): Pr
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getSupermarketComparisonCards = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const ids_products = typeof req.query.ids_products === 'string' ? req.query.ids_products : null;
+    const supermarketComparisionCards = await SupermercadoProductoModel.getSupermarketComparisonCards(ids_products);
+    res.status(200).json(supermarketComparisionCards);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}

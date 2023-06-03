@@ -1,6 +1,7 @@
 import pool from '../database/pool';
 import { SupermercadoProducto } from '../interfaces/SupermercadosProductos';
 import { ProductSupermarket } from '../interfaces/ProductSupermarket';
+import { SupermarketComparisonCard } from '../interfaces/SupermarketComparisonCard';
 
 export const getSupermercadosProductos = async (limit?: number): Promise<SupermercadoProducto[]> => {
   let query = 'SELECT * FROM supermercados_productos';
@@ -53,6 +54,55 @@ export const getProductoAtSupermercado = async (id_producto: number): Promise<Pr
       WHERE sp.id_producto = ${id_producto} AND 
         sp.precio_normal IS NOT NULL
       ORDER BY LEAST(sp.precio_normal, COALESCE(sp.precio_oferta, sp.precio_normal)) ASC;`;
+  const { rows } = await pool.query(query);
+  return rows;
+}
+
+export const getSupermarketComparisonCards = async (ids_products: string | null): Promise<SupermarketComparisonCard[]> => {
+  let query = `
+    SELECT
+      supermercados.id_supermercado,
+      supermercados.supermercado,
+      
+      (SELECT COUNT(*) 
+       FROM supermercados_productos 
+       WHERE id_supermercado = supermercados.id_supermercado 
+       AND id_producto IN (${ids_products}) 
+       AND disponibilidad = 'Yes') AS num_available,
+       
+      (SELECT COUNT(*) 
+       FROM supermercados_productos 
+       WHERE id_supermercado = supermercados.id_supermercado 
+       AND id_producto IN (${ids_products}) 
+       AND precio_oferta IS NOT NULL 
+       AND disponibilidad = 'Yes') AS num_on_offer,
+       
+      (SELECT COUNT(*) 
+       FROM supermercados_productos 
+       WHERE id_supermercado = supermercados.id_supermercado 
+       AND id_producto IN (${ids_products}) 
+       AND disponibilidad = 'No') AS num_out_of_stock,
+       
+      (SELECT COUNT(*) 
+       FROM productos 
+       WHERE id_producto IN (${ids_products}) 
+       AND id_producto NOT IN (
+           SELECT id_producto 
+           FROM supermercados_productos 
+           WHERE id_supermercado = supermercados.id_supermercado
+       )) AS num_not_distributed,
+       
+       (SELECT SUM(CASE 
+           WHEN precio_oferta IS NOT NULL THEN CAST(precio_oferta AS INTEGER) 
+           ELSE CAST(precio_normal AS INTEGER) 
+           END) 
+        FROM supermercados_productos 
+        WHERE id_supermercado = supermercados.id_supermercado 
+        AND id_producto IN (${ids_products}) 
+        AND disponibilidad = 'Yes') AS total_value
+    FROM supermercados
+    ORDER BY total_value ASC;`;
+    
   const { rows } = await pool.query(query);
   return rows;
 }

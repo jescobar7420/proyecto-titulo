@@ -1,1 +1,28 @@
-<p>price-comparison works!</p>
+<div *ngIf="supermarketComparisonCards.length > 0; else loadingTemplate">
+
+    <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="16px grid">
+
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="16px" fxLayoutWrap
+            style="background-color: red;">
+
+            <div fxFlex.xs="100" *ngFor="let supermarket of supermarketComparisonCards">
+                <app-supermarket-comparison-card
+                    [supermarket_comparison]="supermarket"></app-supermarket-comparison-card>
+            </div>
+        </div>
+    </div>
+    <div fxLayout="column">
+        <div fxLayout="row" fxFlex="100" style="background-color: green;">
+            <span>1</span>
+        </div>
+    </div>
+
+
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="center">
+        <h2>Cargando información</h2>
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+</ng-template>

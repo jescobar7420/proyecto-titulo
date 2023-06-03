@@ -18,6 +18,7 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
 import { ProductFilterComponent } from './pages/product-filter/product-filter.component';
 import { ThousandsSeparatorPipe } from './pipes/thousands-separator.pipe';
 import { CapitalizeFirstLetterPipe } from './pipes/capitalize-first-letter.pipe';
+import { SupermarketComparisonCardComponent } from './pages/supermarket-comparison-card/supermarket-comparison-card.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CapitalizeFirstLetterPipe } from './pipes/capitalize-first-letter.pipe'
     ProductListComponent,
     ProductFilterComponent,
     ThousandsSeparatorPipe,
-    CapitalizeFirstLetterPipe
+    CapitalizeFirstLetterPipe,
+    SupermarketComparisonCardComponent
   ],
   imports: [
     CommonModule,
