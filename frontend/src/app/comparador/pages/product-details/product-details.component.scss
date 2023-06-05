@@ -67,3 +67,10 @@ a:active {
 .adjusted-line-height {
     line-height: 1;
 }
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

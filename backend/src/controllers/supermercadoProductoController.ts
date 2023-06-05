@@ -117,3 +117,53 @@ export const getSupermarketComparisonCards = async (req: Request, res: Response)
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 }
+
+export const getSaleProductsSupermarket = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const ids_products = typeof req.query.ids_products === 'string' ? req.query.ids_products : null;
+    const id_supermarket = typeof req.query.id_supermarket === 'string' ? req.query.id_supermarket : null;
+    const saleProductsSupermarket = await SupermercadoProductoModel.getSaleProductsSupermarket(id_supermarket, ids_products);
+    res.status(200).json(saleProductsSupermarket);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
+
+export const getNoDistributeProductsSupermarket = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const ids_products = typeof req.query.ids_products === 'string' ? req.query.ids_products : null;
+    const id_supermarket = typeof req.query.id_supermarket === 'string' ? req.query.id_supermarket : null;
+    const noDistributeProductsSupermarket = await SupermercadoProductoModel.getNoDistributeProductsSupermarket(id_supermarket, ids_products);
+    console.log(noDistributeProductsSupermarket)
+    res.status(200).json(noDistributeProductsSupermarket);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
+
+export const getNoStockProductsSupermarket = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const ids_products = typeof req.query.ids_products === 'string' ? req.query.ids_products : null;
+    const id_supermarket = typeof req.query.id_supermarket === 'string' ? req.query.id_supermarket : null;
+    const noStockProductsSupermarket = await SupermercadoProductoModel.getNoStockProductsSupermarket(id_supermarket, ids_products);
+    res.status(200).json(noStockProductsSupermarket);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
+
+export const getAvailableProductsSupermarket = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const ids_products = typeof req.query.ids_products === 'string' ? req.query.ids_products : null;
+    const id_supermarket = typeof req.query.id_supermarket === 'string' ? req.query.id_supermarket : null;
+    const availableProductsSupermarket = await SupermercadoProductoModel.getAvailableProductsSupermarket(id_supermarket, ids_products);
+    console.log(availableProductsSupermarket)
+    res.status(200).json(availableProductsSupermarket);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}

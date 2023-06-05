@@ -4,6 +4,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       MatButtonModule,
       MatCardModule,
       MatCheckboxModule,
+      MatDialogModule,
       MatFormFieldModule,
       MatGridListModule,
       MatIconModule,

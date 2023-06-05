@@ -19,6 +19,8 @@ import { ProductFilterComponent } from './pages/product-filter/product-filter.co
 import { ThousandsSeparatorPipe } from './pipes/thousands-separator.pipe';
 import { CapitalizeFirstLetterPipe } from './pipes/capitalize-first-letter.pipe';
 import { SupermarketComparisonCardComponent } from './pages/supermarket-comparison-card/supermarket-comparison-card.component';
+import { DialogProductsSupermarketComponent } from './pages/dialog-products-supermarket/dialog-products-supermarket.component';
+import { ProductSupermarketCardComponent } from './pages/product-supermarket-card/product-supermarket-card.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { SupermarketComparisonCardComponent } from './pages/supermarket-comparis
     ProductFilterComponent,
     ThousandsSeparatorPipe,
     CapitalizeFirstLetterPipe,
-    SupermarketComparisonCardComponent
+    SupermarketComparisonCardComponent,
+    DialogProductsSupermarketComponent,
+    ProductSupermarketCardComponent
   ],
   imports: [
     CommonModule,

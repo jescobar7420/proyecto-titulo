@@ -10,29 +10,29 @@ export class CartService {
   private cart: CartProduct[];
   public cartUpdated = new Subject<void>();
 
-  constructor() { 
+  constructor() {
     const storedCart = localStorage.getItem('cart');
     this.cart = storedCart ? JSON.parse(storedCart) : [];
   }
-  
-  addToCart(product: CartProduct) { 
+
+  addToCart(product: CartProduct) {
     const existingProductIndex = this.cart.findIndex(item => item.id_producto === product.id_producto);
-    
+
     if (existingProductIndex > -1) {
       this.cart[existingProductIndex].cantidad += 1;
     } else {
       product.cantidad = 1;
       this.cart.push(product);
     }
-    
+
     this.cart.forEach((cartProduct: CartProduct) => {
       cartProduct.precio_total = parseFloat(cartProduct.precio) * cartProduct.cantidad;
     });
-    
+
     localStorage.setItem('cart', JSON.stringify(this.cart));
     this.cartUpdated.next();
   }
-  
+
   removeFromCart(id: number) {
     const index = this.cart.findIndex((product) => product.id_producto === id);
     if (index !== -1) {
@@ -49,13 +49,13 @@ export class CartService {
     }
     return [];
   }
-  
+
   clearCart() {
     this.cart = [];
     localStorage.removeItem('cart');
     this.cartUpdated.next();
   }
-  
+
   getTotalQuantity(): number {
     let totalQuantity = 0;
     this.cart.forEach((product: CartProduct) => {
@@ -77,7 +77,7 @@ export class CartService {
       this.cartUpdated.next();
     }
   }
-  
+
   decreaseProductQuantity(id: number) {
     const index = this.cart.findIndex((product) => product.id_producto === id);
     if (index !== -1) {
@@ -91,9 +91,15 @@ export class CartService {
       }
     }
   }
-  
+
   getProductIds(): string {
     const ids = this.cart.map(product => product.id_producto);
     return ids.join(",");
-}
+  }
+  
+  getQuantity(id: number): number {
+    const product = this.cart.find(product => product.id_producto === id);
+    return product ? product.cantidad : 0;
+  }
+  
 }

@@ -1,0 +1,28 @@
+<mat-card class="card-cart-products">
+    <mat-card-header class="text-oneline">
+      <mat-card-title-group>
+        <img mat-card-sm-image
+             class="cart-image"
+             [src]="producto.imagen"
+             (error)="producto.imagen = 'assets/error_image_cart.jpg'"
+             [routerLink]="['/products', producto.id_producto]"
+             mat-dialog-close>
+        <mat-card-title class="card-name" 
+                        matListItemTitle
+                        [routerLink]="['/products', producto.id_producto]"
+                        mat-dialog-close>
+          {{ producto.nombre | titlecase }}
+        </mat-card-title>
+        <mat-card-subtitle matListItemLine>{{ producto.marca | uppercase }}</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-actions>
+
+      <span class="px-2">Cantidad: {{ producto.cantidad }}</span>
+
+      <span class="spacer"></span>
+      
+      <span class="price-product px-2">$ {{ producto.precio_total | thousandsSeparator }}</span>
+
+    </mat-card-actions>
+</mat-card>

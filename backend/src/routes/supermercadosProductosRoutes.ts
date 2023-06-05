@@ -4,7 +4,11 @@ import { getSupermercadosProductos,
          createSupermercadoProducto, 
          updateSupermercadoProducto,
          getProductoAtSupermercado,
-         getSupermarketComparisonCards
+         getSupermarketComparisonCards,
+         getSaleProductsSupermarket,
+         getNoDistributeProductsSupermarket,
+         getNoStockProductsSupermarket,
+         getAvailableProductsSupermarket
 } from '../controllers/supermercadoProductoController';
 
 const router = Router();
@@ -13,6 +17,10 @@ router.get('/supermercados-productos', getSupermercadosProductos);
 router.get('/supermercados-productos/:id_supermercado/:id_producto', getSupermercadoProductoByIds);
 router.get('/supermercados-productos/:id_producto', getProductoAtSupermercado);
 router.get('/supermarket-comparison', getSupermarketComparisonCards);
+router.get('/supermarket-sale', getSaleProductsSupermarket);
+router.get('/supermarket-no-distribute', getNoDistributeProductsSupermarket);
+router.get('/supermarket-no-stock', getNoStockProductsSupermarket);
+router.get('/supermarket-available', getAvailableProductsSupermarket);
 
 router.post('/supermercados-productos', createSupermercadoProducto);
 

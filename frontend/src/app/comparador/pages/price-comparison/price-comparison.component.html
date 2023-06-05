@@ -1,9 +1,9 @@
-<div *ngIf="supermarketComparisonCards.length > 0; else loadingTemplate">
 
-    <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="16px grid">
+<div *ngIf="supermarketComparisonCards.length > 0; else loadingTemplate" class="price-comparison">
+    
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px grid">
 
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="16px" fxLayoutWrap
-            style="background-color: red;">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="16px" fxLayoutWrap>
 
             <div fxFlex.xs="100" *ngFor="let supermarket of supermarketComparisonCards">
                 <app-supermarket-comparison-card
@@ -11,14 +11,8 @@
             </div>
         </div>
     </div>
-    <div fxLayout="column">
-        <div fxLayout="row" fxFlex="100" style="background-color: green;">
-            <span>1</span>
-        </div>
-    </div>
-
-
 </div>
+
 
 <ng-template #loadingTemplate>
     <div class="center">

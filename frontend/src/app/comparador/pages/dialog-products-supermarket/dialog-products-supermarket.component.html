@@ -1,0 +1,85 @@
+<div *ngIf="loading; else loadingTemplate" class="dialog">
+  <h2 mat-dialog-title>Lista de productos</h2>
+  <mat-dialog-content class="mat-typography">
+    <div>
+      
+      <!-- Products on Sale -->
+      <div *ngIf="listSaleProducts.length > 0"
+           fxLayout="column">
+           
+        <div class="title-icon">
+          <mat-icon class="icon-sale">new_releases</mat-icon>
+          <span> Productos en oferta</span>
+        </div>
+
+        <div fxLayout="column">
+          <mat-nav-list *ngFor="let producto of listSaleProducts">
+            <app-product-supermarket-card [producto]="producto"></app-product-supermarket-card>
+          </mat-nav-list>
+        </div>
+      </div>
+           
+      <!-- Products available -->
+      <div *ngIf="listAvailableProducts.length > 0"
+            fxLayout="column"
+            class="py-4">
+        
+        <div class="title-icon">
+          <mat-icon class="icon-available">check_circle</mat-icon>
+          <span> Productos disponibles</span>
+        </div>
+    
+        <div fxLayout="column">
+          <mat-nav-list *ngFor="let producto of listAvailableProducts">
+            <app-product-supermarket-card [producto]="producto"></app-product-supermarket-card>
+          </mat-nav-list>
+        </div>
+      </div>
+      
+      <!-- Products no Stock -->
+      <div *ngIf="listNoStockProducts.length > 0"
+            fxLayout="column"
+            class="py-4">
+            
+        <div class="title-icon">
+          <mat-icon class="icon-stock">cancel</mat-icon>
+          <span> Productos sin stock</span>
+        </div>
+     
+        <div fxLayout="column">
+          <mat-nav-list *ngFor="let producto of listNoStockProducts">
+            <app-product-supermarket-card [producto]="producto"></app-product-supermarket-card>
+          </mat-nav-list>
+        </div>
+      </div>
+      
+      <!-- Products not distribute -->
+      <div *ngIf="listNoDistributeProducts.length > 0"
+           fxLayout="column"
+           class="py-4">
+           
+        <div class="title-icon">
+          <mat-icon class="icon-distribute">not_interested</mat-icon>
+          <span> Productos no distribuidos</span>
+        </div>
+
+        <div fxLayout="column">
+          <mat-nav-list *ngFor="let producto of listNoDistributeProducts">
+            <app-product-supermarket-card [producto]="producto"></app-product-supermarket-card>
+          </mat-nav-list>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="center py-4 px-4">
+      <h2>Cargando información</h2>
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-template>

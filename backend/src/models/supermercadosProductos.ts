@@ -2,6 +2,7 @@ import pool from '../database/pool';
 import { SupermercadoProducto } from '../interfaces/SupermercadosProductos';
 import { ProductSupermarket } from '../interfaces/ProductSupermarket';
 import { SupermarketComparisonCard } from '../interfaces/SupermarketComparisonCard';
+import { SupermarketProductCard } from '../interfaces/SupermarketProductCard';
 
 export const getSupermercadosProductos = async (limit?: number): Promise<SupermercadoProducto[]> => {
   let query = 'SELECT * FROM supermercados_productos';
@@ -104,5 +105,93 @@ export const getSupermarketComparisonCards = async (ids_products: string | null)
     ORDER BY total_value ASC;`;
     
   const { rows } = await pool.query(query);
+  return rows;
+}
+
+export const getSaleProductsSupermarket = async (id_supermarket: string | null, ids_products: string | null): Promise<SupermarketProductCard[]> => {
+  let query = `
+        SELECT p.id_producto,
+               p.nombre,
+               m.marca,
+               '1'::INT AS cantidad,
+          	   p.imagen,
+          	   '0'::INT AS precio_total,
+               sp.precio_oferta::INT AS precio_unitario
+        FROM supermercados_productos AS sp
+        JOIN productos AS p ON sp.id_producto = p.id_producto
+        JOIN marcas AS m ON p.marca = m.id_marca
+        WHERE sp.id_supermercado = ${id_supermarket} AND 
+              p.id_producto IN (${ids_products}) AND 
+              sp.precio_oferta IS NOT NULL AND 
+              sp.disponibilidad = 'Yes'
+        ORDER BY p.nombre ASC`;
+  
+  const { rows } = await pool.query(query);
+  return rows;
+}
+
+export const getNoDistributeProductsSupermarket = async (id_supermarket: string | null, ids_products: string | null): Promise<SupermarketProductCard[]> => {
+  let query = `
+        SELECT p.id_producto,
+               p.nombre,
+               m.marca,
+               '1'::INT AS cantidad,
+          	   p.imagen,
+          	   '0'::INT AS precio_total,
+               COALESCE(sp.precio_oferta, sp.precio_normal)::INT AS precio_unitario
+      FROM productos AS p
+      JOIN supermercados_productos AS sp ON p.id_producto = sp.id_producto
+      JOIN marcas AS m ON m.id_marca = p.marca
+      WHERE p.id_producto IN (${ids_products})
+      AND p.id_producto NOT IN (
+        SELECT sp.id_producto 
+        FROM supermercados_productos AS sp
+        WHERE sp.id_supermercado = ${id_supermarket})
+      ORDER BY p.nombre ASC`;
+    
+  const { rows } = await pool.query(query);
+  return rows;
+}
+
+export const getNoStockProductsSupermarket = async (id_supermarket: string | null, ids_products: string | null): Promise<SupermarketProductCard[]> => {
+  let query = `
+      SELECT p.id_producto,
+               p.nombre,
+               m.marca,
+               '1'::INT AS cantidad,
+          	   p.imagen,
+          	   '0'::INT AS precio_total,
+               COALESCE(sp.precio_oferta, sp.precio_normal)::INT AS precio_unitario
+      FROM productos AS p
+      JOIN supermercados_productos AS sp ON p.id_producto = sp.id_producto
+      JOIN marcas AS m ON m.id_marca = p.marca
+      WHERE sp.id_supermercado = ${id_supermarket} AND 
+            p.id_producto IN (${ids_products}) AND 
+            sp.disponibilidad = 'No'
+      ORDER BY p.nombre ASC`;
+    
+  const { rows } = await pool.query(query);
+  return rows;
+}
+
+export const getAvailableProductsSupermarket = async (id_supermarket: string | null, ids_products: string | null): Promise<SupermarketProductCard[]> => {
+  let query = `
+      SELECT p.id_producto,
+               p.nombre,
+               m.marca,
+               '1'::INT AS cantidad,
+          	   p.imagen,
+          	   '0'::INT AS precio_total,
+               COALESCE(sp.precio_oferta, sp.precio_normal)::INT AS precio_unitario
+      FROM productos AS p
+      JOIN supermercados_productos AS sp ON p.id_producto = sp.id_producto
+      JOIN marcas AS m ON m.id_marca = p.marca
+      WHERE sp.id_supermercado = ${id_supermarket} AND 
+            p.id_producto IN (${ids_products}) AND 
+            sp.disponibilidad = 'Yes'
+      ORDER BY p.nombre ASC`;
+  
+  const { rows } = await pool.query(query);
+
   return rows;
 }

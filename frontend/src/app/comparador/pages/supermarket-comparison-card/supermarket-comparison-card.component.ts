@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SupermarketComparisonCard } from '../../interfaces/supermarket-comparison-card';
+import { DialogProductsSupermarketComponent } from '../dialog-products-supermarket/dialog-products-supermarket.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-supermarket-comparison-card',
@@ -14,6 +16,8 @@ export class SupermarketComparisonCardComponent implements OnInit {
   num_on_offer: string = '';
   num_out_of_stock: string = '';
   num_not_distributed: string = '';
+  
+  constructor(public dialog: MatDialog) {}
   
   ngOnInit(): void {
     /* Disponibles */
@@ -51,5 +55,18 @@ export class SupermarketComparisonCardComponent implements OnInit {
     } else {
       this.num_not_distributed = `${this.supermarket_comparison.num_not_distributed} productos`;
     }
+  }
+  
+  openDialog(id_supermercado: number) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    
+    dialogConfig.data = {
+      id_supermercado: id_supermercado.toString()
+    }
+  
+    this.dialog.open(DialogProductsSupermarketComponent, dialogConfig);
   }
 }

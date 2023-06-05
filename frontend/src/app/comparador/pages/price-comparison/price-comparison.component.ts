@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupermarketComparisonCard } from '../../interfaces/supermarket-comparison-card';
 import { SupermarketService } from '../../services/supermarket.service';
 import { CartService } from '../../services/cart.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-price-comparison',
@@ -13,7 +14,8 @@ export class PriceComparisonComponent implements OnInit {
   supermarketComparisonCards: SupermarketComparisonCard[] = [];
   
   constructor(private supermarketService: SupermarketService,
-              private cartService: CartService) {}
+              private cartService: CartService,
+              public dialog: MatDialog) {}
 
   ngOnInit(): void {
     let ids_products: string = this.cartService.getProductIds();
@@ -22,4 +24,5 @@ export class PriceComparisonComponent implements OnInit {
         this.supermarketComparisonCards = supermarkets
       });
   }
+  
 }
