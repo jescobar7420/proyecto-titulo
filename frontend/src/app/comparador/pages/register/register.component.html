@@ -1,0 +1,96 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="full-height py-2">
+    <mat-card class="register-card">
+
+        <mat-card-header>
+            <mat-card-title>Registrar cuenta</mat-card-title>
+        </mat-card-header>
+    
+        <mat-card-content fxFlex fxLayout="column">
+    
+            <mat-vertical-stepper [linear]="true" #stepper animationDuration="100">
+                <!-- Step 1 -->
+                <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                        <ng-template matStepLabel>Nombre del usuario</ng-template>
+    
+                        <!-- User name -->
+                        <div class="form-field">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput placeholder="Nombre" formControlName="name" required>
+                                <mat-error *ngIf="firstFormGroup.get('name')!.hasError('required')">Campo obligatorio.</mat-error>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div>
+                            <button mat-button matStepperNext [disabled]="firstFormGroup.invalid">Siguiente</button>
+                        </div>
+                    </form>
+                </mat-step>
+    
+                <!-- Step 2 -->
+                <mat-step [stepControl]="secondFormGroup">
+                    <form [formGroup]="secondFormGroup">
+                        <ng-template matStepLabel>Correo electrónico</ng-template>
+                        
+                        <!-- Email -->
+                        <div class="form-field">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="Email" formControlName="email" required>
+                                <mat-error *ngIf="secondFormGroup.get('email')!.hasError('required')">Campo obligatorio.</mat-error>
+                                <mat-error *ngIf="secondFormGroup.get('email')!.hasError('email')">Formato de email incorrecto.</mat-error>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="py-4">
+                            <button mat-button matStepperPrevious>Atrás</button>
+                            <button mat-button matStepperNext [disabled]="secondFormGroup.invalid">Siguiente</button>
+                        </div>
+                    </form>
+                </mat-step>
+    
+                <!-- Step 3 -->
+                <mat-step [stepControl]="passwordFormGroup">
+                    <form [formGroup]="passwordFormGroup">
+                        <ng-template matStepLabel>Establecer y confirmar contraseña</ng-template>
+                        <div class="form-field">
+                            <mat-form-field class="form-field">
+                                <mat-label>Ingrese contraseña</mat-label>
+                                <input formControlName="password" matInput placeholder="Contraseña" required
+                                    [type]="hidePassword ? 'password' : 'text'">
+                                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                                    [attr.aria-pressed]="hidePassword">
+                                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-error *ngIf="passwordFormGroup.get('password')!.hasError('required')">Campo obligatorio.</mat-error>
+                                <mat-error *ngIf="passwordFormGroup.get('password')!.hasError('minlength')">La contraseña debe tener al menos 8 caracteres.</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-field">
+                            <mat-form-field class="form-field">
+                                <mat-label>Confirma tu contraseña</mat-label>
+                                <input formControlName="confirmPassword" matInput placeholder="Confirmar contraseña" required
+                                    [type]="hideConfirmPassword ? 'password' : 'text'">
+                                <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide password'"
+                                    [attr.aria-pressed]="hideConfirmPassword">
+                                    <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-error *ngIf="passwordFormGroup.get('confirmPassword')!.hasError('required')">Campo obligatorio.</mat-error>
+                                <mat-error *ngIf="passwordFormGroup.get('confirmPassword')!.hasError('notSame')">Las contraseñas no coinciden.</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="py-4">
+                            <button mat-button matStepperPrevious>Atrás</button>
+                            <button mat-button matStepperNext [disabled]="passwordFormGroup.invalid">Registrarse</button>
+                        </div>
+                    </form>
+                </mat-step>
+            </mat-vertical-stepper>
+        </mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="end center" class="py-2">
+            <a href="/comparador/login">¿Ya tienes cuenta?</a>
+            <a href="/">¿Olvidaste la contraseña?</a>
+        </div>
+    </mat-card>
+</div>

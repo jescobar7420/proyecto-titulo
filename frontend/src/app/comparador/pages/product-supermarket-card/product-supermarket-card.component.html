@@ -5,11 +5,11 @@
              class="cart-image"
              [src]="producto.imagen"
              (error)="producto.imagen = 'assets/error_image_cart.jpg'"
-             [routerLink]="['/products', producto.id_producto]"
+             [routerLink]="['/comparador', producto.id_producto]"
              mat-dialog-close>
         <mat-card-title class="card-name" 
                         matListItemTitle
-                        [routerLink]="['/products', producto.id_producto]"
+                        [routerLink]="['/comparador', producto.id_producto]"
                         mat-dialog-close>
           {{ producto.nombre | titlecase }}
         </mat-card-title>
@@ -22,7 +22,7 @@
 
       <span class="spacer"></span>
       
-      <span class="price-product px-2">$ {{ producto.precio_total | thousandsSeparator }}</span>
+      <span class="price-product px-2" *ngIf="producto.precio_unitario">$ {{ producto.precio_total | thousandsSeparator }}</span>
 
     </mat-card-actions>
 </mat-card>

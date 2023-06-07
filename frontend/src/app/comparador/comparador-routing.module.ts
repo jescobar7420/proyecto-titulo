@@ -6,6 +6,8 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
 import { ProductFilterComponent } from './pages/product-filter/product-filter.component';
 import { FeaturedProductsComponent } from './pages/featured-products/featured-products.component';
 import { PriceComparisonComponent } from './pages/price-comparison/price-comparison.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 const rutas: Routes = [
   {
@@ -15,6 +17,8 @@ const rutas: Routes = [
       { path: 'featured-products', component: FeaturedProductsComponent },
       { path: 'search-filter', component: ProductFilterComponent },
       { path: 'price-comparison', component: PriceComparisonComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
       { path: ':id', component: ProductDetailsComponent },
       { path: '**', redirectTo: 'featured-products' }
     ]

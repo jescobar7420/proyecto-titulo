@@ -7,7 +7,7 @@
                         (mouseenter)="isHovered = true"
                         (mouseleave)="isHovered = false"
                         [class.underlined]="isHovered"
-                        [routerLink]="['/products', producto.id_producto]">
+                        [routerLink]="['/comparador', producto.id_producto]">
                 {{ producto.nombre | titlecase }}
         </mat-card-title>
         <mat-card-subtitle class="card-brand">{{ producto.marca | uppercase }}</mat-card-subtitle>
@@ -16,7 +16,7 @@
     <img mat-card-image
          [src]="producto.imagen"
          (error)="producto.imagen = 'assets/failed_load_image.png'"
-         [routerLink]="['/products', producto.id_producto]">
+         [routerLink]="['/comparador', producto.id_producto]">
 
     <mat-card-content>
         <div class="card-price">
@@ -29,7 +29,7 @@
     <mat-card-actions class="d-flex justify-content-center">
         <button mat-icon-button 
                 color="#545454"
-                [routerLink]="['/products', producto.id_producto]">
+                [routerLink]="['/comparador', producto.id_producto]">
             <mat-icon class="icon-size icon-color" 
                       aria-label="Ver detalles">visibility</mat-icon>
         </button>

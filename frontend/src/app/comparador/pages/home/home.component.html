@@ -56,11 +56,11 @@
                  class="cart-image"
                  [src]="product.imagen"
                  (error)="product.imagen = 'assets/error_image_cart.jpg'"
-                 [routerLink]="['/products', product.id_producto]"
+                 [routerLink]="['/comparador', product.id_producto]"
                  (click)="cartSidenav.toggle()">
             <mat-card-title class="card-name" 
                             matListItemTitle
-                            [routerLink]="['/products', product.id_producto]"
+                            [routerLink]="['/comparador', product.id_producto]"
                             (click)="cartSidenav.toggle()">
               {{ product.nombre | titlecase }}
             </mat-card-title>
@@ -138,7 +138,7 @@
       </div>
     </mat-toolbar>
 
-    <div class="container-fluid py-3 px-3">
+    <div class="container-fluid">
       <router-outlet></router-outlet>
 
       <button mat-fab class="floating-element" aria-label="cart" color="warn"

@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper'; 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -39,6 +40,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       MatSliderModule,
       MatSidenavModule,
       MatSnackBarModule,
+      MatStepperModule,
       MatToolbarModule,
       ReactiveFormsModule
   ]
