@@ -23,6 +23,8 @@ import { SupermarketComparisonCardComponent } from './pages/supermarket-comparis
 import { RegisterComponent } from './pages/register/register.component';
 import { DialogProductsSupermarketComponent } from './pages/dialog-products-supermarket/dialog-products-supermarket.component';
 import { ProductSupermarketCardComponent } from './pages/product-supermarket-card/product-supermarket-card.component';
+import { NotificationSuccessRegisterComponent } from './notification-success-register/notification-success-register.component';
+import { NotificationErrorRegisterComponent } from './notification-error-register/notification-error-register.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { ProductSupermarketCardComponent } from './pages/product-supermarket-car
     SupermarketComparisonCardComponent,
     RegisterComponent,
     DialogProductsSupermarketComponent,
-    ProductSupermarketCardComponent
+    ProductSupermarketCardComponent,
+    NotificationSuccessRegisterComponent,
+    NotificationErrorRegisterComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,30 @@
+.full-height {
+    height: 94vh;
+    background: rgb(255,255,255);
+    background: linear-gradient(184deg, rgba(255,255,255,1) 0%, rgba(74,74,74,1) 100%);
+}
+
+@media (max-height: 400px) {
+    .full-height {
+      height: 100%;
+    }
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.login-card {
+    min-width: 300px;
+    min-height: 380px;
+}
+
+mat-form-field {
+    width: 100%;
+}

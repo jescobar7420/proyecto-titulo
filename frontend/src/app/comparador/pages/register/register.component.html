@@ -82,15 +82,14 @@
                         </div>
                         <div class="py-4">
                             <button mat-button matStepperPrevious>Atrás</button>
-                            <button mat-button matStepperNext [disabled]="passwordFormGroup.invalid">Registrarse</button>
+                            <button mat-raised-button color="primary" [disabled]="passwordFormGroup.invalid" (click)="register()">Registrarse</button>
                         </div>
                     </form>
                 </mat-step>
             </mat-vertical-stepper>
         </mat-card-content>
-        <div fxLayout="column" fxLayoutAlign="end center" class="py-2">
+        <div fxLayout="column" fxLayoutAlign="end center" class="py-4">
             <a href="/comparador/login">¿Ya tienes cuenta?</a>
-            <a href="/">¿Olvidaste la contraseña?</a>
         </div>
     </mat-card>
 </div>

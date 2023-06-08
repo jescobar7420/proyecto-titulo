@@ -1,4 +1,4 @@
-import pool from '../database/pool'
+import pool from '../database/pool';
 import { Product } from '../interfaces/Product';
 import { ProductCard } from '../interfaces/ProductCard';
 import { SupermarketComparisonCard } from '../interfaces/SupermarketComparisonCard';

@@ -1,1 +1,32 @@
-<p>login works!</p>
+<div fxLayout="row" fxLayoutAlign="center center" class="full-height py-2">
+    <mat-card class="login-card">
+        <mat-card-content fxFlex fxLayout="column">
+            <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
+                <h2>Iniciar sesión</h2>
+                <mat-error *ngIf="!loginValid">Email o contraseña incorrecto.</mat-error>
+                <div class="form-field py-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Correo electrónico</mat-label>
+                        <input matInput placeholder="Email" formControlName="email" required>
+                        <mat-error *ngIf="loginFormGroup.get('email')!.hasError('required')">Campo obligatorio.</mat-error>
+                        <mat-error *ngIf="loginFormGroup.get('email')!.hasError('email')">Formato de email incorrecto.</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-field py-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput type="password" placeholder="Contraseña" formControlName="password" required>
+                        <mat-error *ngIf="loginFormGroup.get('password')!.hasError('required')">Campo obligatorio.</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button mat-raised-button color="primary" [disabled]="!loginFormGroup.valid">Login</button>
+                </div>
+            </form>
+        </mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="end center" class="py-4">
+            <a href="/comparador/register">¿Aún no tienes cuenta?</a>
+            <a href="/">¿Olvidaste la contraseña?</a>
+        </div>
+    </mat-card>
+</div>

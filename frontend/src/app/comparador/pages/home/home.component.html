@@ -1,12 +1,10 @@
 <mat-sidenav-container class="sidenav-container" fullscreen>
-  
+
   <!-- Navbar sidenav -->
   <mat-sidenav #sidenav mode="over" [fixedInViewport]="true">
     <mat-toolbar>
       <span>Menú</span>
-
       <span class="spacer"></span>
-
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
@@ -31,10 +29,40 @@
           <span>Comparar precios</span>
         </a>
       </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <ng-container *ngIf="!authService.loggedIn; else loggedInOptions">
+        <mat-list-item>
+          <a routerLink="./login" mat-list-item class="my-list-item" (click)="sidenav.toggle()">
+            <mat-icon mat-list-icon>login</mat-icon>
+            <span>Iniciar sesión</span>
+          </a>
+        </mat-list-item>
+        <mat-list-item>
+          <a routerLink="./register" mat-list-item class="my-list-item" (click)="sidenav.toggle()">
+            <mat-icon mat-list-icon>person_add</mat-icon>
+            <span>Registrarse</span>
+          </a>
+        </mat-list-item>
+      </ng-container>
+
+      <ng-template #loggedInOptions>
+        <mat-list-item>
+          <a routerLink="./quotations" mat-list-item class="my-list-item" (click)="sidenav.toggle()">
+            <mat-icon mat-list-icon>assignment</mat-icon>
+            <span>Ver cotizaciones</span>
+          </a>
+        </mat-list-item>
+        <mat-list-item>
+          <a (click)="authService.logout(); sidenav.toggle()" mat-list-item class="my-list-item">
+            <mat-icon mat-list-icon>logout</mat-icon>
+            <span>Cerrar sesión</span>
+          </a>
+        </mat-list-item>
+      </ng-template>
     </mat-nav-list>
-
   </mat-sidenav>
-
 
   <!-- Cart sidenav -->
   <mat-sidenav #cartSidenav mode="over" position="end" [fixedInViewport]="true">
@@ -52,16 +80,11 @@
       <mat-card class="card-cart-products">
         <mat-card-header class="text-oneline">
           <mat-card-title-group>
-            <img mat-card-sm-image
-                 class="cart-image"
-                 [src]="product.imagen"
-                 (error)="product.imagen = 'assets/error_image_cart.jpg'"
-                 [routerLink]="['/comparador', product.id_producto]"
-                 (click)="cartSidenav.toggle()">
-            <mat-card-title class="card-name" 
-                            matListItemTitle
-                            [routerLink]="['/comparador', product.id_producto]"
-                            (click)="cartSidenav.toggle()">
+            <img mat-card-sm-image class="cart-image" [src]="product.imagen"
+              (error)="product.imagen = 'assets/error_image_cart.jpg'"
+              [routerLink]="['/comparador', product.id_producto]" (click)="cartSidenav.toggle()">
+            <mat-card-title class="card-name" matListItemTitle [routerLink]="['/comparador', product.id_producto]"
+              (click)="cartSidenav.toggle()">
               {{ product.nombre | titlecase }}
             </mat-card-title>
             <mat-card-subtitle matListItemLine>{{ product.marca | uppercase }}</mat-card-subtitle>
@@ -95,14 +118,11 @@
         </mat-card-actions>
       </mat-card>
     </mat-nav-list>
-    
+
     <!-- Button price comparision -->
     <div class="d-flex justify-content-center py-2">
-      <button mat-raised-button 
-              color="primary"
-              class="py-4"
-              routerLink="./price-comparison"
-              (click)="cartSidenav.toggle()">
+      <button mat-raised-button color="primary" class="py-4" routerLink="./price-comparison"
+        (click)="cartSidenav.toggle()">
         COMPARAR
       </button>
     </div>
@@ -132,9 +152,15 @@
 
       <!-- Botón de login/register -->
       <div>
-        <button mat-icon-button>
-          <mat-icon>person</mat-icon>
-        </button>
+        <ng-container *ngIf="authService.userDetails; else notLoggedIn">
+          <span>Bienvenid@ {{ authService.userDetails.name | titlecase }}</span>
+        </ng-container>
+
+        <ng-template #notLoggedIn>
+          <button mat-icon-button routerLink="./login">
+            <mat-icon>person</mat-icon>
+          </button>
+        </ng-template>
       </div>
     </mat-toolbar>
 
@@ -147,6 +173,6 @@
         <div *ngIf="totalProducts > 0" id="badge_cart" [matBadge]="totalProducts"></div>
       </button>
     </div>
-    
+
   </mat-sidenav-content>
 </mat-sidenav-container>

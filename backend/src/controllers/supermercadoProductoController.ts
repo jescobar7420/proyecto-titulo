@@ -135,7 +135,6 @@ export const getNoDistributeProductsSupermarket = async (req: Request, res: Resp
     const ids_products = typeof req.query.ids_products === 'string' ? req.query.ids_products : null;
     const id_supermarket = typeof req.query.id_supermarket === 'string' ? req.query.id_supermarket : null;
     const noDistributeProductsSupermarket = await SupermercadoProductoModel.getNoDistributeProductsSupermarket(id_supermarket, ids_products);
-    console.log(noDistributeProductsSupermarket)
     res.status(200).json(noDistributeProductsSupermarket);
   } catch (error) {
     console.error(error);
@@ -160,7 +159,6 @@ export const getAvailableProductsSupermarket = async (req: Request, res: Respons
     const ids_products = typeof req.query.ids_products === 'string' ? req.query.ids_products : null;
     const id_supermarket = typeof req.query.id_supermarket === 'string' ? req.query.id_supermarket : null;
     const availableProductsSupermarket = await SupermercadoProductoModel.getAvailableProductsSupermarket(id_supermarket, ids_products);
-    console.log(availableProductsSupermarket)
     res.status(200).json(availableProductsSupermarket);
   } catch (error) {
     console.error(error);
