@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -23,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   exports: [
+      MatAutocompleteModule,
       MatBadgeModule,
       MatButtonModule,
       MatCardModule,

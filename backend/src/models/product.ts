@@ -267,3 +267,13 @@ export const getTotalResultFilter = async (filters: Filters): Promise<ProductCar
   const { rows } = await pool.query(query);
   return rows;
 };
+
+export const getSearchProductByName = async (nombre: string): Promise<void[]> => {
+  let query = `SELECT p.id_producto, p.nombre
+               FROM productos AS p
+               WHERE p.nombre LIKE '%${nombre}%'
+               LIMIT 5`;
+
+  const { rows } = await pool.query(query);
+  return rows;
+};

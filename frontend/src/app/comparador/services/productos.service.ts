@@ -98,4 +98,8 @@ export class ProductosService {
   getTotalResultFilter(filterData: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/products-filter-result`, filterData);
   }
+  
+  getSearchProductByName(name: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/search-product?name=${name}`);
+  }
 }
