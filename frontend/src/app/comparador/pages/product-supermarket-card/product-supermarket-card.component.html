@@ -5,11 +5,11 @@
              class="cart-image"
              [src]="producto.imagen"
              (error)="producto.imagen = 'assets/error_image_cart.jpg'"
-             [routerLink]="['/comparador', producto.id_producto]"
+             [routerLink]="['/comparador/producto/', producto.id_producto]"
              mat-dialog-close>
         <mat-card-title class="card-name" 
                         matListItemTitle
-                        [routerLink]="['/comparador', producto.id_producto]"
+                        [routerLink]="['/comparador/producto/', producto.id_producto]"
                         mat-dialog-close>
           {{ producto.nombre | titlecase }}
         </mat-card-title>

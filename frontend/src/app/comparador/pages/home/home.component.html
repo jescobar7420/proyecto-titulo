@@ -82,8 +82,8 @@
           <mat-card-title-group>
             <img mat-card-sm-image class="cart-image" [src]="product.imagen"
               (error)="product.imagen = 'assets/error_image_cart.jpg'"
-              [routerLink]="['/comparador', product.id_producto]" (click)="cartSidenav.toggle()">
-            <mat-card-title class="card-name" matListItemTitle [routerLink]="['/comparador', product.id_producto]"
+              [routerLink]="['/comparador/producto/', product.id_producto]" (click)="cartSidenav.toggle()">
+            <mat-card-title class="card-name" matListItemTitle [routerLink]="['/comparador/producto/', product.id_producto]"
               (click)="cartSidenav.toggle()">
               {{ product.nombre | titlecase }}
             </mat-card-title>
@@ -151,7 +151,7 @@
 
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
               <mat-option *ngFor="let product of filteredOptions | async" [value]="product.nombre"
-                [routerLink]="['/comparador', product.id_producto]" (onSelectionChange)="onOptionSelected()">
+                [routerLink]="['/comparador/producto/', product.id_producto]" (onSelectionChange)="onOptionSelected()">
                 {{product.nombre}}
               </mat-option>
 

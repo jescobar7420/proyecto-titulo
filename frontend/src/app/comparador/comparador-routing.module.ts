@@ -19,7 +19,7 @@ const rutas: Routes = [
       { path: 'price-comparison', component: PriceComparisonComponent },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
-      { path: ':id', component: ProductDetailsComponent },
+      { path: 'producto/:id', component: ProductDetailsComponent },
       { path: '**', redirectTo: 'featured-products' }
     ]
   }
