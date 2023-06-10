@@ -8,6 +8,9 @@ import { FeaturedProductsComponent } from './pages/featured-products/featured-pr
 import { PriceComparisonComponent } from './pages/price-comparison/price-comparison.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { UserQuotationsComponent } from './pages/user-quotations/user-quotations.component';
+import { AuthGuard } from './guards/auth.guard';
+import { GuestGuard } from './guards/guest.guard';
 
 const rutas: Routes = [
   {
@@ -17,9 +20,10 @@ const rutas: Routes = [
       { path: 'featured-products', component: FeaturedProductsComponent },
       { path: 'search-filter', component: ProductFilterComponent },
       { path: 'price-comparison', component: PriceComparisonComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
+      { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
+      { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
       { path: 'producto/:id', component: ProductDetailsComponent },
+      { path: 'user/quotations', component: UserQuotationsComponent, canActivate: [AuthGuard] },
       { path: '**', redirectTo: 'featured-products' }
     ]
   }

@@ -26,10 +26,8 @@ export class LoginComponent implements OnInit {
   
   onSubmit(): void {
     if (this.loginFormGroup.valid) {
-      console.log(this.authService.loggedIn)
       this.authService.login(this.loginFormGroup.value).subscribe(
         res => {
-          console.log(this.authService.loggedIn);
           this.router.navigate(['/comparador/featured-products']);
         },
         err => {

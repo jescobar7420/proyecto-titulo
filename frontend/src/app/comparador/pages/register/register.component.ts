@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { NotificationSuccessRegisterComponent } from '../../notification-success-register/notification-success-register.component';
+import { NotificationSuccessRegisterComponent } from '../../notifications/notification-success-register/notification-success-register.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { NotificationErrorRegisterComponent } from '../../notification-error-register/notification-error-register.component';
+import { NotificationErrorRegisterComponent } from '../../notifications/notification-error-register/notification-error-register.component';
 import { MatStepper } from '@angular/material/stepper';
 
 @Component({

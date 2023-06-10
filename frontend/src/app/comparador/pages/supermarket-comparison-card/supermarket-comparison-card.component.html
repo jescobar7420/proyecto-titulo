@@ -29,11 +29,10 @@
                 </mat-list-item>
                 <mat-list-item>
                     <mat-icon matListItemIcon class="icon icon-distribute">not_interested</mat-icon>
-                    <span matListItemTitle>No distribuye</span>
+                    <span matListItemTitle>No encontrado</span>
                     <span matListItemLine>{{ num_not_distributed }}</span>
                 </mat-list-item>
             </mat-list>
-
         </div>
     </div>
     <mat-divider></mat-divider>
@@ -44,9 +43,17 @@
         </div>
     </div>
     <mat-divider></mat-divider>
-    <div fxLayout="row" fxLayoutAlign="center center" class="py-2">
-        <button mat-flat-button color="primary" class="py-4" (click)="openDialog(supermarket_comparison.id_supermercado)">
-            Ver productos
-        </button>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="" class="py-2">
+        <div>
+            <button mat-flat-button color="primary" class="py-4" (click)="openDialogProductsSupermarket(supermarket_comparison.id_supermercado)">
+                Ver productos
+            </button>
+        </div>
+        <div class="px-2">
+            <button mat-raised-button color="primary" class="py-4" [disabled]="!authService.loggedIn" (click)="saveQuotationUser(supermarket_comparison.id_supermercado)">
+                <mat-icon>save</mat-icon>
+                Guardar
+            </button>
+        </div>
     </div>
 </mat-card>

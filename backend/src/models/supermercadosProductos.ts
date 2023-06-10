@@ -138,7 +138,7 @@ export const getNoDistributeProductsSupermarket = async (id_supermarket: string 
                '1'::INT AS cantidad,
           	   p.imagen,
           	   '0'::INT AS precio_total,
-               COALESCE(sp.precio_oferta, sp.precio_normal)::INT AS precio_unitario
+               NULL AS precio_unitario
       FROM productos AS p
       JOIN supermercados_productos AS sp ON p.id_producto = sp.id_producto
       JOIN marcas AS m ON m.id_marca = p.marca
@@ -188,10 +188,25 @@ export const getAvailableProductsSupermarket = async (id_supermarket: string | n
       JOIN marcas AS m ON m.id_marca = p.marca
       WHERE sp.id_supermercado = ${id_supermarket} AND 
             p.id_producto IN (${ids_products}) AND 
-            sp.disponibilidad = 'Yes'
+            sp.disponibilidad = 'Yes' AND
+            sp.precio_oferta IS NULL
       ORDER BY p.nombre ASC`;
   
   const { rows } = await pool.query(query);
 
+  return rows;
+}
+
+export const getProductsPricesAvailablesSupermarket = async (id_supermarket: string | null, ids_products: string | null): Promise<SupermarketProductCard[]> => {
+  let query = `
+      SELECT sp.id_producto, 
+             COALESCE(sp.precio_oferta, sp.precio_normal)::INT AS precio
+      FROM supermercados_productos AS sp
+      JOIN productos AS p ON sp.id_producto = p.id_producto
+      WHERE sp.id_producto IN (${ids_products}) AND
+            sp.id_supermercado = ${id_supermarket} AND
+            sp.disponibilidad = 'Yes'`;
+  
+  const { rows } = await pool.query(query);
   return rows;
 }

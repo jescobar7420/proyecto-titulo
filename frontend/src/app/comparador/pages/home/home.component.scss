@@ -95,29 +95,32 @@
 .search-form-field {
     padding-top: 20px;
     width: 100%;
-    min-width: 400px;
+    min-width: 350px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
-@media(max-width: 500px) {
-    .search-form-field {
-        padding-top: 20px;
-        width: 10%;
-        min-width: 300px;
-    }
-}
-
-@media (max-width: 320px) {
-    .login {
-      display: none;
-    }
-    
+@media(max-width: 320px) {
     .search-form-field {
         padding-top: 20px;
         width: 10%;
         min-width: 100px;
-        padding-right: 20px;
     }
-  }
+}
+
+@media(max-width: 500px) {
+    .login {
+        display: none;
+    }
+}
+
+@media (max-width:600px) and (min-width:500px) {
+    .search-form-field {
+        padding-top: 20px;
+        width: 10%;
+        min-width: 250px;
+    }
+}
 
 .search-form-field {
     width: 100%;
@@ -129,7 +132,3 @@ mat-toolbar {
     align-items: center;
 }
 
-::ng-deep .mat-autocomplete-panel {
-    width: 100% !important;
-    max-width: 500px;
-}

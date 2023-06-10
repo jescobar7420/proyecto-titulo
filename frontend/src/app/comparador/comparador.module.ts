@@ -11,7 +11,7 @@ import { ComparadorRoutingModule } from './comparador-routing.module';
 import { FeaturedProductsComponent } from './pages/featured-products/featured-products.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
-import { NotificationComponent } from './notification/notification.component';
+import { NotificationComponent } from './notifications/notification-product/notification.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PriceComparisonComponent } from './pages/price-comparison/price-comparison.component';
 import { ProductCardComponent } from './pages/product-card/product-card.component';
@@ -23,8 +23,13 @@ import { SupermarketComparisonCardComponent } from './pages/supermarket-comparis
 import { RegisterComponent } from './pages/register/register.component';
 import { DialogProductsSupermarketComponent } from './pages/dialog-products-supermarket/dialog-products-supermarket.component';
 import { ProductSupermarketCardComponent } from './pages/product-supermarket-card/product-supermarket-card.component';
-import { NotificationSuccessRegisterComponent } from './notification-success-register/notification-success-register.component';
-import { NotificationErrorRegisterComponent } from './notification-error-register/notification-error-register.component';
+import { NotificationSuccessRegisterComponent } from './notifications/notification-success-register/notification-success-register.component';
+import { NotificationErrorRegisterComponent } from './notifications/notification-error-register/notification-error-register.component';
+import { UserQuotationsComponent } from './pages/user-quotations/user-quotations.component';
+import { QuotationDetailsComponent } from './pages/quotation-details/quotation-details.component';
+import { DialogSaveQuotationComponent } from './pages/dialog-save-quotation/dialog-save-quotation.component';
+import { NotificationSucessSaveQuotationComponent } from './notifications/notification-sucess-save-quotation/notification-sucess-save-quotation.component';
+import { NotificationErrorSaveQuotationComponent } from './notifications/notification-error-save-quotation/notification-error-save-quotation.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +49,12 @@ import { NotificationErrorRegisterComponent } from './notification-error-registe
     DialogProductsSupermarketComponent,
     ProductSupermarketCardComponent,
     NotificationSuccessRegisterComponent,
-    NotificationErrorRegisterComponent
+    NotificationErrorRegisterComponent,
+    UserQuotationsComponent,
+    QuotationDetailsComponent,
+    DialogSaveQuotationComponent,
+    NotificationSucessSaveQuotationComponent,
+    NotificationErrorSaveQuotationComponent
   ],
   imports: [
     CommonModule,

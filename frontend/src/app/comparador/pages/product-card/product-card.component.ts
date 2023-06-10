@@ -3,7 +3,7 @@ import { ProductCard } from '../../interfaces/product-card';
 import { CartService } from '../../services/cart.service';
 import { CartProduct } from '../../interfaces/cart-product';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationComponent } from 'src/app/comparador/notification/notification.component'; // Aseg
+import { NotificationComponent } from 'src/app/comparador/notifications/notification-product/notification.component'; // Aseg
 
 @Component({
   selector: 'app-product-card',

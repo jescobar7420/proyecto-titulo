@@ -2,6 +2,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SupermarketComparisonCard } from '../../interfaces/supermarket-comparison-card';
 import { DialogProductsSupermarketComponent } from '../dialog-products-supermarket/dialog-products-supermarket.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
+import { QuotationService } from '../../services/quotation.service';
+import { DialogSaveQuotationComponent } from '../dialog-save-quotation/dialog-save-quotation.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationSucessSaveQuotationComponent } from '../../notifications/notification-sucess-save-quotation/notification-sucess-save-quotation.component';
+import { NotificationErrorSaveQuotationComponent } from '../../notifications/notification-error-save-quotation/notification-error-save-quotation.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-supermarket-comparison-card',
@@ -11,14 +19,20 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 export class SupermarketComparisonCardComponent implements OnInit {
 
   @Input() supermarket_comparison!: SupermarketComparisonCard;
-  
+
   num_available: string = '';
   num_on_offer: string = '';
   num_out_of_stock: string = '';
   num_not_distributed: string = '';
-  
-  constructor(public dialog: MatDialog) {}
-  
+
+  constructor(public dialogProductsSupermarket: MatDialog,
+    public authService: AuthService,
+    private cartService: CartService,
+    private quotationService: QuotationService,
+    private dialogSaveQuotation: MatDialog,
+    private router: Router,
+    private snackBar: MatSnackBar) { }
+
   ngOnInit(): void {
     /* Disponibles */
     if (this.supermarket_comparison.num_available == 1) {
@@ -28,7 +42,7 @@ export class SupermarketComparisonCardComponent implements OnInit {
     } else {
       this.num_available = `${this.supermarket_comparison.num_available} productos`;
     }
-    
+
     /* Ofertas */
     if (this.supermarket_comparison.num_on_offer == 1) {
       this.num_on_offer = `${this.supermarket_comparison.num_on_offer} producto`;
@@ -37,7 +51,7 @@ export class SupermarketComparisonCardComponent implements OnInit {
     } else {
       this.num_on_offer = `${this.supermarket_comparison.num_on_offer} productos`;
     }
-  
+
     /* Stock */
     if (this.supermarket_comparison.num_out_of_stock == 1) {
       this.num_out_of_stock = `${this.supermarket_comparison.num_out_of_stock} producto`;
@@ -46,7 +60,7 @@ export class SupermarketComparisonCardComponent implements OnInit {
     } else {
       this.num_out_of_stock = `${this.supermarket_comparison.num_out_of_stock} productos`;
     }
-    
+
     /* Distribución */
     if (this.supermarket_comparison.num_not_distributed == 1) {
       this.num_not_distributed = `${this.supermarket_comparison.num_not_distributed} producto`;
@@ -56,17 +70,84 @@ export class SupermarketComparisonCardComponent implements OnInit {
       this.num_not_distributed = `${this.supermarket_comparison.num_not_distributed} productos`;
     }
   }
-  
-  openDialog(id_supermercado: number) {
-    const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-    
-    dialogConfig.data = {
+  openDialogProductsSupermarket(id_supermercado: number) {
+    const dialogProductsSupermarketConfig = new MatDialogConfig();
+
+    dialogProductsSupermarketConfig.disableClose = false;
+    dialogProductsSupermarketConfig.autoFocus = true;
+
+    dialogProductsSupermarketConfig.data = {
       id_supermercado: id_supermercado.toString()
     }
+
+    this.dialogProductsSupermarket.open(DialogProductsSupermarketComponent, dialogProductsSupermarketConfig);
+  }
+
+  saveQuotationUser(id_supermercado: number) {
+    const id_usuario = this.authService.userId;
+    if (id_usuario) {
+      let title = '';
+
+      const dialogRef = this.dialogSaveQuotation.open(DialogSaveQuotationComponent, {
+        data: { title: title },
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result)
+        title = result;
+        if (title) {
+          const fecha_actual = this.obtenerFechaActual();
+          const monto_total = this.supermarket_comparison.total_value;
+          const ids_products = this.cartService.getProductIds().split(",").map(Number);
+          const quantities = this.cartService.getProductQuantities().split(",").map(Number);
+
+          this.quotationService.postInsertQuotation(id_usuario, id_supermercado, title, monto_total, fecha_actual, ids_products, quantities)
+            .subscribe({
+              next: (response) => {
+                console.log(response)
+                this.openSnackBarSucess();
+                this.router.navigate(['/comparador/user/quotations']);
+              },
+              error: (error) => {
+                this.openSnackBarError();
+                console.error(error);
+                this.router.navigate(['/comparador/featured-products']);
+              }
+            })
+        }
+      });
+    }
+    return null;
+  }
+
+  obtenerFechaActual(): string {
+    const fechaActual: Date = new Date();
+
+    const dia: number = fechaActual.getDate();
+    const mes: number = fechaActual.getMonth() + 1;
+    const anio: number = fechaActual.getFullYear();
+
+    const diaFormateado: string = dia < 10 ? `0${dia}` : `${dia}`;
+    const mesFormateado: string = mes < 10 ? `0${mes}` : `${mes}`;
+
+    const fechaFormateada: string = `${diaFormateado}/${mesFormateado}/${anio}`;
+    return fechaFormateada;
+  }
+
+  openSnackBarSucess() {
+    this.snackBar.openFromComponent(NotificationSucessSaveQuotationComponent, {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
+  }
   
-    this.dialog.open(DialogProductsSupermarketComponent, dialogConfig);
+  openSnackBarError() {
+    this.snackBar.openFromComponent(NotificationErrorSaveQuotationComponent, {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
   }
 }

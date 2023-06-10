@@ -49,13 +49,13 @@
 
       <ng-template #loggedInOptions>
         <mat-list-item>
-          <a routerLink="./quotations" mat-list-item class="my-list-item" (click)="sidenav.toggle()">
+          <a routerLink="./user/quotations" mat-list-item class="my-list-item" (click)="sidenav.toggle()">
             <mat-icon mat-list-icon>assignment</mat-icon>
             <span>Ver cotizaciones</span>
           </a>
         </mat-list-item>
         <mat-list-item>
-          <a (click)="authService.logout(); sidenav.toggle()" mat-list-item class="my-list-item">
+          <a routerLink="./featured-products" (click)="authService.logout(); sidenav.toggle()" mat-list-item class="my-list-item">
             <mat-icon mat-list-icon>logout</mat-icon>
             <span>Cerrar sesión</span>
           </a>
@@ -163,7 +163,7 @@
 
       <!-- Botón de login/register -->
       <div class="login">
-        <ng-container *ngIf="authService.userDetails; else notLoggedIn">
+        <ng-container *ngIf="authService.loggedIn && authService.userDetails; else notLoggedIn">
           <span>Bienvenid@ {{ authService.userDetails.name | titlecase }}</span>
         </ng-container>
 

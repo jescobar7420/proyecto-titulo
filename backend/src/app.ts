@@ -7,7 +7,8 @@ import tipoRoutes from './routes/tipoRoutes';
 import categoriaRoutes from './routes/categoriaRoutes';
 import supermercadoRoutes from './routes/supermercadoRoutes';
 import supermercados_productosRoutes from './routes/supermercadosProductosRoutes';
-import auth from './routes/authRoutes';
+import cotizacionRoutes from './routes/cotizacionRoutes';
+import authRoutes from './routes/authRoutes';
 
 require('dotenv').config();
 
@@ -22,7 +23,8 @@ app.use('/api', tipoRoutes);
 app.use('/api', categoriaRoutes);
 app.use('/api', supermercadoRoutes);
 app.use('/api', supermercados_productosRoutes);
-app.use('/api', auth);
+app.use('/api', authRoutes);
+app.use('/api', cotizacionRoutes)
 
 const PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 const HOSTNAME_SV: string = process.env.HOSTNAME_SV || 'localhost'; 

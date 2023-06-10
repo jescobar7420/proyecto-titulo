@@ -12,7 +12,7 @@ import { User } from '../interfaces/user';
 export class AuthService {
   private baseUrl: string = environment.baseUrl;
   private jwtHelper = new JwtHelperService();
-
+  
   constructor(private http: HttpClient) { }
 
   register(user: User): Observable<any> {
@@ -32,21 +32,29 @@ export class AuthService {
 
   public get loggedIn(): boolean {
     const token = localStorage.getItem('access_token');
-    // Comprueba si hay un token y no está expirado.
     return token != null && !this.jwtHelper.isTokenExpired(token);
   }
-  
-  public get userDetails(): User | null {
-  const token = localStorage.getItem('access_token');
-  if (token != null) {
-    const tokenData = this.jwtHelper.decodeToken(token);
-    return {
-      name: tokenData.name,
-      email: tokenData.email,
-      password: ''
-    };
-  }
-  return null;
-}
 
+  public get userDetails(): User | null {
+    const token = localStorage.getItem('access_token');
+    if (token != null) {
+      const tokenData = this.jwtHelper.decodeToken(token);
+      return {
+        name: tokenData.name,
+        email: tokenData.email,
+        password: ''
+      };
+    }
+    return null;
+  }
+
+  public get userId(): number | null {
+    const token = localStorage.getItem('access_token');
+    if (token != null) {
+      const tokenData = this.jwtHelper.decodeToken(token);
+      return tokenData.id
+    }
+    
+    return null;
+  }
 }

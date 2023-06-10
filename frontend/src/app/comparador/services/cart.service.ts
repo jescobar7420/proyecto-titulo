@@ -102,4 +102,13 @@ export class CartService {
     return product ? product.cantidad : 0;
   }
   
+  getProductQuantities(): string {
+    const quantities = this.cart.map(product => product.cantidad);
+    return quantities.join(",");
+  }
+  
+  getProductNames(): string {
+    const names = this.cart.map(product => product.nombre);
+    return names.join(",");
+  }
 }

@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Guardar cotización</h1>
+<div mat-dialog-content>
+  <p>¿Cómo quieres llamar a la cotización?</p>
+  <form [formGroup]="quotationForm">
+    <mat-form-field>
+      <mat-label>Nombre cotización</mat-label>
+      <input matInput formControlName="title">
+      <mat-error *ngIf="quotationForm.get('title')!.hasError('required')">El campo es obligatorio</mat-error>
+      <mat-error *ngIf="quotationForm.get('title')!.hasError('minlength')">Debe tener al menos 6 caracteres</mat-error>
+      <mat-error *ngIf="quotationForm.get('title')!.hasError('maxlength')">Debe tener hasta 255 caracteres</mat-error>
+    </mat-form-field>
+  </form>
+  <p>¡OJO!</p>
+  <p>Tu carrito se vaciará luego de guardar la cotización</p>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="quotationForm.get('title')?.value" cdkFocusInitial [disabled]="!quotationForm.valid">Guardar</button>
+</div>

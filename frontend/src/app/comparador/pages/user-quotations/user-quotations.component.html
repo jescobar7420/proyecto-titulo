@@ -1,0 +1,64 @@
+<div class="content py-3 px-3">
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" class="container-filters">
+
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="35" fxFlex.lg="30" fxFlex.xl="25">
+
+            <mat-card>
+                <mat-card-header class="py-3">
+                    <mat-card-title>Ordenar cotizaciones por:</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content fxLayout="column">
+
+                    <div>
+                        <mat-radio-group aria-label="Ordenar por">
+                            <mat-list>
+                                <mat-list-item>
+                                    <mat-radio-button value="cotizaciones_desc" color="primary" checked="true">Fecha más recientes</mat-radio-button>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <mat-radio-button value="cotizaciones_asc" color="primary">Fecha más antiguas</mat-radio-button>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <mat-radio-button value="nombre_asc" color="primary">Nombres de la A-Z</mat-radio-button>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <mat-radio-button value="nombre_desc" color="primary">Nombres de la Z-A</mat-radio-button>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <mat-radio-button value="precio_desc" color="primary">Mayor precio</mat-radio-button>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <mat-radio-button value="precio_asc" color="primary">Menor precio</mat-radio-button>
+                                </mat-list-item>
+                            </mat-list>
+                        </mat-radio-group>
+                    </div>
+
+                </mat-card-content>
+
+                <mat-card-actions class="d-flex justify-content-center">
+                    <button mat-raised-button color="primary" [disabled]="false" (click)="onFilterClick()">
+                        Filtrar
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+        <div fxFlex="row" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="70" fxFlex.xl="75">
+
+            <div class="content">
+                <app-quotation-details></app-quotation-details>
+            </div>
+
+            <!-- <ng-template #loadingTemplate>
+                <div class="center">
+                    <h2>Cargando información...</h2>
+                    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+                </div>
+            </ng-template> -->
+
+        </div>
+    </div>
+</div>

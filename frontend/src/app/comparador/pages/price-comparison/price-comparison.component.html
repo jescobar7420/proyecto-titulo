@@ -1,8 +1,8 @@
 
-<div *ngIf="supermarketComparisonCards.length > 0; else loadingTemplate" class="price-comparison">
-    
-    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px grid">
-
+<div *ngIf="supermarketComparisonCards.length > 0; else loadingTemplate" class="price-comparison py-4 px-2">
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <h2 class="title-comparison">Lista de opciones de supermercados</h2>
+        
         <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="16px" fxLayoutWrap>
 
             <div fxFlex.xs="100" *ngFor="let supermarket of supermarketComparisonCards">

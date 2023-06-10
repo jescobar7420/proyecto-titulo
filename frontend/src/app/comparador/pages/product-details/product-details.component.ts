@@ -8,7 +8,7 @@ import { ProductosService } from '../../services/productos.service';
 import { Product } from '../../interfaces/producto';
 import { ProductSupermarket } from '../../interfaces/product-supermarket';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationComponent } from 'src/app/comparador/notification/notification.component'; // Asegúrate de que la ruta sea correcta
+import { NotificationComponent } from 'src/app/comparador/notifications/notification-product/notification.component'; // Asegúrate de que la ruta sea correcta
 
 @Component({
   selector: 'app-product-details',

@@ -34,4 +34,8 @@ export class SupermarketService {
   getAvailableProductsSupermarket(id_supermercado: string, ids_products: string):Observable<SupermarketProductCard[]> {
     return this.http.get<SupermarketProductCard[]>(`${this.baseUrl}/api/supermarket-available?id_supermarket=${id_supermercado}&ids_products=${ids_products}`);
   }
+  
+  getProductsPricesAvailablesSupermarket(id_supermercado: string, ids_products: string):Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/supermarket-products-prices?id_supermarket=${id_supermercado}&ids_products=${ids_products}`);
+  }
 }

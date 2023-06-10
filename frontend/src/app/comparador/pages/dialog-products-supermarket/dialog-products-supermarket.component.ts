@@ -20,8 +20,8 @@ export class DialogProductsSupermarketComponent implements OnInit {
   id_supermercado: string;
 
   constructor(private supermarketService: SupermarketService,
-    private cartService: CartService,
-    @Inject(MAT_DIALOG_DATA) data: any) {
+              private cartService: CartService,
+              @Inject(MAT_DIALOG_DATA) data: any) {
 
     this.id_supermercado = data.id_supermercado;
   }
@@ -63,6 +63,4 @@ export class DialogProductsSupermarketComponent implements OnInit {
       return product;
     });
   }
-
-
 }
