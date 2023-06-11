@@ -108,7 +108,19 @@
     }
 }
 
-@media(max-width: 500px) {
+@media(max-width: 420px) {
+    .search-form-field {
+        padding-top: 20px;
+        width: 10%;
+        min-width: 100px;
+    }
+    
+    .welcome-user {
+        display: none;
+    }
+}
+
+@media(max-width: 380px) {
     .login {
         display: none;
     }
@@ -132,3 +144,13 @@ mat-toolbar {
     align-items: center;
 }
 
+.cart-sidenav {
+    max-width: 450px;
+}
+
+.empty-cart {
+    color: rgba(0, 0, 0, 0.54);
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 18rem;
+}

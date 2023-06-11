@@ -38,4 +38,8 @@ export class SupermarketService {
   getProductsPricesAvailablesSupermarket(id_supermercado: string, ids_products: string):Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/api/supermarket-products-prices?id_supermarket=${id_supermercado}&ids_products=${ids_products}`);
   }
+  
+  getPricesProductSupermarket(id_supermercado: number, ids_products: string):Observable<string> {
+    return this.http.get<string>(`${this.baseUrl}/api/supermarket-prices-product?id_supermarket=${id_supermercado}&ids_products=${ids_products}`);
+  }
 }

@@ -1,15 +1,23 @@
 
-<div *ngIf="supermarketComparisonCards.length > 0; else loadingTemplate" class="price-comparison py-4 px-2">
-    <div fxLayout="column" fxLayoutAlign="center center">
-        <h2 class="title-comparison">Lista de opciones de supermercados</h2>
-        
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="16px" fxLayoutWrap>
-
-            <div fxFlex.xs="100" *ngFor="let supermarket of supermarketComparisonCards">
-                <app-supermarket-comparison-card
-                    [supermarket_comparison]="supermarket"></app-supermarket-comparison-card>
+<div *ngIf="!loading; else loadingTemplate" class="price-comparison py-4 px-2">
+    <div *ngIf="getTotalProductsCart() > 0">
+        <div fxLayout="column" fxLayoutAlign="center center">
+            <h2 class="title-comparison text-center">Lista de opciones de supermercados</h2>
+            
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="16px" fxLayoutWrap>
+    
+                <div fxFlex.xs="100" *ngFor="let supermarket of supermarketComparisonCards">
+                    <app-supermarket-comparison-card
+                        [supermarket_comparison]="supermarket"></app-supermarket-comparison-card>
+                </div>
             </div>
         </div>
+    </div>
+    <div *ngIf="getTotalProductsCart() === 0">
+        <div class="text-center center">
+            <h2>Tu carrito se encuentra vacío.</h2>
+            <mat-icon>remove_shopping_cart</mat-icon>
+        </div> 
     </div>
 </div>
 

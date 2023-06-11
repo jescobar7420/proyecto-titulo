@@ -90,4 +90,8 @@ export class ProductDetailsComponent implements OnInit {
       verticalPosition: 'bottom',
     });
   }
+  
+  console(a: any) {
+    console.log(a)
+  }
 }

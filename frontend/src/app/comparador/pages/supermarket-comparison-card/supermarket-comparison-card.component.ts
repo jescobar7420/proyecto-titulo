@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationSucessSaveQuotationComponent } from '../../notifications/notification-sucess-save-quotation/notification-sucess-save-quotation.component';
 import { NotificationErrorSaveQuotationComponent } from '../../notifications/notification-error-save-quotation/notification-error-save-quotation.component';
 import { Router } from '@angular/router';
+import { SupermarketService } from '../../services/supermarket.service';
 
 @Component({
   selector: 'app-supermarket-comparison-card',
@@ -31,7 +32,8 @@ export class SupermarketComparisonCardComponent implements OnInit {
     private quotationService: QuotationService,
     private dialogSaveQuotation: MatDialog,
     private router: Router,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private supermarketService: SupermarketService) { }
 
   ngOnInit(): void {
     /* Disponibles */
@@ -94,27 +96,31 @@ export class SupermarketComparisonCardComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result)
         title = result;
         if (title) {
-          const fecha_actual = this.obtenerFechaActual();
-          const monto_total = this.supermarket_comparison.total_value;
-          const ids_products = this.cartService.getProductIds().split(",").map(Number);
-          const quantities = this.cartService.getProductQuantities().split(",").map(Number);
+          this.supermarketService.getPricesProductSupermarket(id_supermercado, this.cartService.getProductIds())
+          .subscribe(prices => {
+            const fecha_actual = this.obtenerFechaActual();
+            const monto_total = this.supermarket_comparison.total_value;
+            const ids_products = this.cartService.getProductIds().split(",").map(Number);
+            const quantities = this.cartService.getProductQuantities().split(",").map(Number);
+            const pricesList = prices.split(",").map(Number);
 
-          this.quotationService.postInsertQuotation(id_usuario, id_supermercado, title, monto_total, fecha_actual, ids_products, quantities)
-            .subscribe({
-              next: (response) => {
-                console.log(response)
-                this.openSnackBarSucess();
-                this.router.navigate(['/comparador/user/quotations']);
-              },
-              error: (error) => {
-                this.openSnackBarError();
-                console.error(error);
-                this.router.navigate(['/comparador/featured-products']);
-              }
-            })
+            this.quotationService.postInsertQuotation(id_usuario, id_supermercado, title, monto_total, fecha_actual, ids_products, quantities, pricesList)
+              .subscribe({
+                next: (response) => {
+                  this.openSnackBarSucess();
+                  this.cartService.clearCart();
+                  this.router.navigate(['/comparador/user/quotations']);
+                },
+                error: (error) => {
+                  this.openSnackBarError();
+                  console.error(error);
+                  this.router.navigate(['/comparador/featured-products']);
+                }
+              })
+            
+            });
         }
       });
     }

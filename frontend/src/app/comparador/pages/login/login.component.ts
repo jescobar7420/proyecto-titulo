@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   loginFormGroup: FormGroup = this._formBuilder.group({ email: [''], password: [''] })
   public loginValid = true;
+  hide: boolean = true;
 
   constructor(private _formBuilder: FormBuilder,
               private authService: AuthService, 

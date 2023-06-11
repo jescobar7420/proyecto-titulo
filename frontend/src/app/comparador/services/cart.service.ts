@@ -111,4 +111,9 @@ export class CartService {
     const names = this.cart.map(product => product.nombre);
     return names.join(",");
   }
+  
+  getProductPrices(): string {
+    const prices = this.cart.map(product => product.precio);
+    return prices.join(",");
+  }
 }

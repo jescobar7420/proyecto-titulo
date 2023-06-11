@@ -21,6 +21,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper'; 
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -46,6 +47,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       MatSnackBarModule,
       MatStepperModule,
       MatToolbarModule,
+      MatTooltipModule,
       ReactiveFormsModule
   ]
 })

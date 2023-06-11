@@ -13,18 +13,20 @@ export class PriceComparisonComponent implements OnInit {
 
   supermarketComparisonCards: SupermarketComparisonCard[] = [];
   listProducts: any[] = [];
+  loading: boolean = false;
 
   constructor(private supermarketService: SupermarketService,
-    private cartService: CartService,
-    public dialog: MatDialog) { }
+              private cartService: CartService,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.loading = true;
     let ids_products: string = this.cartService.getProductIds();
     
     this.supermarketService.getSupermarketComparisonCards(ids_products)
       .subscribe(supermarkets => {
         this.supermarketComparisonCards = supermarkets;
-
+        
         let promises = this.supermarketComparisonCards.map((supermarketCard, i) => {
           return new Promise<void>((resolve) => {
             this.supermarketService.getProductsPricesAvailablesSupermarket(supermarketCard.id_supermercado.toString(), ids_products)
@@ -44,8 +46,17 @@ export class PriceComparisonComponent implements OnInit {
         Promise.all(promises).then(() => {
           this.supermarketComparisonCards.sort((a, b) => a.total_value - b.total_value);
         });
+        
+        if (this.supermarketComparisonCards.length === 0) {
+          console.log(this.supermarketComparisonCards.length)
+          this.loading = false;
+        }
 
       });
+    this.loading = false;
   }
 
+  getTotalProductsCart():number {
+    return this.cartService.getTotalQuantity();
+  }
 }

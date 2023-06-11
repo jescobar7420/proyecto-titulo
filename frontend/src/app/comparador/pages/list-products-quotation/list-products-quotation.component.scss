@@ -1,0 +1,35 @@
+.title-icon {
+    display: flex; 
+    text-align: left;
+}
+
+.title-icon span {
+    margin-left: 10px;
+    font-weight: 550;
+    font-size: 19px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.icon-available {
+    color: #5d9e11;
+}
+
+.icon-sale {
+    color: #dec702;
+}
+
+.icon-stock {
+    color: #e03419;
+}
+
+.icon-distribute {
+    color: #4f4f4f;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

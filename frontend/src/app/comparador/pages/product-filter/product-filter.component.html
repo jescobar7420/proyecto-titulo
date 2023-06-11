@@ -113,16 +113,20 @@
         </mat-card-content>
 
         <mat-card-actions class="d-flex justify-content-center">
-          <button mat-raised-button color="primary"
-                  [disabled]="!categorias.value?.length"
-                  (click)="onFilterClick()">
-            Filtrar
-          </button>
-          <button mat-icon-button color="warn" class="mx-2" (click)="clearFields()">
-            <mat-icon class="icon-size icon-color" aria-label="Ver detalles">
-              refresh
-            </mat-icon>
-          </button>
+          <div [matTooltip]="!categorias.value?.length ? 'Debes aplicar al menos un filtro' : ''">
+            <button mat-raised-button color="primary"
+                    [disabled]="!categorias.value?.length"
+                    (click)="onFilterClick()">
+              Filtrar
+            </button>
+          </div>
+          <div>
+            <button mat-icon-button color="warn" class="mx-2" (click)="clearFields()">
+              <mat-icon class="icon-size icon-color" aria-label="Ver detalles">
+                refresh
+              </mat-icon>
+            </button>
+          </div>
         </mat-card-actions>
       </mat-card>
     </div>

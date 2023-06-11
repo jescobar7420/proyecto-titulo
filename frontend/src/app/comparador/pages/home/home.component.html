@@ -55,7 +55,7 @@
           </a>
         </mat-list-item>
         <mat-list-item>
-          <a routerLink="./featured-products" (click)="authService.logout(); sidenav.toggle()" mat-list-item class="my-list-item">
+          <a routerLink="./featured-products" (click)="logOut(); sidenav.toggle()" mat-list-item class="my-list-item">
             <mat-icon mat-list-icon>logout</mat-icon>
             <span>Cerrar sesión</span>
           </a>
@@ -65,7 +65,7 @@
   </mat-sidenav>
 
   <!-- Cart sidenav -->
-  <mat-sidenav #cartSidenav mode="over" position="end" [fixedInViewport]="true">
+  <mat-sidenav #cartSidenav mode="over" position="end" [fixedInViewport]="true" class="cart-sidenav">
     <mat-toolbar>
       <button mat-icon-button (click)="cartSidenav.toggle()">
         <mat-icon>menu</mat-icon>
@@ -118,9 +118,14 @@
         </mat-card-actions>
       </mat-card>
     </mat-nav-list>
+    
+    <div *ngIf="getTotalProductsCart() === 0" class="text-center empty-cart">
+      <h2>Tu carrito se encuentra vacío.</h2>
+      <mat-icon>remove_shopping_cart</mat-icon>
+    </div>
 
     <!-- Button price comparision -->
-    <div class="d-flex justify-content-center py-2">
+    <div class="d-flex justify-content-center py-2" *ngIf="getTotalProductsCart() > 0">
       <button mat-raised-button color="primary" class="py-4" routerLink="./price-comparison"
         (click)="cartSidenav.toggle()">
         COMPARAR
@@ -164,7 +169,7 @@
       <!-- Botón de login/register -->
       <div class="login">
         <ng-container *ngIf="authService.loggedIn && authService.userDetails; else notLoggedIn">
-          <span>Bienvenid@ {{ authService.userDetails.name | titlecase }}</span>
+          <span class="welcome-user">Bienvenid@ {{ authService.userDetails.name | titlecase }}</span>
         </ng-container>
 
         <ng-template #notLoggedIn>

@@ -89,8 +89,7 @@
              fxLayoutWrap class="mt-3">
     
             <div *ngFor="let supermercado of ListaSupermercadosProducto" class="mb-3 card">
-    
-                <mat-card>
+                <mat-card matTooltip="La fecha de esta información es del día {{ supermercado.fecha!.toString() | dateFormat }}" matTooltipPosition="above">
                     
                     <mat-card-content class="no-side-padding">
                         

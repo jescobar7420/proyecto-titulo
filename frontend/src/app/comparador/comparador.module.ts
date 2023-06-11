@@ -30,6 +30,8 @@ import { QuotationDetailsComponent } from './pages/quotation-details/quotation-d
 import { DialogSaveQuotationComponent } from './pages/dialog-save-quotation/dialog-save-quotation.component';
 import { NotificationSucessSaveQuotationComponent } from './notifications/notification-sucess-save-quotation/notification-sucess-save-quotation.component';
 import { NotificationErrorSaveQuotationComponent } from './notifications/notification-error-save-quotation/notification-error-save-quotation.component';
+import { ListProductsQuotationComponent } from './pages/list-products-quotation/list-products-quotation.component';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { NotificationErrorSaveQuotationComponent } from './notifications/notific
     QuotationDetailsComponent,
     DialogSaveQuotationComponent,
     NotificationSucessSaveQuotationComponent,
-    NotificationErrorSaveQuotationComponent
+    NotificationErrorSaveQuotationComponent,
+    ListProductsQuotationComponent,
+    DateFormatPipe
   ],
   imports: [
     CommonModule,

@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ProductSearch } from '../../interfaces/product-search';
 import { map, switchMap } from 'rxjs/operators'; // Recuerda importar los operadores aquí
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -22,20 +23,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   cart: CartProduct[] = [];
 
   filteredOptions: Observable<ProductSearch[]>;
-  searchForm: FormGroup; // Cambiado a FormGroup
+  searchForm: FormGroup; 
 
   private cartUpdatedSubscription: Subscription;
 
   constructor(private cartService: CartService,
               private productService: ProductosService,
               public authService: AuthService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private router: Router) {
     this.totalProducts = cartService.getTotalQuantity();
     this.cartUpdatedSubscription = this.cartService.cartUpdated.subscribe(() => {
       this.totalProducts = this.cartService.getTotalQuantity();
     });
 
-    // Inicializa el formulario aquí
     this.searchForm = this.fb.group({
       search: new FormControl(''),
     });
@@ -95,5 +96,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onOptionSelected() {
     this.searchForm.get('search')!.reset();
+  }
+  
+  getTotalProductsCart():number {
+    return this.cartService.getTotalQuantity();
+  }
+  
+  logOut() {
+    this.cartService.clearCart();
+    this.authService.logout();
+    this.router.navigate(['/comparador/login']);
   }
 }
