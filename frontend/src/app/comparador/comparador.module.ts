@@ -32,6 +32,8 @@ import { NotificationSucessSaveQuotationComponent } from './notifications/notifi
 import { NotificationErrorSaveQuotationComponent } from './notifications/notification-error-save-quotation/notification-error-save-quotation.component';
 import { ListProductsQuotationComponent } from './pages/list-products-quotation/list-products-quotation.component';
 import { DateFormatPipe } from './pipes/date-format.pipe';
+import { DialogDeleteQuotationComponent } from './pages/dialog-delete-quotation/dialog-delete-quotation.component';
+import { DialogRelistQuotationComponent } from './pages/dialog-relist-quotation/dialog-relist-quotation.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
     NotificationSucessSaveQuotationComponent,
     NotificationErrorSaveQuotationComponent,
     ListProductsQuotationComponent,
-    DateFormatPipe
+    DateFormatPipe,
+    DialogDeleteQuotationComponent,
+    DialogRelistQuotationComponent
   ],
   imports: [
     CommonModule,

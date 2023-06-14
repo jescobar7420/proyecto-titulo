@@ -23,6 +23,15 @@
       <span class="spacer"></span>
       
       <span class="price-product px-2" *ngIf="producto.precio_unitario">$ {{ producto.precio_total | thousandsSeparator }}</span>
+      <span class="product-no-available px-2" *ngIf="!producto.precio_unitario">No disponible</span>
 
     </mat-card-actions>
+    <div class="py-3 px-3" *ngIf="flag_quotation">
+      <button mat-raised-button 
+                color="primary"
+                (click)="addToCart(producto.id_producto)">
+            <mat-icon>shopping_cart</mat-icon>
+            Agregar
+        </button>
+    </div>
 </mat-card>

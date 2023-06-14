@@ -9,7 +9,8 @@ import { getSupermercadosProductos,
          getNoDistributeProductsSupermarket,
          getNoStockProductsSupermarket,
          getAvailableProductsSupermarket,
-         getProductsPricesAvailablesSupermarket
+         getProductsPricesAvailablesSupermarket,
+         getPricesProductSupermarket
 } from '../controllers/supermercadoProductoController';
 
 const router = Router();
@@ -23,6 +24,7 @@ router.get('/supermarket-no-distribute', getNoDistributeProductsSupermarket);
 router.get('/supermarket-no-stock', getNoStockProductsSupermarket);
 router.get('/supermarket-available', getAvailableProductsSupermarket);
 router.get('/supermarket-products-prices', getProductsPricesAvailablesSupermarket);
+router.get('/supermarket-prices-product', getPricesProductSupermarket);
 
 router.post('/supermercados-productos', createSupermercadoProducto);
 

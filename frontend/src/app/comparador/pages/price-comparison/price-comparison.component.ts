@@ -23,7 +23,8 @@ export class PriceComparisonComponent implements OnInit {
     this.loading = true;
     let ids_products: string = this.cartService.getProductIds();
     
-    this.supermarketService.getSupermarketComparisonCards(ids_products)
+    if (this.cartService.getTotalQuantity() > 0) {
+      this.supermarketService.getSupermarketComparisonCards(ids_products)
       .subscribe(supermarkets => {
         this.supermarketComparisonCards = supermarkets;
         
@@ -53,6 +54,7 @@ export class PriceComparisonComponent implements OnInit {
         }
 
       });
+    }
     this.loading = false;
   }
 

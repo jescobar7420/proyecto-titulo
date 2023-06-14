@@ -27,13 +27,13 @@ export class SupermarketComparisonCardComponent implements OnInit {
   num_not_distributed: string = '';
 
   constructor(public dialogProductsSupermarket: MatDialog,
-    public authService: AuthService,
-    private cartService: CartService,
-    private quotationService: QuotationService,
-    private dialogSaveQuotation: MatDialog,
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private supermarketService: SupermarketService) { }
+              public authService: AuthService,
+              private cartService: CartService,
+              private quotationService: QuotationService,
+              private dialogSaveQuotation: MatDialog,
+              private router: Router,
+              private snackBar: MatSnackBar,
+              private supermarketService: SupermarketService) { }
 
   ngOnInit(): void {
     /* Disponibles */

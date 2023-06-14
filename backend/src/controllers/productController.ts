@@ -144,3 +144,25 @@ export const getSearchProductByName = async (req: Request, res: Response): Promi
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getProductCartById = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const id_producto = Number(req.query.id_producto);
+    const producto = await ProductoModel.getProductCartById(id_producto);
+    res.status(200).json(producto);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getProductCartByListId = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const ids_producto = typeof req.query.ids_products === 'string' ? req.query.ids_products : null;
+    const productos = await ProductoModel.getProductCartByListId(ids_producto);
+    res.status(200).json(productos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

@@ -210,3 +210,21 @@ export const getProductsPricesAvailablesSupermarket = async (id_supermarket: str
   const { rows } = await pool.query(query);
   return rows;
 }
+
+export const getPricesProductSupermarket = async (id_supermarket: string | null, ids_products: string | null): Promise<string> => {
+  let query = ` SELECT COALESCE(sp.precio_oferta, sp.precio_normal) AS precio
+                FROM (SELECT UNNEST(string_to_array('${ids_products}', ',')::INTEGER[]) AS id_producto) prod
+                LEFT JOIN (SELECT id_producto, 
+                                  precio_oferta, 
+                                  precio_normal 
+                           FROM supermercados_productos 
+                           WHERE id_supermercado = ${id_supermarket} AND fecha = ( SELECT MAX(fecha) 
+                                                                                   FROM supermercados_productos 
+                                                                                   WHERE id_supermercado = ${id_supermarket} ) ) sp ON prod.id_producto = sp.id_producto`;
+  
+  const { rows } = await pool.query(query);
+  
+  const pricesProductos = rows.map(row => row.precio === null ? "null" : row.precio);
+  const pricesProductosString = pricesProductos.join(',');
+  return pricesProductosString;
+}

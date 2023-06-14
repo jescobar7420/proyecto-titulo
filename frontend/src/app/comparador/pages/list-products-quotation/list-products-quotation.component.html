@@ -1,23 +1,8 @@
-<div>
-    <!-- Products on Sale -->
-    <div *ngIf="productsCard.length > 0" fxLayout="column">
-
-        <!-- <div class="title-icon">
-            <mat-icon class="icon-sale">new_releases</mat-icon>
-            <span> Productos en oferta</span>
-        </div> -->
-
-        <div fxLayout="column">
-            <mat-nav-list *ngFor="let producto of productsCard">
-                <app-product-supermarket-card [producto]="producto"></app-product-supermarket-card>
-            </mat-nav-list>
-        </div>
+<div fxLayout="column">
+    <div fxLayout="column">
+        <mat-nav-list *ngFor="let producto of listProducts">
+            <app-product-supermarket-card [producto]="producto" [flag_quotation]="true"></app-product-supermarket-card>
+        </mat-nav-list>
     </div>
 </div>
 
-<ng-template #loadingTemplate>
-    <div class="center py-4 px-4">
-        <h2>Cargando información</h2>
-        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    </div>
-</ng-template>

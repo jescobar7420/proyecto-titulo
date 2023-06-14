@@ -1,5 +1,5 @@
-<div class="content py-3 px-3">
 
+<div class="content py-3 px-3" *ngIf="listQuotations.length > 0">
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" class="container-filters">
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="35" fxFlex.lg="30" fxFlex.xl="25">
@@ -12,7 +12,7 @@
                 <mat-card-content fxLayout="column">
 
                     <div>
-                        <mat-radio-group aria-label="Ordenar por">
+                        <mat-radio-group aria-label="Ordenar por" name="filterOptions" [(ngModel)]="selectedOption">
                             <mat-list>
                                 <mat-list-item>
                                     <mat-radio-button value="cotizaciones_desc" color="primary" checked="true">Fecha más recientes</mat-radio-button>
@@ -49,16 +49,16 @@
         <div fxFlex="row" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="70" fxFlex.xl="75">
 
             <div class="content">
-                <app-quotation-details></app-quotation-details>
+                <app-quotation-details [listQuotations]="listQuotations"></app-quotation-details>
             </div>
-
-            <!-- <ng-template #loadingTemplate>
-                <div class="center">
-                    <h2>Cargando información...</h2>
-                    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-                </div>
-            </ng-template> -->
 
         </div>
     </div>
+</div>
+
+<div *ngIf="listQuotations.length === 0">
+    <div class="text-center center">
+        <h2>No hay cotizaciones guardadas</h2>
+        <mat-icon>clear</mat-icon>
+    </div> 
 </div>

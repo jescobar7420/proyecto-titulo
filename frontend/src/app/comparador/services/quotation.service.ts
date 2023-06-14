@@ -44,4 +44,12 @@ export class QuotationService {
   getAvailableProductsSupermarketQuotation(id_cotizacion: string, ids_products: string):Observable<SupermarketProductCard[]> {
     return this.http.get<SupermarketProductCard[]>(`${this.baseUrl}/api/quotation-supermarket-available?id_cotizacion=${id_cotizacion}&ids_products=${ids_products}`);
   }
+  
+  getListProductsQuotation(id_cotizacion: number):Observable<string> {
+    return this.http.get<string>(`${this.baseUrl}/api/quotation-list-products?id_cotizacion=${id_cotizacion}`);
+  }
+  
+  deleteQuotation(id_cotizacion: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/api/delete-quotation?id_cotizacion=${id_cotizacion}`);
+  }
 }

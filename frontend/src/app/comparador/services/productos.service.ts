@@ -11,6 +11,7 @@ import { Marca } from '../interfaces/marca';
 import { TipoProducto } from '../interfaces/tipo-producto';
 import { CategoriaMarcaTipo } from '../interfaces/categoria-marca-tipo';
 import { Supermercado } from '../interfaces/supermercado';
+import { CartProduct } from '../interfaces/cart-product';
 
 @Injectable({
   providedIn: 'root'
@@ -101,5 +102,13 @@ export class ProductosService {
   
   getSearchProductByName(name: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/api/search-product?name=${name}`);
+  }
+  
+  getProductCartById(id_producto: number): Observable<CartProduct> {
+    return this.http.get<CartProduct>(`${this.baseUrl}/api/product-cart?id_producto=${id_producto}`);
+  }
+  
+  getProductCartByListId(ids_producto: string): Observable<CartProduct[]> {
+    return this.http.get<CartProduct[]>(`${this.baseUrl}/api/list-product-cart?ids_products=${ids_producto}`);
   }
 }

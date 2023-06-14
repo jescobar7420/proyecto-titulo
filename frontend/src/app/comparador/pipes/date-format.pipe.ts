@@ -6,10 +6,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DateFormatPipe implements PipeTransform {
   transform(value: string): string {
     const date = new Date(value);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
+    let day = date.getDate().toString();
+    let month = (date.getMonth() + 1).toString();
     const year = date.getFullYear();
 
-    return `${day}/${month}/${year}`;
+    day = day.padStart(2, '0');
+    month = month.padStart(2, '0');
+
+    return `${month}/${day}/${year}`;
   }
 }

@@ -2,6 +2,7 @@ import pool from '../database/pool';
 import { Product } from '../interfaces/Product';
 import { ProductCard } from '../interfaces/ProductCard';
 import { SupermarketComparisonCard } from '../interfaces/SupermarketComparisonCard';
+import { CartProduct } from '../interfaces/cartProduct';
 
 export const getProducts = async (limit?: number): Promise<Product[]> => {
   let query = 'SELECT * FROM productos';
@@ -274,6 +275,52 @@ export const getSearchProductByName = async (nombre: string): Promise<void[]> =>
                WHERE p.nombre LIKE '%${nombre}%'
                LIMIT 5`;
 
+  const { rows } = await pool.query(query);
+  return rows;
+};
+
+export const getProductCartById = async (id_producto: number): Promise<CartProduct> => {
+  let query = `SELECT p.id_producto,
+                      p.nombre,
+                      m.marca,
+                      p.imagen,
+                      min_price.precio,
+                      1 AS cantidad
+               FROM productos AS p
+               INNER JOIN marcas AS m ON p.marca = m.id_marca
+               INNER JOIN ( SELECT sp.id_producto,
+                                   MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio
+                            FROM supermercados_productos AS sp
+                            INNER JOIN ( SELECT id_producto, 
+                                              MAX(fecha) AS fecha
+                                         FROM supermercados_productos
+                                         WHERE id_producto = ${id_producto}
+                                         GROUP BY id_producto ) AS sp_max ON sp.id_producto = sp_max.id_producto AND 
+                                                                             sp.fecha = sp_max.fecha
+                            GROUP BY sp.id_producto ) AS min_price ON p.id_producto = min_price.id_producto`;
+  const { rows } = await pool.query(query);
+  return rows[0];
+};
+
+export const getProductCartByListId = async (ids_producto: string | null): Promise<CartProduct[]> => {
+  let query = `SELECT p.id_producto,
+                      p.nombre,
+                      m.marca,
+                      p.imagen,
+                      min_price.precio,
+                      1 AS cantidad
+               FROM productos AS p
+               INNER JOIN marcas AS m ON p.marca = m.id_marca
+               INNER JOIN ( SELECT sp.id_producto,
+                                   MIN(COALESCE(sp.precio_oferta, sp.precio_normal)) AS precio
+                            FROM supermercados_productos AS sp
+                            INNER JOIN ( SELECT id_producto, 
+                                              MAX(fecha) AS fecha
+                                         FROM supermercados_productos
+                                         WHERE id_producto IN (${ids_producto})
+                                         GROUP BY id_producto ) AS sp_max ON sp.id_producto = sp_max.id_producto AND 
+                                                                             sp.fecha = sp_max.fecha
+                            GROUP BY sp.id_producto ) AS min_price ON p.id_producto = min_price.id_producto`;
   const { rows } = await pool.query(query);
   return rows;
 };

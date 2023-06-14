@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Eliminar cotización: {{data.title}}</h1>
+<div mat-dialog-content>
+  <p>¡OJO!</p>
+  <p>No podrás volver a recuperar esta lista.</p>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>Eliminar cotización</button>
+</div>

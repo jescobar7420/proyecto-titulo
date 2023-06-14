@@ -116,4 +116,13 @@ export class CartService {
     const prices = this.cart.map(product => product.precio);
     return prices.join(",");
   }
+  
+  addProductListToCart(productList: CartProduct[]) {
+    this.clearCart();
+  
+    productList.forEach(product => {
+      this.addToCart(product);
+    });
+  }
+  
 }

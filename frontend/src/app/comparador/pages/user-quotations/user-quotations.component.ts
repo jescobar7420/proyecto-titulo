@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { QuotationService } from '../../services/quotation.service';
+import { AuthService } from '../../services/auth.service';
+import { QuotationDetail } from '../../interfaces/quotation-detail';
 
 @Component({
   selector: 'app-user-quotations',
@@ -7,13 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserQuotationsComponent implements OnInit {
 
-  constructor() {}
+  listQuotations: QuotationDetail[] = [];
+  selectedOption: string = '';
+
+  constructor(private quotationService: QuotationService,
+              private authService: AuthService) {}
 
   ngOnInit(): void {
-      
+    const id_usuario = this.authService.userId;
+    if (id_usuario) {
+      this.quotationService.getQuotationUser(id_usuario)
+        .subscribe(quotations => {
+          this.listQuotations = quotations;
+        });
+    }
   }
   
   onFilterClick() {
-  
+    const id_usuario = this.authService.userId;
+    if (id_usuario) {
+      this.quotationService.getQuotationUser(id_usuario, this.selectedOption)
+        .subscribe(quotations => {
+          this.listQuotations = quotations;
+        });
+    }
   }
 }

@@ -6,16 +6,36 @@
         {{ quotation.nombre }}
       </mat-panel-title>
       <mat-panel-description>
-        {{ quotation.fecha | date: 'MM/dd/yyyy' }}
+        <span class="date-header">{{ quotation.fecha | date: 'MM/dd/yyyy' }}</span>
         <span>$ {{ quotation.monto_total | thousandsSeparator }}</span>
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <app-list-products-quotation [id_cotizacion]="quotation.id_cotizacion"></app-list-products-quotation>
+    <p class="title-expansion">{{ quotation.supermercado }}</p>
+    <p class="second-title-expansion">Monto total: $ {{ quotation.monto_total | thousandsSeparator }}</p>
+    <p class="second-title-expansion">{{ quotation.fecha.toString() | dateFormat }}</p>
+    <mat-divider class="py-3"></mat-divider>
+    <p class="title-expansion">Lista de productos</p>
+    
+    <app-list-products-quotation [listProducts]="listProductsQuotation"></app-list-products-quotation>
     
     <!-- Actions buttons -->
     <mat-action-row>
-      <button mat-button color="primary">Next</button>
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+        <div fxLayout="column">
+          <button mat-raised-button color="warn" (click)="deleteQuotation(quotation.id_cotizacion, quotation.nombre)">
+            <mat-icon>remove</mat-icon>
+            Eliminar lista
+          </button>
+        </div>
+        
+        <div fxLayout="column">
+          <button mat-raised-button color="primary" (click)="addQuotationToCart(quotation.id_cotizacion, quotation.nombre)">
+            <mat-icon>shopping_cart</mat-icon>
+            Agregar lista
+          </button>
+        </div>
+      </div>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
