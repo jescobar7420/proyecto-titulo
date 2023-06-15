@@ -264,6 +264,9 @@ def format_product_info(product_info):
 
     return f"> {id_product}/{category} - {name} - {precio}"
 
+def normalize_product_name(name):
+    return name.replace("-", " ").replace(",", ".")
+
 def get_product_details(driver, product_url, category_id, session):
     count = 1
     while True:
@@ -284,7 +287,7 @@ def get_product_details(driver, product_url, category_id, session):
             product_info = {}
             product_info['url'] = product_url
             product_info['stock'] = "Yes" if get_info(XPATH_PRODUCT_NO_STOCK, driver) is None else "No"
-            product_info['name'] = upper_text(get_info(XPATH_PRODUCT_NAME, driver))
+            product_info['name'] = normalize_product_name(upper_text(get_info(XPATH_PRODUCT_NAME, driver)))
             product_info['product_id'] = generate_unique_id(product_info['name'])
             product_info['description'] = get_info(XPATH_PRODUCT_DESCRIPTION, driver)
             product_info['ingredients'] = get_info(XPATH_PRODUCT_INGREDIENTS, driver)
