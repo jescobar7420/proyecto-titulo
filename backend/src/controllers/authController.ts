@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import * as nodemailer from 'nodemailer';
+import { v4 as uuidv4 } from 'uuid';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import * as UserModel from '../models/user';
@@ -40,7 +42,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
                 id: user.id_usuario, 
                 email: user.email,
                 name: user.nombre 
-            }, jwtSecret, { expiresIn: '1h' }); 
+            }, jwtSecret, { expiresIn: '1h' });
+            await UserModel.resetTokenUser(user.id_usuario);
             res.status(200).json({ token: token });
         } else {
             res.status(401).json({ error: 'Incorrect email or password' });
@@ -70,4 +73,74 @@ export const checkAuth = async (req: Request, res: Response): Promise<void> => {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
     }
+};
+
+export const recoverPassword = async (req: Request, res: Response): Promise<void> => {
+    const { email } = req.body;
+    if (!email) {
+        res.status(400).json({ error: 'Email is required' });
+        return;
+    }
+    try {
+        const user = await UserModel.getUserByEmail(email);
+        if (!user) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
+        const token = uuidv4();
+        await UserModel.storeUserToken(user.id_usuario, token);
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: user.email,
+            subject: 'Recuperación de contraseña',
+            text: `Para recuperar tu contraseña, por favor ingresa este código en la página de recuperación de contraseña: ${token}`
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        res.status(200).json({ status: 'Recovery email sent' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+export const verifyResetToken = async (req: Request, res: Response) => {
+    const { email, token } = req.body;
+    if (!email) {
+        res.status(400).json({ error: 'Email is required' });
+        return;
+    }
+    try {
+        const user = await UserModel.getUserByEmail(email);
+        if (!user) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
+    
+        const storedToken = await UserModel.getResetToken(email);
+        if (storedToken.reset_token !== token) {
+            return res.status(400).json({ error: 'Invalid token' });
+        }
+        res.status(200).json({ status: 'Token verified' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }    
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await UserModel.updatePassword(email, hashedPassword);
+    res.status(200).json({ status: 'Password updated' });
 };

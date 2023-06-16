@@ -11,6 +11,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { UserQuotationsComponent } from './pages/user-quotations/user-quotations.component';
 import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
+import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 
 const rutas: Routes = [
   {
@@ -22,6 +23,7 @@ const rutas: Routes = [
       { path: 'price-comparison', component: PriceComparisonComponent },
       { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
       { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
+      { path: 'recover-password', component: RecoverPasswordComponent, canActivate: [GuestGuard] },
       { path: 'producto/:id', component: ProductDetailsComponent },
       { path: 'user/quotations', component: UserQuotationsComponent, canActivate: [AuthGuard] },
       { path: '**', redirectTo: 'most-sought-products' }

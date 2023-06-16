@@ -35,6 +35,7 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
 import { DialogDeleteQuotationComponent } from './pages/dialog-delete-quotation/dialog-delete-quotation.component';
 import { DialogRelistQuotationComponent } from './pages/dialog-relist-quotation/dialog-relist-quotation.component';
 import { FooterComponent } from './pages/footer/footer.component';
+import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { FooterComponent } from './pages/footer/footer.component';
     DateFormatPipe,
     DialogDeleteQuotationComponent,
     DialogRelistQuotationComponent,
-    FooterComponent
+    FooterComponent,
+    RecoverPasswordComponent
   ],
   imports: [
     CommonModule,
