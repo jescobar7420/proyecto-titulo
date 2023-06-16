@@ -44,23 +44,23 @@
                                 <strong>Nombre:</strong>
                                 {{ producto.nombre | titlecase }}
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item" *ngIf="producto.marca != null">
                                 <strong>Marca:</strong>
-                                {{ producto.marca | titlecase }}
+                                {{ producto.marca | capitalizeFirstLetter }}
                             </li>
                             <li class="list-group-item">
                                 <strong>Categoría:</strong>
-                                {{ producto.categoria | titlecase }}
+                                {{ producto.categoria | capitalizeFirstLetter }}
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item" *ngIf="producto.tipo_producto != null">
                                 <strong>Tipo de producto:</strong>
-                                {{ producto.tipo_producto | titlecase }}
+                                {{ producto.tipo_producto | capitalizeFirstLetter }}
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item" *ngIf="producto.descripcion != null">
                                 <strong>Descripción:</strong>
                                 {{ producto.descripcion }}
                             </li>
-                            <li class="list-group-item" *ngIf="producto.ingredientes != 'NA'">
+                            <li class="list-group-item" *ngIf="producto.ingredientes != null">
                                 <strong>Ingredientes:</strong>
                                 {{ producto.ingredientes }}
                             </li>
@@ -139,10 +139,16 @@
                                             </ng-container>
     
                                             <ng-template #noOferta>
-                                                <div fxFlex="100">
+                                                <div fxFlex="100" *ngIf="supermercado.precio_normal == null; else normalPrice">
                                                     <mat-card-subtitle>Precio Normal</mat-card-subtitle>
-                                                    <mat-card-title>$ {{ supermercado.precio_normal | thousandsSeparator }}</mat-card-title>
+                                                    <mat-card-title> $ - </mat-card-title>
                                                 </div>
+                                                <ng-template #normalPrice>
+                                                    <div fxFlex="100">
+                                                        <mat-card-subtitle>Precio Normal</mat-card-subtitle>
+                                                        <mat-card-title>$ {{ supermercado.precio_normal | thousandsSeparator }}</mat-card-title>
+                                                    </div>
+                                                </ng-template>
                                             </ng-template>
     
                                         </div>

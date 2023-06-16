@@ -114,7 +114,9 @@ export class ProductFilterComponent implements OnInit {
   }
   
   onFilterClick(): void {
+    this.flag_loading = true;
     this.productosFilters = [];
+    
     this.filterData = {
       supermercados: this.supermercados.value && this.supermercados.value.length > 0 ? this.supermercados.value.join(', ') : null,
       precioMin: this.rangeMin ? this.rangeMin.toString() : this.minPrice,
@@ -127,12 +129,12 @@ export class ProductFilterComponent implements OnInit {
     }
     
     if (!this.flag_filter) {
-      this.productService.getTotalResultFilter(this.filterData).subscribe(result => this.total_results = (Number(result[0].count)));
       this.flag_filter = true;
     }
     
-    this.flag_loading = true;
-    this.productService.getFilteredProducts(this.filterData).subscribe(producto => this.productosFilters = producto);
+    this.productService.getTotalResultFilter(this.filterData).subscribe(result => {this.total_results = (Number(result[0].count))});
+    this.productService.getFilteredProducts(this.filterData).subscribe(producto => {this.productosFilters = producto});
+    
     this.flag_loading = false;
   }
   

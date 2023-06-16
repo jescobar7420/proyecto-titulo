@@ -6,6 +6,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ThousandsSeparatorPipe implements PipeTransform {
 
   transform(value: any | undefined): string {
+    if (value === 0) {
+      return '0';
+    }
+  
     if (!value) {
       return '';
     }

@@ -17,14 +17,14 @@ const rutas: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      { path: 'featured-products', component: FeaturedProductsComponent },
+      { path: 'most-sought-products', component: FeaturedProductsComponent },
       { path: 'search-filter', component: ProductFilterComponent },
       { path: 'price-comparison', component: PriceComparisonComponent },
       { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
       { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
       { path: 'producto/:id', component: ProductDetailsComponent },
       { path: 'user/quotations', component: UserQuotationsComponent, canActivate: [AuthGuard] },
-      { path: '**', redirectTo: 'featured-products' }
+      { path: '**', redirectTo: 'most-sought-products' }
     ]
   }
 ];

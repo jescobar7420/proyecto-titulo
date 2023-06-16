@@ -105,7 +105,16 @@ export class SupermarketComparisonCardComponent implements OnInit {
             const ids_products = this.cartService.getProductIds().split(",").map(Number);
             const quantities = this.cartService.getProductQuantities().split(",").map(Number);
             const pricesList = prices.split(",").map(Number);
-
+            
+            
+            console.log(id_usuario)
+            console.log(id_supermercado)
+            console.log(title)
+            console.log(monto_total)
+            console.log(fecha_actual)
+            console.log(ids_products)
+            console.log(quantities)
+            
             this.quotationService.postInsertQuotation(id_usuario, id_supermercado, title, monto_total, fecha_actual, ids_products, quantities, pricesList)
               .subscribe({
                 next: (response) => {
@@ -137,7 +146,7 @@ export class SupermarketComparisonCardComponent implements OnInit {
     const diaFormateado: string = dia < 10 ? `0${dia}` : `${dia}`;
     const mesFormateado: string = mes < 10 ? `0${mes}` : `${mes}`;
 
-    const fechaFormateada: string = `${diaFormateado}/${mesFormateado}/${anio}`;
+    const fechaFormateada: string = `${anio}-${mesFormateado}-${diaFormateado}`;
     return fechaFormateada;
   }
 

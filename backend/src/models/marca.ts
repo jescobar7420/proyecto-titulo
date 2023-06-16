@@ -71,7 +71,7 @@ export const getBrandsByTypes = async (id_tipos: string | null): Promise<Marca[]
   let query = `SELECT DISTINCT m.id_marca, m.marca
                FROM productos AS p
                JOIN marcas AS m ON p.marca = m.id_marca
-               WHERE p.tipo_producto IN (${id_tipos})
+               WHERE p.tipo_producto IN (${id_tipos}) AND m.marca IS NOT NULL
                ORDER BY m.marca;`;
   
   const { rows } = await pool.query(query);

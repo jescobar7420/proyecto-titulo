@@ -34,6 +34,7 @@ import { ListProductsQuotationComponent } from './pages/list-products-quotation/
 import { DateFormatPipe } from './pipes/date-format.pipe';
 import { DialogDeleteQuotationComponent } from './pages/dialog-delete-quotation/dialog-delete-quotation.component';
 import { DialogRelistQuotationComponent } from './pages/dialog-relist-quotation/dialog-relist-quotation.component';
+import { FooterComponent } from './pages/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { DialogRelistQuotationComponent } from './pages/dialog-relist-quotation/
     ListProductsQuotationComponent,
     DateFormatPipe,
     DialogDeleteQuotationComponent,
-    DialogRelistQuotationComponent
+    DialogRelistQuotationComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,

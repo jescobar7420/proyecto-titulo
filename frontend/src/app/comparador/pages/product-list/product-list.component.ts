@@ -9,7 +9,4 @@ import { ProductCard } from '../../interfaces/product-card';
 export class ProductListComponent {
 
   @Input() productos: ProductCard[] = [];
-   
-  constructor() {}
-
 }

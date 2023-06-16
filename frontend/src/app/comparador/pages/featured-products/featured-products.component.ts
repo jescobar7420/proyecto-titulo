@@ -10,18 +10,16 @@ import { ProductCard } from '../../interfaces/product-card';
 export class FeaturedProductsComponent implements OnInit {
 
   productos: ProductCard[] = [];
-  limit: number = 40;
   loading: boolean = false;
 
   constructor(private productosService: ProductosService) {}
   
   ngOnInit(): void {
     this.loading = true;
-    this.productosService.getAvailableProductCards(this.limit)
+    this.productosService.getMostSoughtProducts()
       .subscribe(producto => {
         this.productos = producto;
         this.loading = false;
       });
-    
   }
 }

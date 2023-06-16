@@ -4,6 +4,7 @@ import { Categoria } from '../interfaces/Categoria';
 export const getCategorias = async (limit?: number): Promise<Categoria[]> => {
   let query = `SELECT id_categoria, categoria 
                FROM categorias AS c
+               WHERE categoria IS NOT NULL
                ORDER BY c.categoria ASC`;
   if (limit) {
     query += ` LIMIT ${limit}`;

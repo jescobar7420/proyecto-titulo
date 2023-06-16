@@ -50,7 +50,7 @@ export const getTypesByCategoryBrand = async (id_category: string | null, id_mar
     SELECT DISTINCT t.id_tipo, t.tipo
     FROM productos AS p
     JOIN tipos AS t ON t.id_tipo = p.tipo_producto
-    WHERE 1 = 1`;
+    WHERE 1 = 1 AND t.tipo IS NOT NULL`;
 
   if (id_category) {
     query += ` AND p.categoria IN (${id_category})`;

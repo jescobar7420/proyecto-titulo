@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
   register(): void {
     if (this.firstFormGroup.valid && this.secondFormGroup.valid && this.passwordFormGroup.valid) {
       const name = this.firstFormGroup.get('name')?.value;
-      const email = this.secondFormGroup.get('email')?.value;
+      const email = this.secondFormGroup.get('email')?.value.toLowerCase();
       const password = this.passwordFormGroup.get('password')?.value;
       const user = {name, email, password};
 

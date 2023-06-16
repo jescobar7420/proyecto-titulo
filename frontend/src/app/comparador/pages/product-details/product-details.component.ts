@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 import { CartService } from '../../services/cart.service';
@@ -25,7 +25,6 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(private productosService: ProductosService,
     private cartService: CartService,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar) { }
 

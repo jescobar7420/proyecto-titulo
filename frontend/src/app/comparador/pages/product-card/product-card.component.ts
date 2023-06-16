@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductCard } from '../../interfaces/product-card';
 import { CartService } from '../../services/cart.service';
 import { CartProduct } from '../../interfaces/cart-product';
@@ -14,8 +14,6 @@ export class ProductCardComponent {
   
   @Input() producto!: ProductCard;
   isHovered = false;
-  
-  alternativeUrl: string = "assets/failed_load_image.png";
    
   constructor(private cartService: CartService,
               private snackBar: MatSnackBar) {}

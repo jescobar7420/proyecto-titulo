@@ -166,3 +166,13 @@ export const getProductCartByListId = async (req: Request, res: Response): Promi
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getMostSoughtProducts = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const productCards = await ProductoModel.getMostSoughtProducts();
+    res.json(productCards);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}

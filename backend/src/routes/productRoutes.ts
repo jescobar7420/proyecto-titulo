@@ -10,7 +10,8 @@ import { getProducts,
          getTotalResultFilter,
          getSearchProductByName,
          getProductCartById,
-         getProductCartByListId
+         getProductCartByListId,
+         getMostSoughtProducts
 } from '../controllers/productController';
 
 const router = Router();
@@ -22,6 +23,7 @@ router.get('/product-card/:id', getProductCardById);
 router.get('/search-product', getSearchProductByName);
 router.get('/product-cart', getProductCartById);
 router.get('/list-product-cart', getProductCartByListId);
+router.get('/most-sought-products', getMostSoughtProducts);
 
 router.post('/products-filter-result', getTotalResultFilter);
 router.post('/productos', createProduct);

@@ -86,7 +86,8 @@ export const getProductsQuotation = async (id_cotizacion: number): Promise<Super
                  JOIN cotizaciones_productos AS cp ON cp.id_cotizacion = c.id_cotizacion
                  JOIN productos AS p ON p.id_producto = cp.id_producto
                  JOIN marcas AS m ON m.id_marca = p.marca
-                 WHERE c.id_cotizacion = ${id_cotizacion}`;
+                 WHERE c.id_cotizacion = ${id_cotizacion}
+                 ORDER BY precio_total ASC`;
     const { rows } = await pool.query(query);
     return rows;
 };

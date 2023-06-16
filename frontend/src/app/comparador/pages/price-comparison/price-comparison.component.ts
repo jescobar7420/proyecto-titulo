@@ -45,14 +45,21 @@ export class PriceComparisonComponent implements OnInit {
         });
 
         Promise.all(promises).then(() => {
-          this.supermarketComparisonCards.sort((a, b) => a.total_value - b.total_value);
+          this.supermarketComparisonCards.sort((a, b) => {
+            if (a.total_value === 0) {
+              return 1; 
+            } else if (b.total_value === 0) {
+              return -1; 
+            } else {
+              return a.total_value - b.total_value; 
+            }
+          });
         });
         
         if (this.supermarketComparisonCards.length === 0) {
           console.log(this.supermarketComparisonCards.length)
           this.loading = false;
         }
-
       });
     }
     this.loading = false;

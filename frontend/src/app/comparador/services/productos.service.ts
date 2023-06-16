@@ -111,4 +111,8 @@ export class ProductosService {
   getProductCartByListId(ids_producto: string): Observable<CartProduct[]> {
     return this.http.get<CartProduct[]>(`${this.baseUrl}/api/list-product-cart?ids_products=${ids_producto}`);
   }
+  
+  getMostSoughtProducts():Observable<ProductCard[]> {
+    return this.http.get<ProductCard[]>(`${this.baseUrl}/api/most-sought-products`);
+  }
 }

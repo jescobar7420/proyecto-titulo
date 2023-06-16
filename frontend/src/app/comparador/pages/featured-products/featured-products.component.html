@@ -1,5 +1,9 @@
 <div *ngIf="!loading; else loadingTemplate" class="px-3 py-3">
-    <app-product-list [productos]="productos"></app-product-list>
+  <div class="py-2">
+    <h2 class="title-comparison text-center">Productos más cotizados</h2>
+    <mat-divider></mat-divider>
+  </div>
+  <app-product-list [productos]="productos"></app-product-list>
 </div>
 
 <ng-template #loadingTemplate>

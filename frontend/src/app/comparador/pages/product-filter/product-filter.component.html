@@ -156,6 +156,11 @@
         <h2>¡Aún no se han aplicado filtros!</h2>
       </div>
       
+      <div *ngIf="flag_filter && productosFilters.length === 0" class="center">
+        <h2>¡No se encontraron resultados!</h2>
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+      </div>
+      
       <ng-template #loadingTemplate>
         <div class="center" *ngIf="flag_loading">
           <h2>Cargando productos...</h2>
