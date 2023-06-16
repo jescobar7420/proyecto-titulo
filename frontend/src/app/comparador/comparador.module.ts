@@ -36,6 +36,7 @@ import { DialogDeleteQuotationComponent } from './pages/dialog-delete-quotation/
 import { DialogRelistQuotationComponent } from './pages/dialog-relist-quotation/dialog-relist-quotation.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
+import { SupermarketsMapComponent } from './pages/supermarkets-map/supermarkets-map.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { RecoverPasswordComponent } from './pages/recover-password/recover-passw
     DialogDeleteQuotationComponent,
     DialogRelistQuotationComponent,
     FooterComponent,
-    RecoverPasswordComponent
+    RecoverPasswordComponent,
+    SupermarketsMapComponent
   ],
   imports: [
     CommonModule,

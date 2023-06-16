@@ -1,0 +1,52 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="container py-4">
+    <div fxLayout="column" class="text-center">
+        <h2 class="title-map">Encuentra los supermercados más cercanos</h2>
+    </div>
+
+    <div id="map" class="map"></div>
+
+    <div *ngIf="supermarketsFound.length > 0" fxLayout="column" fxLayoutGap="10px" fxFlex="90%" class="px-3 py-2">
+        <mat-card *ngFor="let supermarket of supermarketsFound">
+            <mat-card-content class="no-side-padding">
+                <div fxLayout="column" fxLayoutAlign="stretch">
+                    <div fxLayout="row">
+                        <!-- Logo Supermarket -->
+                        <div fxFlex="40" fxLayout="column" fxLayoutAlign="center center"
+                            style="border-right: 1px solid #ccc;">
+
+                            <div fxFlex="100" fxLayoutAlign="center center" class="mx-2">
+                                <img src="assets/{{supermarket.id}}.png" class="img-fluid logo-supermarket">
+                            </div>
+                        </div>
+                        <div fxFlex="60" fxLayout="row" fxLayoutAlign="start center">
+                            <div fxLayout="column" fxFlex="100" class="mx-2">
+                                <div fxLayout="row" fxFlex="50" class="my-1">
+                                    <div fxFlex="100">
+                                        <mat-card-title>{{supermarket.name}}</mat-card-title>
+                                        <mat-card-subtitle>Distancia: {{supermarket.distance | number: '1.1-2'}} metros</mat-card-subtitle>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<!-- <mat-card *ngFor="let supermarket of supermarketsFound; let i = index">
+  <div fxLayout="row">
+    <div fxFlex>
+      <img src="assets/1.png" class="logo-supermarket">
+    </div>
+    <div fxFlex="90">
+      <mat-card-title></mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+      <mat-card-content>
+        <h2>{{supermarket.name}}</h2>
+        <p>Distancia: {{supermarket.distance | number: '1.1-2'}} metros</p>
+      </mat-card-content>
+    </div>
+  </div>
+</mat-card> -->

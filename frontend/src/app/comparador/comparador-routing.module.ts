@@ -12,6 +12,7 @@ import { UserQuotationsComponent } from './pages/user-quotations/user-quotations
 import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
+import { SupermarketsMapComponent } from './pages/supermarkets-map/supermarkets-map.component';
 
 const rutas: Routes = [
   {
@@ -20,6 +21,7 @@ const rutas: Routes = [
     children: [
       { path: 'most-sought-products', component: FeaturedProductsComponent },
       { path: 'search-filter', component: ProductFilterComponent },
+      { path: 'map', component: SupermarketsMapComponent },
       { path: 'price-comparison', component: PriceComparisonComponent },
       { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
       { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },

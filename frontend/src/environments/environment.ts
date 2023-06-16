@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://192.168.1.5:3000'
+  baseUrl: 'http://192.168.1.5:3000',
+  mapbox: {
+    accessToken: 'pk.eyJ1IjoieGlrb3NoeWIiLCJhIjoiY2xpeTllOW5nMDdrdTNscXJ0OGc0YXN3NCJ9.1AKv7UyGc3lt3U4rcElJrw'
+  }
 };
 
 /*
