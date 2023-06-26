@@ -6,7 +6,7 @@
         {{ quotation.nombre }}
       </mat-panel-title>
       <mat-panel-description>
-        <span class="date-header">{{ quotation.fecha | date: 'MM/dd/yyyy' }}</span>
+        <span class="date-header">{{ quotation.fecha | date: 'dd/MM/yyyy' }}</span>
         <span>$ {{ quotation.monto_total | thousandsSeparator }}</span>
       </mat-panel-description>
     </mat-expansion-panel-header>

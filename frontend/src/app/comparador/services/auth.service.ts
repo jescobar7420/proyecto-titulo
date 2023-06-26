@@ -11,17 +11,17 @@ import { SHA256 } from 'crypto-js';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl: string = environment.baseUrl;
+  private baseUrl: string = environment.baseUrl + '/api/';
   private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient) { }
 
   register(user: User): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/register`, user);
+    return this.http.post(`${this.baseUrl}register`, user);
   }
 
   login(user: User): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/login`, user)
+    return this.http.post(`${this.baseUrl}login`, user)
       .pipe(tap((res: any) => {
         localStorage.setItem('access_token', res.token);
       }));
@@ -60,14 +60,14 @@ export class AuthService {
   }
 
   postRecoverPassword(email: { email: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/recover-password`, email);
+    return this.http.post(`${this.baseUrl}recover-password`, email);
   }
 
   updatePassword(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/reset-password`, { email, password });
+    return this.http.post(`${this.baseUrl}reset-password`, { email, password });
   }
 
   verifyRecoverCode(email: string, token: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/verify-reset-token`, { email, token });
+    return this.http.post(`${this.baseUrl}verify-reset-token`, { email, token });
   }
 }

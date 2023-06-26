@@ -14,7 +14,12 @@ require('dotenv').config();
 
 const app: Application = express();
 
-app.use(cors());
+var corsOptions = {
+  origin: 'https://d37n0kxf213nru.cloudfront.net',
+  optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions))
 app.use(express.json());
 
 app.use('/api', productRoutes);

@@ -15,6 +15,7 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
 
 export const getProductById = async (req: Request, res: Response): Promise<void> => {
   const id = parseInt(req.params.id, 10);
+  console.log(id)
   if (!id) {
     res.status(400).json({ error: 'Invalid ID' });
     return;

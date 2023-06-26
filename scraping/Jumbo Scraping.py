@@ -89,11 +89,11 @@ TOTAL_THREADS_PRODUCT = 10
 XPATH_LOADING_PAGE_SUPERMARKET = "//div[@class='loader active ']"
 
 # DATABASE CONFIG
-DB_HOST = "localhost"
-DB_PORT = "5432"
-DB_DATABASE = "proyecto-titulo2"
 DB_USER = "postgres"
-DB_PASSWORD = "123"
+DB_HOST = "proyecto-titulo-db.ccs1okha1boi.us-east-1.rds.amazonaws.com"
+DB_DATABASE = "proyecto_titulo_db"
+DB_PASSWORD = "Xiko156354*"
+DB_PORT = "5432"
 
 # XPATH CATEGORIES
 XPATH_TITLE_CATEGORIES = "//a[@class='new-header-supermarket-title']/h3[text()!='Ofertas']/.."
@@ -482,6 +482,7 @@ def main():
 
     chrome_options = Options()
     chrome_options.add_argument("--headless")
+    chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument("--window-size=1920,1080")
     main_driver = webdriver.Chrome(options=chrome_options)
 

@@ -90,11 +90,11 @@ TOTAL_THREADS_PRODUCT = 10
 XPATH_MAIN_PAGE_LOADING = "//h1[contains(text(), 'Nuestras categorías')]"
 
 # DATABASE CONFIG
-DB_HOST = "localhost"
-DB_PORT = "5432"
-DB_DATABASE = "proyecto-titulo2"
 DB_USER = "postgres"
-DB_PASSWORD = "123"
+DB_HOST = "proyecto-titulo-db.ccs1okha1boi.us-east-1.rds.amazonaws.com"
+DB_DATABASE = "proyecto_titulo_db"
+DB_PASSWORD = "Xiko156354*"
+DB_PORT = "5432"
 
 # XPATH CATEGORIES
 XPATH_TITLE_CATEGORIES = "//p[@class='Text_text__cB7NM Text_text--left__1v2Xw Text_text--flex__F7yuI Text_text--regular__KSs6J Text_text--md__H7JI_ Text_text--black__zYYxI Text_text__cursor--pointer__WZsQE Text_text--none__zez2n']/../.."
@@ -501,6 +501,7 @@ def main():
 
     chrome_options = Options()
     chrome_options.add_argument("--headless")
+    chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument("--window-size=1920,1080")
     main_driver = webdriver.Chrome(options=chrome_options)
 

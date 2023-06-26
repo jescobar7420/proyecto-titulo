@@ -88,11 +88,11 @@ TOTAL_THREADS_PRODUCT = 10
 XPATH_LOADING_PAGE_SUPERMARKET = "//div[@class='loader active ']"
 
 # DATABASE CONFIG
-DB_HOST = "localhost"
-DB_PORT = "5432"
-DB_DATABASE = "proyecto-titulo2"
 DB_USER = "postgres"
-DB_PASSWORD = "123"
+DB_HOST = "proyecto-titulo-db.ccs1okha1boi.us-east-1.rds.amazonaws.com"
+DB_DATABASE = "proyecto_titulo_db"
+DB_PASSWORD = "Xiko156354*"
+DB_PORT = "5432"
 
 # XPATH CATEGORIES
 XPATH_TITLE_CATEGORIES = "//a[@class='new-header-supermarket-title']/h3[text()!='Ofertas']/.."
@@ -451,6 +451,7 @@ def handle_category(data):
 def handle_products(product_data_list):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
+    chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(options=chrome_options)
 
@@ -485,7 +486,7 @@ def main():
         main_driver.get(URL_SUPERMARKET)
         WebDriverWait(main_driver, 8).until_not(EC.presence_of_element_located((By.XPATH, XPATH_LOADING_PAGE_SUPERMARKET)))
 
-        # Get URLs of categories
+        # Get URLs de categorias
         category_urls, category_names = get_categories(main_driver)
         
         # Insertar categorías en la base de datos y obtener un mapeo de nombres de categoría a ID
@@ -496,7 +497,7 @@ def main():
         # Empaquetar las URLs de las categorías y los IDs correspondientes juntos
         category_data = list(zip(category_urls, category_id_map.values()))
     
-        # Create a ThreadPoolExecutor
+        # Crear un ThreadPoolExecutor
         with ThreadPoolExecutor(max_workers=TOTAL_THREADS_CATEGORY) as executor:
             # Obtener las URLs de los productos y sus IDs de categoría
             product_data_list = list(executor.map(handle_category, category_data))

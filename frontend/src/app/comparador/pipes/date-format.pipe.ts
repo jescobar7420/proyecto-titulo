@@ -13,6 +13,6 @@ export class DateFormatPipe implements PipeTransform {
     day = day.padStart(2, '0');
     month = month.padStart(2, '0');
 
-    return `${month}/${day}/${year}`;
+    return `${day}/${month}/${year}`;
   }
 }
