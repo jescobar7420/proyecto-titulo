@@ -17,7 +17,7 @@
                         <div class="form-field">
                             <mat-form-field appearance="fill">
                                 <mat-label>Nombre</mat-label>
-                                <input matInput placeholder="Nombre" formControlName="name" required>
+                                <input matInput placeholder="Nombre" formControlName="name">
                                 <mat-error *ngIf="firstFormGroup.get('name')!.hasError('required')">Campo obligatorio.</mat-error>
                             </mat-form-field>
                         </div>
@@ -37,7 +37,7 @@
                         <div class="form-field">
                             <mat-form-field appearance="fill">
                                 <mat-label>Email</mat-label>
-                                <input matInput placeholder="Email" formControlName="email" required>
+                                <input matInput placeholder="Email" formControlName="email">
                                 <mat-error *ngIf="secondFormGroup.get('email')!.hasError('required')">Campo obligatorio.</mat-error>
                                 <mat-error *ngIf="secondFormGroup.get('email')!.hasError('email')">Formato de email incorrecto.</mat-error>
                             </mat-form-field>
